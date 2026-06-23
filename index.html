@@ -108,8 +108,8 @@
           <span class="badge-item monitor"><i class="fas fa-circle" style="color: var(--success); font-size: 8px; margin-right: 4px;"></i> Live Local Monitor</span>
           <span class="badge-item practice">Volunteer Practice Session</span>
           <a href="https://www.usys.org" target="_blank" class="header-link-btn">USYS Website <i class="fas fa-external-link-alt"></i></a>
-          <a href="https://www.ohioathletics.org" target="_blank" class="header-link-btn">AYSA Ohio Soccer <i class="fas fa-external-link-alt"></i></a>
-          <a href="#" class="header-link-btn">Lorain County Soccer <i class="fas fa-external-link-alt"></i></a>
+          <a href="https://aysaohiosoccer.com/" target="_blank" class="header-link-btn">AYSA Soccer <i class="fas fa-external-link-alt"></i></a>
+          <a href="https://www.quickscores.com/loraincountysoccer" target="_blank" class="header-link-btn">Lorain County Soccer <i class="fas fa-external-link-alt"></i></a>
         </div>
       </header>
 
@@ -234,10 +234,14 @@
           <!-- Field container -->
           <div class="soccer-field-wrapper">
             <div class="soccer-field" id="tactics-field">
+              <div class="field-boundary"></div>
               <div class="field-midline"></div>
               <div class="field-center-circle"></div>
               <div class="field-penalty-box-top"></div>
               <div class="field-penalty-box-bottom"></div>
+              <div class="subs-bench-area">
+                <span class="subs-bench-label">Substitutes</span>
+              </div>
               
               <!-- Draggable Player Tokens rendered via JS -->
             </div>
@@ -248,7 +252,7 @@
             <h3 class="widget-title"><i class="fas fa-user-edit"></i> Edit Player Names</h3>
             <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Names entered below will sync automatically with the field tokens.</p>
             <div class="player-inputs-grid" id="player-inputs-container">
-              <!-- JS will render 14 inputs -->
+              <!-- JS will render 18 inputs -->
             </div>
           </div>
         </div>
@@ -411,7 +415,6 @@
           <form onsubmit="submitBoardLogin(event)">
             <div class="form-group" style="margin-bottom: 20px;">
               <input type="password" id="board-passcode-input" class="form-input" style="text-align: center; letter-spacing: 4px; font-size: 18px;" placeholder="••••••••" required>
-              <span style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">Hint: admin passcode is <strong>board123</strong></span>
             </div>
             <button type="submit" class="btn btn-primary btn-full">
               <i class="fas fa-unlock"></i> Authenticate Board Representative

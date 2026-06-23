@@ -1788,19 +1788,64 @@ window.addEventListener('storage', (e) => {
 // ----------------------------------------------------
 // TACTICS BOARD (LINEUP BUILDER) LOGIC
 // ----------------------------------------------------
-let playerNames = Array.from({ length: 14 }, (_, i) => `Player ${i + 1}`);
-let playerPositions = Array.from({ length: 14 }, (_, i) => ({
-  left: 20 + (i % 4) * 80,
-  top: 40 + Math.floor(i / 4) * 110
-}));
+function getDefaultPositions() {
+  const positions = [];
+  // GK
+  positions.push({ left: 174, top: 450 });
+  // LB, LCB, RCB, RB
+  positions.push({ left: 40, top: 370 });
+  positions.push({ left: 130, top: 370 });
+  positions.push({ left: 210, top: 370 });
+  positions.push({ left: 300, top: 370 });
+  // LM, CM, RM
+  positions.push({ left: 60, top: 250 });
+  positions.push({ left: 174, top: 270 });
+  positions.push({ left: 280, top: 250 });
+  // LW, CF, RW
+  positions.push({ left: 60, top: 100 });
+  positions.push({ left: 174, top: 70 });
+  positions.push({ left: 280, top: 100 });
+  
+  // 7 Subs on the bench (y = 544)
+  for (let i = 0; i < 7; i++) {
+    positions.push({ left: 15 + i * 50, top: 544 });
+  }
+  return positions;
+}
+
+let playerNames = Array.from({ length: 18 }, (_, i) => `Player ${i + 1}`);
+let playerPositions = getDefaultPositions();
+let ballPosition = { left: 178, top: 248 };
 
 function loadTacticsData() {
   try {
     const savedNames = localStorage.getItem("soccercoach_tactics_names");
-    if (savedNames) playerNames = JSON.parse(savedNames);
+    if (savedNames) {
+      const parsedNames = JSON.parse(savedNames);
+      if (parsedNames.length === 18) {
+        playerNames = parsedNames;
+      } else {
+        playerNames = Array.from({ length: 18 }, (_, i) => parsedNames[i] || `Player ${i + 1}`);
+      }
+    }
     
     const savedPositions = localStorage.getItem("soccercoach_tactics_positions");
-    if (savedPositions) playerPositions = JSON.parse(savedPositions);
+    if (savedPositions) {
+      const parsedPositions = JSON.parse(savedPositions);
+      if (parsedPositions.length === 18) {
+        playerPositions = parsedPositions;
+      } else {
+        const defaultPos = getDefaultPositions();
+        playerPositions = Array.from({ length: 18 }, (_, i) => parsedPositions[i] || defaultPos[i]);
+      }
+    }
+
+    const savedBall = localStorage.getItem("soccercoach_tactics_ball");
+    if (savedBall) {
+      ballPosition = JSON.parse(savedBall);
+    } else {
+      ballPosition = { left: 178, top: 248 };
+    }
   } catch (e) {
     console.error("Error loading tactics data", e);
   }
@@ -1811,7 +1856,7 @@ function renderTacticsInputs() {
   if (!container) return;
   
   let html = "";
-  for (let i = 0; i < 14; i++) {
+  for (let i = 0; i < 18; i++) {
     html += `
       <div class="player-input-group">
         <span class="player-input-num">${i + 1}</span>
@@ -1837,7 +1882,7 @@ function renderPlayerTokens() {
   const field = document.getElementById("tactics-field");
   if (!field) return;
   
-  const existingTokens = field.querySelectorAll(".player-token");
+  const existingTokens = field.querySelectorAll(".player-token, .soccer-ball");
   existingTokens.forEach(t => t.remove());
   
   playerPositions.forEach((pos, i) => {
@@ -1852,11 +1897,22 @@ function renderPlayerTokens() {
     `;
     
     field.appendChild(token);
-    makeDraggable(token, i);
+    makeElementDraggable(token, false, i);
   });
+
+  // Render soccer ball
+  const ball = document.createElement("div");
+  ball.className = "soccer-ball";
+  ball.id = "soccer-ball";
+  ball.style.left = `${ballPosition.left}px`;
+  ball.style.top = `${ballPosition.top}px`;
+  ball.innerHTML = `<i class="fas fa-futbol"></i>`;
+  
+  field.appendChild(ball);
+  makeElementDraggable(ball, true, 0);
 }
 
-function makeDraggable(el, index) {
+function makeElementDraggable(el, isBall, index) {
   let isDragging = false;
   let startX, startY;
   
@@ -1901,27 +1957,38 @@ function makeDraggable(el, index) {
     el.style.left = `${x}px`;
     el.style.top = `${y}px`;
     
-    playerPositions[index] = { left: x, top: y };
+    if (isBall) {
+      ballPosition = { left: x, top: y };
+    } else {
+      playerPositions[index] = { left: x, top: y };
+    }
   }
   
   function endDrag() {
+    if (!isDragging) return;
     isDragging = false;
     document.removeEventListener('mousemove', drag);
     document.removeEventListener('touchmove', drag);
     document.removeEventListener('mouseup', endDrag);
     document.removeEventListener('touchend', endDrag);
     
-    localStorage.setItem("soccercoach_tactics_positions", JSON.stringify(playerPositions));
+    if (isBall) {
+      localStorage.setItem("soccercoach_tactics_ball", JSON.stringify(ballPosition));
+    } else {
+      localStorage.setItem("soccercoach_tactics_positions", JSON.stringify(playerPositions));
+    }
     localStorage.setItem("soccercoach_tactics_sync_trigger", Date.now());
   }
 }
 
 window.resetPlayerPositions = function() {
-  playerPositions = Array.from({ length: 14 }, (_, i) => ({
-    left: 20 + (i % 4) * 80,
-    top: 40 + Math.floor(i / 4) * 110
-  }));
+  playerPositions = getDefaultPositions();
+  ballPosition = { left: 178, top: 248 };
+  
   localStorage.setItem("soccercoach_tactics_positions", JSON.stringify(playerPositions));
+  localStorage.setItem("soccercoach_tactics_ball", JSON.stringify(ballPosition));
+  localStorage.setItem("soccercoach_tactics_sync_trigger", Date.now());
+  
   renderPlayerTokens();
-  addSystemLog("Tactics Board layout reset to default lineup.");
+  addSystemLog("Tactics Board layout reset to default lineup and ball position.");
 };

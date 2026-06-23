@@ -2030,19 +2030,31 @@ textarea.form-input {
   position: relative;
   width: 100%;
   max-width: 380px;
-  height: 520px;
+  height: 600px; /* Increased from 520px to accommodate subs bench */
   background: #14532d; /* Grass green */
   background-image: radial-gradient(circle, rgba(255,255,255,0.03) 10%, transparent 10.5%);
   background-size: 20px 20px;
-  border: 3px solid rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle frame border */
   border-radius: var(--radius-md);
   box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6);
   overflow: hidden;
 }
 
+.field-boundary {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 80px; /* Bounded playing area (520px high) */
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
 .field-midline {
   position: absolute;
-  top: 50%;
+  top: 260px; /* Midpoint of the 520px playing field */
   left: 0;
   right: 0;
   height: 2px;
@@ -2051,7 +2063,7 @@ textarea.form-input {
 
 .field-center-circle {
   position: absolute;
-  top: 50%;
+  top: 260px; /* Midpoint of the 520px playing field */
   left: 50%;
   width: 80px;
   height: 80px;
@@ -2073,13 +2085,63 @@ textarea.form-input {
 
 .field-penalty-box-bottom {
   position: absolute;
-  bottom: 0;
+  bottom: 80px; /* Adjusted to sit on the bottom endline (80px from bottom) */
   left: 50%;
   width: 180px;
   height: 70px;
   border: 2px solid rgba(255, 255, 255, 0.85);
   border-bottom: none;
   transform: translateX(-50%);
+}
+
+.subs-bench-area {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: rgba(15, 23, 42, 0.65); /* Rich semi-transparent dark glassmorphism */
+  backdrop-filter: blur(4px);
+  border-top: 2px dashed rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subs-bench-label {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  pointer-events: none;
+  position: absolute;
+  top: 6px;
+}
+
+.soccer-ball {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #111827;
+  border: 1.5px solid #111827;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: grab;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  z-index: 60; /* Higher than player tokens */
+  transition: transform 0.1s ease;
+  touch-action: none;
+}
+
+.soccer-ball:active {
+  cursor: grabbing;
+  transform: scale(1.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 /* Draggable Tokens */
