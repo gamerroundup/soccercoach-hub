@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoccerCoach Hub - Volunteer Coaching App</title>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="app.css">
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/53/53283.png">
+</head>
+<body>
+
+  <!-- Top Display Layout Selector -->
+  <header class="mode-selector">
+    <div class="selector-title">
+      <i class="fas fa-sliders-h"></i> PREVIEW CONTROLLER
+    </div>
+    <div class="selector-buttons">
+      <button id="layout-desktop" class="btn-mode active">
+        <i class="fas fa-desktop"></i> Desktop View
+      </button>
+      <button id="layout-mobile" class="btn-mode">
+        <i class="fas fa-mobile-alt"></i> Mobile App View
+      </button>
+      <button id="theme-toggle" class="btn-theme-toggle" title="Toggle Dark/Light Mode">
+        <i class="fas fa-sun"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- App Wrapper -->
+  <div class="app-container">
+
+    <!-- 1. MOBILE DEVICE FRAME PREVIEW -->
+    <div id="mobile-view-wrapper" class="device-frame-wrapper">
+      <div class="iphone-frame">
+        <div class="dynamic-island"></div>
+        <div class="iphone-status-bar">
+          <span>4:49</span>
+          <div style="display: flex; gap: 4px; align-items: center;">
+            <i class="fas fa-signal"></i>
+            <i class="fas fa-wifi"></i>
+            <i class="fas fa-battery-full"></i>
+          </div>
+        </div>
+        
+        <!-- Mobile Main App Viewport -->
+        <div class="iphone-screen">
+          <!-- Views will be moved here in Mobile mode -->
+          <div id="mobile-app-header" style="padding: 15px 20px; background: var(--bg-sidebar); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-family: var(--font-title); font-size: 16px; font-weight: 800; color: var(--primary);">SoccerCoach PWA</span>
+            <span class="badge-item hub" style="font-size: 9px; padding: 2px 6px;">Mobile Mode</span>
+          </div>
+          
+          <div id="mobile-view-content-target">
+            <!-- App views dynamically move in here -->
+          </div>
+
+          <!-- Bottom Navigation Tab Bar (Simulated Mobile Nav) -->
+          <nav class="mobile-nav-bar">
+            <button class="mobile-nav-item active" data-view="handbook">
+              <i class="fas fa-book"></i>
+              <span>Handbook</span>
+            </button>
+            <button class="mobile-nav-item" data-view="lineup">
+              <i class="fas fa-chalkboard"></i>
+              <span>Tactics</span>
+            </button>
+            <button class="mobile-nav-item" data-view="drills">
+              <i class="fas fa-futbol"></i>
+              <span>Drills</span>
+            </button>
+            <button class="mobile-nav-item" data-view="lounge">
+              <i class="fas fa-comments"></i>
+              <span>Lounge</span>
+            </button>
+            <button class="mobile-nav-item" data-view="complaints">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span>Log Incident</span>
+            </button>
+            <button class="mobile-nav-item" data-view="board">
+              <i class="fas fa-lock"></i>
+              <span>Board Room</span>
+            </button>
+          </nav>
+          <div class="home-indicator"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. DESKTOP PORTAL PREVIEW -->
+    <div id="desktop-view-wrapper" class="desktop-portal-wrapper">
+      <!-- Desktop Hub Header (matches Screenshot 2) -->
+      <header class="desktop-header">
+        <div class="logo-section">
+          <div class="app-logo">SC</div>
+          <div class="logo-text">
+            <h1>SOCCERCOACH <span>HUB</span></h1>
+            <p>Community Volunteer Assistant & Core Guidelines</p>
+          </div>
+        </div>
+        <div class="header-badges-links">
+          <span class="badge-item monitor"><i class="fas fa-circle" style="color: var(--success); font-size: 8px; margin-right: 4px;"></i> Live Local Monitor</span>
+          <span class="badge-item practice">Volunteer Practice Session</span>
+          <a href="https://www.usys.org" target="_blank" class="header-link-btn">USYS Website <i class="fas fa-external-link-alt"></i></a>
+          <a href="https://www.ohioathletics.org" target="_blank" class="header-link-btn">AYSA Ohio Soccer <i class="fas fa-external-link-alt"></i></a>
+          <a href="#" class="header-link-btn">Lorain County Soccer <i class="fas fa-external-link-alt"></i></a>
+        </div>
+      </header>
+
+      <!-- Desktop Tabs Bar (matches Screenshot 2) -->
+      <nav class="desktop-nav-tabs">
+        <button class="nav-tab-btn active" data-view="handbook">
+          <i class="fas fa-book-open"></i> Age Rules Handbook
+        </button>
+        <button class="nav-tab-btn" data-view="lineup">
+          <i class="fas fa-chalkboard"></i> Tactics Board
+        </button>
+        <button class="nav-tab-btn" data-view="drills">
+          <i class="fas fa-futbol"></i> Coaching Drills Library <span class="tab-count drills-count-badge">5</span>
+        </button>
+        <button class="nav-tab-btn" data-view="lounge">
+          <i class="fas fa-comments"></i> Coaches' Lounge <span class="badge-item hub" style="font-size: 8px; background: rgba(16,185,129,0.15); color: var(--success); padding: 1px 4px; margin-left: 4px;">LOUNGE</span>
+        </button>
+        <button class="nav-tab-btn" data-view="complaints">
+          <i class="fas fa-exclamation-circle"></i> Log Incident
+        </button>
+        <button class="nav-tab-btn" data-view="board">
+          <i class="fas fa-gavel"></i> Board Room <span class="badge-item hub" style="font-size: 8px; background: rgba(139,92,246,0.15); color: var(--accent); padding: 1px 4px; margin-left: 4px;">GS</span>
+        </button>
+      </nav>
+
+      <!-- Desktop Main Viewport -->
+      <div id="desktop-view-content-target" class="desktop-content-area">
+        <!-- App views dynamically move in here -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- REPOSITORIED APP VIEWS (SHARED CONTAINER)  -->
+  <!-- ========================================== -->
+  <div id="app-views-container">
+    <div id="app-views">
+
+      <!-- ========================================== -->
+      <!-- VIEW: AGE RULES HANDBOOK                  -->
+      <!-- ========================================== -->
+      <section id="view-handbook" class="view-section active">
+        <div class="welcome-banner">
+          <div class="banner-text">
+            <h2>AGE-GROUP GUIDELINES HANDBOOK</h2>
+            <p>Official rules, roster structures, and developmental priorities for Lorain County.</p>
+          </div>
+          <button id="btn-add-agegroup" class="btn btn-success" onclick="openAddAgeGroupModal()">
+            <i class="fas fa-plus"></i> Add Age Category
+          </button>
+        </div>
+
+        <!-- Segmented Control View Selector -->
+        <div class="segmented-control">
+          <button id="handbook-view-cards-btn" class="btn-segmented active" onclick="toggleHandbookView('cards')">
+            <i class="fas fa-th-large"></i> Detailed Cards
+          </button>
+          <button id="handbook-view-table-btn" class="btn-segmented" onclick="toggleHandbookView('table')">
+            <i class="fas fa-table"></i> Comparison Matrix
+          </button>
+        </div>
+
+        <!-- 1. Detailed Cards View -->
+        <div id="handbook-cards-view" class="handbook-layout">
+          <!-- Desktop/Mobile Sidebar list will render here -->
+          <div id="handbook-list-desktop" class="sidebar-list"></div>
+          
+          <!-- Selected specifications display card -->
+          <div class="handbook-details-wrapper">
+            <div id="handbook-details-desktop" class="handbook-details"></div>
+          </div>
+        </div>
+
+        <!-- 2. Comparison Table View -->
+        <div id="handbook-table-view" class="table-view-wrapper" style="display: none;">
+          <div class="table-responsive">
+            <table class="comparison-table">
+              <thead>
+                <tr>
+                  <th>Age Category</th>
+                  <th>Match Format</th>
+                  <th>Roster Size</th>
+                  <th>Ball Size</th>
+                  <th>Field Dimension</th>
+                  <th>Match Duration</th>
+                  <th>Offside Regulation</th>
+                  <th>Heading Restrictions</th>
+                  <th>Goalkeeper Status</th>
+                  <th>Developmental Notes</th>
+                </tr>
+              </thead>
+              <tbody id="comparison-table-body">
+                <!-- Loaded Dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top: 30px; display: flex; justify-content: flex-end;">
+          <button class="btn btn-secondary btn-small" onclick="restoreHandbookDefaults()">
+            <i class="fas fa-undo"></i> Restore League Default Handbook
+          </button>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW: TACTICS BOARD (LINEUP BUILDER)       -->
+      <!-- ========================================== -->
+      <section id="view-lineup" class="view-section">
+        <div class="welcome-banner" style="border-left-color: #f59e0b;">
+          <div class="banner-text">
+            <h2>SOCCER FIELD TACTICS BOARD</h2>
+            <p>Drag and drop player markers to set up formations. Customize names to show volunteer coaches and players where to line up.</p>
+          </div>
+          <button class="btn btn-secondary btn-small" onclick="resetPlayerPositions()">
+            <i class="fas fa-undo"></i> Reset Layout
+          </button>
+        </div>
+
+        <div class="tactics-layout">
+          <!-- Field container -->
+          <div class="soccer-field-wrapper">
+            <div class="soccer-field" id="tactics-field">
+              <div class="field-midline"></div>
+              <div class="field-center-circle"></div>
+              <div class="field-penalty-box-top"></div>
+              <div class="field-penalty-box-bottom"></div>
+              
+              <!-- Draggable Player Tokens rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Players Names Input Panel -->
+          <div class="tactics-inputs-panel">
+            <h3 class="widget-title"><i class="fas fa-user-edit"></i> Edit Player Names</h3>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Names entered below will sync automatically with the field tokens.</p>
+            <div class="player-inputs-grid" id="player-inputs-container">
+              <!-- JS will render 14 inputs -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW: DRILLS LIBRARY                      -->
+      <!-- ========================================== -->
+      <section id="view-drills" class="view-section">
+        <div class="welcome-banner" style="border-left-color: var(--primary);">
+          <div class="banner-text">
+            <h2>COACHING DRILLS LIBRARY</h2>
+            <p>Browse passing, dribbling, and physical drill guides. Add/edit walkthrough videos dynamically.</p>
+          </div>
+          <button id="btn-create-drill" class="btn btn-primary" onclick="openAddDrillModal()">
+            <i class="fas fa-plus"></i> Create Drill
+          </button>
+        </div>
+
+        <!-- Drills Catalog View Container -->
+        <div id="drills-list-container">
+          <div class="drills-filter-bar">
+            <div class="search-wrapper">
+              <i class="fas fa-search"></i>
+              <input type="text" id="drill-search" class="search-input" placeholder="Search drills, keywords, focus...">
+            </div>
+            
+            <div class="filter-controls">
+              <select id="drill-filter-age" class="filter-select">
+                <option value="all">Any Age</option>
+                <option value="u6">U6 Groups</option>
+                <option value="u7">U7 Groups</option>
+                <option value="u8">U8 Groups</option>
+                <option value="u9">U9-U10 Groups</option>
+                <option value="u11">U11-U12 Groups</option>
+                <option value="u13-older">U13+ Groups</option>
+              </select>
+
+              <select id="drill-filter-type" class="filter-select">
+                <option value="all">All Focuses</option>
+                <option value="passing">Passing</option>
+                <option value="dribbling">Dribbling</option>
+                <option value="shooting">Shooting</option>
+                <option value="defending">Defending</option>
+                <option value="peewee games">PeeWee Games</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="drills-grid-container" class="drills-grid">
+            <!-- Drills card catalog rendered via JS -->
+          </div>
+        </div>
+
+        <!-- Drill Detailed View Container (Hidden by default, loaded via JS) -->
+        <div id="drill-detail-container" style="display: none;"></div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW: COACHES LOUNGE (BLOG & PRACTICE PLANS)-->
+      <!-- ========================================== -->
+      <section id="view-lounge" class="view-section">
+        <div class="welcome-banner" style="border-left-color: var(--success);">
+          <div class="banner-text">
+            <h2>COACHES' LOUNGE & CORNER</h2>
+            <p>Read community board tips, coaching philosophies, and access standard training blueprints.</p>
+          </div>
+          <button class="btn btn-success" onclick="openAddBlogModal()">
+            <i class="fas fa-edit"></i> Write Article
+          </button>
+        </div>
+
+        <div class="lounge-layout">
+          <div class="blog-posts-list">
+            <h3 class="widget-title"><i class="fas fa-newspaper"></i> Best Practices & Shared Advice</h3>
+            <div id="blog-posts-container">
+              <!-- Render blog cards -->
+            </div>
+          </div>
+
+          <div class="sidebar-practice-plans">
+            <div class="plans-widget">
+              <h3 class="widget-title"><i class="fas fa-file-pdf"></i> Standard Practice Plans</h3>
+              <div id="practice-plans-container" class="plans-list">
+                <!-- Render practice plan links -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW: INCIDENT COMPLAINT LOGGER           -->
+      <!-- ========================================== -->
+      <section id="view-complaints" class="view-section">
+        <div class="welcome-banner complaint-banner">
+          <div class="banner-text">
+            <h2>OFFICIAL INCIDENT REPORT LOGGER</h2>
+            <p>Coaches, log concerns regarding referee conduct, parent behavior, or field safety. Reports are sent directly to the board.</p>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <!-- Submission Alert Banner -->
+          <div id="complaint-success-alert" class="alert-box success">
+            <i class="fas fa-check-circle"></i> <strong>Report Submitted Successfully!</strong> Assigned Tracking Code: <span class="inc-id-placeholder">INC-1025</span>. The board reps have been alerted.
+          </div>
+
+          <form id="ref-complaint-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="complaint-type">Incident Type</label>
+                <select id="complaint-type" class="form-select" required>
+                  <option value="referee">Referee Conduct / Performance</option>
+                  <option value="parents">Opposing Sideline / Parent Conduct</option>
+                  <option value="incident">General Field Incident / Safety Hazard</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="complaint-reporter">Your Name, Team & Club</label>
+                <input type="text" id="complaint-reporter" class="form-input" placeholder="e.g. Coach Bob (U11 Elyria Rec)" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="complaint-subject">Incident Subject</label>
+                <input type="text" id="complaint-subject" class="form-input" placeholder="e.g. Center Ref screaming at children" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="complaint-opponent">Opponent Community / Parent Group</label>
+                <input type="text" id="complaint-opponent" class="form-input" placeholder="e.g. Amherst Soccer Club parents" required>
+              </div>
+
+              <div class="form-group full-width">
+                <label class="form-label" for="complaint-details">Full Incident Details</label>
+                <textarea id="complaint-details" class="form-input" placeholder="Please describe exactly what occurred, timestamps, specific words used, and names if possible..." required></textarea>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: flex-end;">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> File Official Incident Report
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW: HIDDEN BOARD PORTAL                  -->
+      <!-- ========================================== -->
+      <section id="view-board" class="view-section">
+        <!-- 1. Authenticate secret area panel -->
+        <div id="board-login-section" class="board-login-card">
+          <div class="login-icon"></div>
+          <h2>Board Secret Access Area</h2>
+          <p>Authorized personnel only. Access enables sync workflows, virtual meets, referee logs, and task boards.</p>
+          
+          <form onsubmit="submitBoardLogin(event)">
+            <div class="form-group" style="margin-bottom: 20px;">
+              <input type="password" id="board-passcode-input" class="form-input" style="text-align: center; letter-spacing: 4px; font-size: 18px;" placeholder="••••••••" required>
+              <span style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">Hint: admin passcode is <strong>board123</strong></span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+              <i class="fas fa-unlock"></i> Authenticate Board Representative
+            </button>
+          </form>
+        </div>
+
+        <!-- 2. Authenticated Board Portal Workspace -->
+        <div id="board-workspace-section" style="display: none;">
+          <div class="welcome-banner board-banner">
+            <div class="banner-text">
+              <h2>BOARD ADMINISTRATIVE CENTER</h2>
+              <p>Sync calendars, track county tasks, manage incident reports, and review logs.</p>
+            </div>
+            <button class="btn btn-danger" onclick="logoutBoard()">
+              <i class="fas fa-sign-out-alt"></i> Logout Portal
+            </button>
+          </div>
+
+          <!-- Sync and Meeting Management Grid -->
+          <div class="board-dashboard-grid">
+            
+            <!-- Workflow and Meetings Simulator Pane -->
+            <div>
+              <div class="sync-widget-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                  <h3 style="font-family: var(--font-title); font-size:16px;"><i class="fab fa-google"></i> Google Calendar & Meet Sync</h3>
+                  <button id="btn-google-sync" class="btn btn-secondary btn-small" onclick="syncGoogleAccounts()">
+                    <i class="fab fa-google"></i> Sync Google Account
+                  </button>
+                </div>
+                
+                <div id="google-sync-indicator" class="sync-status-indicator">
+                  <span>Google Workspace Connection</span>
+                  <span class="sync-pill">Offline</span>
+                </div>
+
+                <div id="google-meetings-list" class="sync-meetings-list">
+                  <!-- Synced meeting cards loaded here -->
+                </div>
+              </div>
+
+              <!-- Workflow Task Kanban board -->
+              <div class="board-section-title">
+                <span><i class="fas fa-tasks"></i> Workflow Kanban Board (County Meetings & Tasks)</span>
+                <button class="btn btn-primary btn-small" onclick="openAddTaskModal()">
+                  <i class="fas fa-plus"></i> Assign Task
+                </button>
+              </div>
+
+              <div class="kanban-board">
+                <!-- Column: To Do -->
+                <div class="kanban-column">
+                  <div class="column-header">
+                    <span class="column-title"><i class="fas fa-list-ul" style="color: var(--danger);"></i> To Do <span class="count" id="count-todo">0</span></span>
+                  </div>
+                  <div id="kanban-todo" class="kanban-cards-container"></div>
+                </div>
+
+                <!-- Column: In Progress -->
+                <div class="kanban-column">
+                  <div class="column-header">
+                    <span class="column-title"><i class="fas fa-spinner" style="color: var(--warning);"></i> Active <span class="count" id="count-progress">0</span></span>
+                  </div>
+                  <div id="kanban-progress" class="kanban-cards-container"></div>
+                </div>
+
+                <!-- Column: Done -->
+                <div class="kanban-column">
+                  <div class="column-header">
+                    <span class="column-title"><i class="fas fa-check-circle" style="color: var(--success);"></i> Resolved <span class="count" id="count-done">0</span></span>
+                  </div>
+                  <div id="kanban-done" class="kanban-cards-container"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sidebars: System Logs and Complaints Logger Tracker -->
+            <div style="display:flex; flex-direction:column; gap:25px;">
+              <!-- Incident Archives -->
+              <div class="complaints-section-card">
+                <h3 class="widget-title" style="margin-bottom:15px; border-bottom:1px solid var(--border-color); padding-bottom:8px;">
+                  <i class="fas fa-shield-alt"></i> Logged Coach Complaints
+                </h3>
+                <div id="board-complaints-container" class="complaints-list">
+                  <!-- Complaints display loaded via JS -->
+                </div>
+              </div>
+
+              <!-- Console logs tracker widget -->
+              <div class="logs-widget">
+                <h3 class="widget-title" style="margin-bottom:10px;"><i class="fas fa-terminal"></i> Administrative System Logs</h3>
+                <div id="system-logs-container" class="logs-list"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- SYSTEM MODALS CONTAINER                    -->
+  <!-- ========================================== -->
+
+  <!-- MODAL: Age Group Specifications -->
+  <div id="modal-agegroup" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="agegroup-modal-title">Edit Age Category Specs</h3>
+        <button class="modal-close" onclick="closeModal('modal-agegroup')">&times;</button>
+      </div>
+      <form id="agegroup-form" onsubmit="saveAgeGroup(event)">
+        <div class="modal-body">
+          <input type="hidden" id="agegroup-id-input">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label" for="agegroup-name">Category Title (e.g. U7 (Under 7))</label>
+              <input type="text" id="agegroup-name" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="agegroup-format">Match Format</label>
+              <input type="text" id="agegroup-format" class="form-input" placeholder="e.g. 4v4 no GK" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="agegroup-ball">Ball Size</label>
+              <input type="text" id="agegroup-ball" class="form-input" placeholder="e.g. Size 3" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="agegroup-roster">Roster Size</label>
+              <input type="text" id="agegroup-roster" class="form-input" placeholder="e.g. Max 8 players" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="agegroup-duration">Match Duration</label>
+              <input type="text" id="agegroup-duration" class="form-input" placeholder="e.g. 4 x 10 mins" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="agegroup-field">Field Dimension</label>
+              <input type="text" id="agegroup-field" class="form-input" placeholder="e.g. 30 x 20 yds" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="agegroup-gk">Goalkeeper Status</label>
+              <input type="text" id="agegroup-gk" class="form-input" placeholder="e.g. None" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="agegroup-offside">Offside Regulation</label>
+              <input type="text" id="agegroup-offside" class="form-input" placeholder="e.g. No offside" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="agegroup-heading">Heading Restrictions</label>
+              <input type="text" id="agegroup-heading" class="form-input" placeholder="e.g. Ban" required>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label" for="agegroup-notes">League Developmental Notes</label>
+              <textarea id="agegroup-notes" class="form-input" placeholder="e.g. Main focus is fun and learning basics..." style="min-height: 80px;"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-agegroup')">Cancel</button>
+          <button type="submit" class="btn btn-success">Save Specifications</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Drill Add / Edit -->
+  <div id="modal-drill" class="modal-overlay">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 id="drill-modal-title">Add Training Drill</h3>
+        <button class="modal-close" onclick="closeModal('modal-drill')">&times;</button>
+      </div>
+      <form id="drill-form" onsubmit="saveDrill(event)">
+        <div class="modal-body">
+          <input type="hidden" id="drill-id-input">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="drill-title">Drill Name</label>
+              <input type="text" id="drill-title" class="form-input" placeholder="e.g. Gate Passing" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="drill-type">Focus Area</label>
+              <select id="drill-type" class="form-select" required>
+                <option value="Passing">Passing</option>
+                <option value="Dribbling">Dribbling</option>
+                <option value="Shooting">Shooting</option>
+                <option value="Defending">Defending</option>
+                <option value="PeeWee Games">PeeWee Games</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="drill-ageRange">Target Age Group Range</label>
+              <select id="drill-ageRange" class="form-select" required>
+                <!-- Loaded Dynamically -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="drill-duration">Duration (mins)</label>
+              <input type="text" id="drill-duration" class="form-input" placeholder="e.g. 15 mins" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="drill-imageUrl">Cover Image URL (Optional)</label>
+              <input type="url" id="drill-imageUrl" class="form-input" placeholder="e.g. https://images.unsplash.com/photo...">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="drill-youtubeUrl">YouTube Walkthrough Video URL (Optional)</label>
+              <input type="url" id="drill-youtubeUrl" class="form-input" placeholder="e.g. https://www.youtube.com/watch?v=...">
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label" for="drill-description">Drill Setup & Rules (What to do)</label>
+              <textarea id="drill-description" class="form-input" style="min-height: 80px;" placeholder="Explain the set up, space grid, number of cones, and how the drill is run..." required></textarea>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label" for="drill-whyImportant">Developmental Focus (Why it helps)</label>
+              <textarea id="drill-whyImportant" class="form-input" style="min-height: 60px;" placeholder="Explain how this translates to game situations, touches on the ball, or tactical awareness..." required></textarea>
+            </div>
+            <div class="form-group full-width">
+              <label class="form-label" for="drill-pointers">Coaching Tips (Pointers)</label>
+              <textarea id="drill-pointers" class="form-input" style="min-height: 60px;" placeholder="List visual cues, body stances, foot parts, or questions coaches should ask players..." required></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-drill')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Drill Template</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Blog Entry -->
+  <div id="modal-blog" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Publish Coaches' Lounge Blog</h3>
+        <button class="modal-close" onclick="closeModal('modal-blog')">&times;</button>
+      </div>
+      <form id="blog-form" onsubmit="saveBlog(event)">
+        <div class="modal-body">
+          <div class="form-group" style="margin-bottom:15px;">
+            <label class="form-label" for="blog-title">Article Title</label>
+            <input type="text" id="blog-title" class="form-input" placeholder="e.g. Play Practice Play Methodology in Rec Leagues" required>
+          </div>
+          <div class="form-group" style="margin-bottom:15px;">
+            <label class="form-label" for="blog-author">Author Name</label>
+            <input type="text" id="blog-author" class="form-input" placeholder="e.g. Coach Miller" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="blog-content">Article Content</label>
+            <textarea id="blog-content" class="form-input" style="min-height: 180px;" placeholder="Share your experiences, drill adaptations, coaching guidelines, and lessons learned..." required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-blog')">Cancel</button>
+          <button type="submit" class="btn btn-success">Publish Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Kanban Board Task Add / Edit -->
+  <div id="modal-task" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="task-modal-title">Assign Board Task</h3>
+        <button class="modal-close" onclick="closeModal('modal-task')">&times;</button>
+      </div>
+      <form id="task-form" onsubmit="saveTask(event)">
+        <div class="modal-body">
+          <input type="hidden" id="task-id-input">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label" for="task-title">Task Description / Checklist item</label>
+              <input type="text" id="task-title" class="form-input" placeholder="e.g. Check ref availability for Lorain game" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="task-status">Workflow Status</label>
+              <select id="task-status" class="form-select" required>
+                <option value="todo">To Do</option>
+                <option value="in-progress">In Progress</option>
+                <option value="done">Resolved / Complete</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="task-tag">Workflow Category</label>
+              <select id="task-tag" class="form-select" required>
+                <option value="general">General Task</option>
+                <option value="ref">Referee Incident</option>
+                <option value="complaint">Parent Complaint</option>
+                <option value="meeting">County Meeting Item</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="task-assignee">Assigned Board Rep</label>
+              <input type="text" id="task-assignee" class="form-input" placeholder="e.g. John S. (Ref Rep)" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="task-dueDate">Due Date</label>
+              <input type="date" id="task-dueDate" class="form-input" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="justify-content: space-between;">
+          <button type="button" id="btn-delete-task" class="btn btn-danger btn-small" onclick="deleteTask()">
+            <i class="fas fa-trash-alt"></i> Delete Card
+          </button>
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('modal-task')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Assignment</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main JavaScript Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
