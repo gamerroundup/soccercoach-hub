@@ -1,4 +1,4 @@
-const CACHE_NAME = 'soccercoach-hub-v1';
+const CACHE_NAME = 'soccercoach-hub-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -15,6 +15,7 @@ self.addEventListener('install', (e) => {
       return cache.addAll(ASSETS);
     })
   );
+  self.skipWaiting();
 });
 
 // Activate Event
@@ -31,18 +32,39 @@ self.addEventListener('activate', (e) => {
       );
     })
   );
+  self.clients.claim();
 });
 
-// Fetch Event
+// Fetch Event (Network-First with Cache fallback)
 self.addEventListener('fetch', (e) => {
+  // Only intercept HTTP/S GET requests for local origin assets
+  if (e.request.method !== 'GET' || !e.request.url.startsWith(self.location.origin)) {
+    return;
+  }
+
   e.respondWith(
-    caches.match(e.request).then((cachedResponse) => {
-      return cachedResponse || fetch(e.request).catch(() => {
-        // If both cache and network fail, fall back to offline page/app shell if HTML
-        if (e.request.headers.get('accept').includes('text/html')) {
-          return caches.match('./index.html');
+    fetch(e.request)
+      .then((response) => {
+        // If we get a valid response, cache it and return
+        if (response && response.status === 200 && response.type === 'basic') {
+          const responseToCache = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(e.request, responseToCache);
+          });
         }
-      });
-    })
+        return response;
+      })
+      .catch(() => {
+        // Fallback to cache if network is offline
+        return caches.match(e.request).then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
+          }
+          // If a page request fails, fallback to index.html
+          if (e.request.headers.get('accept') && e.request.headers.get('accept').includes('text/html')) {
+            return caches.match('./index.html');
+          }
+        });
+      })
   );
 });
