@@ -63,6 +63,7 @@
 
           <!-- Bottom Navigation Tab Bar (Simulated Mobile Nav) -->
           <nav class="mobile-nav-bar">
+            <div class="mobile-nav-tracer"></div>
             <button class="mobile-nav-item active" data-view="handbook">
               <i class="fas fa-book"></i>
               <span>Handbook</span>
@@ -230,6 +231,66 @@
           </button>
         </div>
 
+        <!-- Game Timers Control Panel -->
+        <div class="match-timers-container">
+          <div class="timers-header">
+            <h3><i class="fas fa-stopwatch"></i> Playtime & Sub Timers</h3>
+            <button class="btn btn-warning btn-small" id="btn-reset-all-timers">
+              <i class="fas fa-history"></i> Half-Time Reset (All)
+            </button>
+          </div>
+          <div class="timers-grid">
+            <!-- Timer: Starters -->
+            <div class="timer-card starters" id="timer-card-starters">
+              <div class="timer-card-header">
+                <span class="timer-dot"></span>
+                <h4>Starters Line</h4>
+              </div>
+              <div class="timer-display" id="timer-starters-time">00:00</div>
+              <div class="timer-controls">
+                <button class="btn-timer-control play-pause" id="btn-starters-toggle">
+                  <i class="fas fa-play"></i> Start
+                </button>
+                <button class="btn-timer-control reset" id="btn-starters-reset" title="Reset">
+                  <i class="fas fa-redo"></i>
+                </button>
+              </div>
+            </div>
+            <!-- Timer: Sub Line 1 -->
+            <div class="timer-card sub-line-1" id="timer-card-sub1">
+              <div class="timer-card-header">
+                <span class="timer-dot"></span>
+                <h4>Sub Line 1</h4>
+              </div>
+              <div class="timer-display" id="timer-sub1-time">00:00</div>
+              <div class="timer-controls">
+                <button class="btn-timer-control play-pause" id="btn-sub1-toggle">
+                  <i class="fas fa-play"></i> Start
+                </button>
+                <button class="btn-timer-control reset" id="btn-sub1-reset" title="Reset">
+                  <i class="fas fa-redo"></i>
+                </button>
+              </div>
+            </div>
+            <!-- Timer: Sub Line 2 -->
+            <div class="timer-card sub-line-2" id="timer-card-sub2">
+              <div class="timer-card-header">
+                <span class="timer-dot"></span>
+                <h4>Sub Line 2</h4>
+              </div>
+              <div class="timer-display" id="timer-sub2-time">00:00</div>
+              <div class="timer-controls">
+                <button class="btn-timer-control play-pause" id="btn-sub2-toggle">
+                  <i class="fas fa-play"></i> Start
+                </button>
+                <button class="btn-timer-control reset" id="btn-sub2-reset" title="Reset">
+                  <i class="fas fa-redo"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="tactics-layout">
           <!-- Field container -->
           <div class="soccer-field-wrapper">
@@ -298,9 +359,13 @@
                 <option value="shooting">Shooting</option>
                 <option value="defending">Defending</option>
                 <option value="peewee games">PeeWee Games</option>
+                <option value="warmup">Warmup</option>
+                <option value="fun game">Fun Game</option>
+                <option value="goalkeeping">Goalkeeping</option>
               </select>
             </div>
           </div>
+          <div id="drills-count-info" style="font-size: 13px; color: var(--text-muted); padding: 8px 10px; font-weight: 600; display: flex; align-items: center; gap: 6px;"><i class="fas fa-info-circle" style="color: var(--primary);"></i> Loading drills statistics...</div>
 
           <div id="drills-grid-container" class="drills-grid">
             <!-- Drills card catalog rendered via JS -->
@@ -320,9 +385,14 @@
             <h2>COACHES' LOUNGE & CORNER</h2>
             <p>Read community board tips, coaching philosophies, and access standard training blueprints.</p>
           </div>
-          <button class="btn btn-success" onclick="openAddBlogModal()">
-            <i class="fas fa-edit"></i> Write Article
-          </button>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn btn-success" onclick="openAddBlogModal()">
+              <i class="fas fa-edit"></i> Write Article
+            </button>
+            <button class="btn btn-primary" onclick="openAddPracticePlanModal()">
+              <i class="fas fa-file-upload"></i> Share Plan
+            </button>
+          </div>
         </div>
 
         <div class="lounge-layout">
@@ -439,21 +509,25 @@
             
             <!-- Workflow and Meetings Simulator Pane -->
             <div>
-              <div class="sync-widget-card">
+              <!-- 30-Day Rolling Calendar Widget -->
+              <div class="calendar-widget-card">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                  <h3 style="font-family: var(--font-title); font-size:16px;"><i class="fab fa-google"></i> Google Calendar & Meet Sync</h3>
-                  <button id="btn-google-sync" class="btn btn-secondary btn-small" onclick="syncGoogleAccounts()">
-                    <i class="fab fa-google"></i> Sync Google Account
+                  <h3 style="font-family: var(--font-title); font-size:16px;"><i class="fas fa-calendar-alt"></i> Board Notices & Meetings (Next 30 Days)</h3>
+                  <button class="btn btn-primary btn-small" onclick="openAddEventModal()">
+                    <i class="fas fa-plus"></i> Add Notice
                   </button>
                 </div>
                 
-                <div id="google-sync-indicator" class="sync-status-indicator">
-                  <span>Google Workspace Connection</span>
-                  <span class="sync-pill">Offline</span>
+                <div id="board-calendar-list" class="calendar-events-list">
+                  <!-- Loaded dynamically -->
                 </div>
+              </div>
 
-                <div id="google-meetings-list" class="sync-meetings-list">
-                  <!-- Synced meeting cards loaded here -->
+              <!-- Board Registration & Onboarding Quick-Links Widget -->
+              <div class="board-links-card">
+                <h3 style="font-family: var(--font-title); font-size:16px; margin-bottom: 15px;"><i class="fas fa-link"></i> Important Registration & Onboarding Links</h3>
+                <div class="board-links-grid" id="board-links-container">
+                  <!-- Loaded dynamically -->
                 </div>
               </div>
 
@@ -606,6 +680,9 @@
                 <option value="Shooting">Shooting</option>
                 <option value="Defending">Defending</option>
                 <option value="PeeWee Games">PeeWee Games</option>
+                <option value="Warmup">Warmup</option>
+                <option value="Fun Game">Fun Game</option>
+                <option value="Goalkeeping">Goalkeeping</option>
               </select>
             </div>
             <div class="form-group">
@@ -734,6 +811,165 @@
           </div>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Board Calendar Event Add / Edit -->
+  <div id="modal-calendar-event" class="modal-overlay">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 id="calendar-event-modal-title">Post Board Notice</h3>
+        <button class="modal-close" onclick="closeModal('modal-calendar-event')">&times;</button>
+      </div>
+      <form id="calendar-event-form" onsubmit="saveCalendarEvent(event)">
+        <div class="modal-body">
+          <input type="hidden" id="calendar-event-id-input">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label" for="calendar-event-title">Notice Title / Event Name</label>
+              <input type="text" id="calendar-event-title" class="form-input" placeholder="e.g. Monthly League Board Meet" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="calendar-event-date">Date</label>
+              <input type="date" id="calendar-event-date" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="calendar-event-time">Time</label>
+              <input type="time" id="calendar-event-time" class="form-input" required>
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label" for="calendar-event-link">Meeting Link (Google Meet, Microsoft Teams, etc.) - Optional</label>
+              <input type="url" id="calendar-event-link" class="form-input" placeholder="e.g. https://meet.google.com/abc-defg-hij">
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label" for="calendar-event-description">Notice Details / Description</label>
+              <textarea id="calendar-event-description" class="form-input" style="min-height: 80px;" placeholder="Outline the agenda, key topics to discuss, or general announcement..." required></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="justify-content: space-between;">
+          <button type="button" id="btn-delete-calendar-event" class="btn btn-danger btn-small" onclick="deleteCalendarEvent()" style="display: none;">
+            <i class="fas fa-trash-alt"></i> Delete Notice
+          </button>
+          <div style="display: flex; gap: 10px; margin-left: auto;">
+            <button type="button" class="btn btn-secondary" onclick="closeModal('modal-calendar-event')">Cancel</button>
+            <button type="submit" class="btn btn-success">Save Notice</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Board Link Edit -->
+  <div id="modal-board-link-edit" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Update Board Resource Link</h3>
+        <button class="modal-close" onclick="closeModal('modal-board-link-edit')">&times;</button>
+      </div>
+      <form id="board-link-edit-form" onsubmit="saveBoardLink(event)">
+        <div class="modal-body">
+          <input type="hidden" id="board-link-key-input">
+          <div class="form-group" style="margin-bottom: 15px;">
+            <label class="form-label" for="board-link-label">Link Label / Title</label>
+            <input type="text" id="board-link-label" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="board-link-url">URL Address</label>
+            <input type="url" id="board-link-url" class="form-input" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-board-link-edit')">Cancel</button>
+          <button type="submit" class="btn btn-success">Update Resource</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Practice Plan Upload -->
+  <div id="modal-practice-plan" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Share Practice Plan</h3>
+        <button class="modal-close" onclick="closeModal('modal-practice-plan')">&times;</button>
+      </div>
+      <form id="practice-plan-form" onsubmit="savePracticePlan(event)">
+        <div class="modal-body">
+          <div class="form-group" style="margin-bottom:15px;">
+            <label class="form-label" for="plan-name">Plan Name / Theme</label>
+            <input type="text" id="plan-name" class="form-input" placeholder="e.g. U8 Passing & Movement Session" required>
+          </div>
+          <div class="form-group" style="margin-bottom:15px;">
+            <label class="form-label" for="plan-ageGroup">Target Age Group</label>
+            <select id="plan-ageGroup" class="form-select" required>
+              <option value="U6">U6</option>
+              <option value="U8">U8</option>
+              <option value="U10">U10</option>
+              <option value="U12">U12</option>
+              <option value="U13 & Older">U13 & Older</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom:15px;">
+            <label class="form-label" for="plan-author">Author / Coach</label>
+            <input type="text" id="plan-author" class="form-input" placeholder="e.g. Coach Miller" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="plan-details">Plan Guidelines / Steps</label>
+            <textarea id="plan-details" class="form-input" style="min-height: 120px;" placeholder="Outline the training steps (e.g. Warmup dynamic tag, Play 3v3 scrimmage, Practice gates passing)..." required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-practice-plan')">Cancel</button>
+          <button type="submit" class="btn btn-success">Publish Practice Plan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Custom Confirm Dialog -->
+  <div id="modal-confirm" class="modal-overlay" style="z-index: 10000;">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+      <div class="modal-header" style="border-bottom: none; justify-content: center; padding-bottom: 5px;">
+        <h3 id="confirm-title" style="font-family: var(--font-title); font-size: 18px; color: var(--text-main); display: flex; align-items: center; gap: 8px;"><i class="fas fa-question-circle" style="color: var(--warning);"></i> Confirm Action</h3>
+      </div>
+      <div class="modal-body" style="padding: 10px 20px;">
+        <p id="confirm-message" style="color: var(--text-muted); font-size: 14px; line-height: 1.5;"></p>
+      </div>
+      <div class="modal-footer" style="border-top: none; justify-content: center; gap: 15px; padding-top: 15px;">
+        <button id="btn-confirm-cancel" class="btn btn-secondary" onclick="closeModal('modal-confirm')">Cancel</button>
+        <button id="btn-confirm-action" class="btn btn-danger">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Practice Plan Details -->
+  <div id="modal-plan-details" class="modal-overlay">
+    <div class="modal-content" style="max-width: 550px;">
+      <div class="modal-header">
+        <h3 id="plan-details-title">Practice Plan Details</h3>
+        <button class="modal-close" onclick="closeModal('modal-plan-details')">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 20px;">
+        <div class="plan-details-header" style="border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <span id="plan-details-age" class="badge-item practice" style="font-size: 11px; padding: 4px 10px;"></span>
+            <span id="plan-details-author" class="text-muted" style="font-size: 12px; font-weight: 500;"></span>
+          </div>
+          <h2 id="plan-details-theme" style="font-family: var(--font-title); font-size: 20px; color: var(--primary);"></h2>
+        </div>
+        <div class="plan-details-body">
+          <h4 style="font-family: var(--font-title); font-size: 14px; margin-bottom: 8px; color: var(--text-main);"><i class="fas fa-clipboard-list" style="color: var(--success); margin-right: 6px;"></i> Training Outline & Steps</h4>
+          <p id="plan-details-text" style="color: var(--text-muted); font-size: 13px; line-height: 1.6; white-space: pre-wrap; background: var(--bg-sidebar); padding: 15px; border-radius: var(--radius-md); border: 1px solid var(--border-color);"></p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-plan-details')">Close</button>
+      </div>
     </div>
   </div>
 

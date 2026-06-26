@@ -229,10 +229,10 @@ body.light-theme::before, body.light-theme::after {
   background: var(--bg-main);
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow-y: hidden; /* Prevent screen scroll */
   overflow-x: hidden;
   position: relative;
-  padding-bottom: 70px; /* Space for bottom tab bar */
+  height: 100%;
 }
 
 /* Custom scrollbar for mobile screen */
@@ -286,7 +286,6 @@ body.light-theme::before, body.light-theme::after {
   font-weight: 700;
 }
 
-/* Home Indicator bar for iOS */
 .home-indicator {
   position: absolute;
   bottom: 4px;
@@ -294,10 +293,13 @@ body.light-theme::before, body.light-theme::after {
   transform: translateX(-50%);
   width: 120px;
   height: 5px;
-  background: #cbd5e1;
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 3px;
   z-index: 1001;
   pointer-events: none;
+}
+body.light-theme .home-indicator {
+  background: rgba(0, 0, 0, 0.2);
 }
 
 /* --- DESKTOP PORTAL LAYOUT --- */
@@ -1816,6 +1818,29 @@ textarea.form-input {
   to { transform: translateY(0); opacity: 1; }
 }
 
+/* Custom Confirm Modal Styling overrides */
+#modal-confirm .modal-content {
+  border-left: 4px solid var(--warning);
+  background: rgba(15, 23, 42, 0.98);
+  backdrop-filter: blur(12px);
+}
+#modal-confirm #btn-confirm-action {
+  background: linear-gradient(135deg, var(--danger) 0%, #b91c1c 100%);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+#modal-confirm #btn-confirm-action:hover {
+  background: linear-gradient(135deg, var(--danger-hover) 0%, #991b1b 100%);
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
+}
+#modal-confirm #btn-confirm-cancel {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+}
+#modal-confirm #btn-confirm-cancel:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
 .modal-header {
   padding: 20px;
   border-bottom: 1px solid var(--border-color);
@@ -2237,5 +2262,475 @@ textarea.form-input {
   width: 100%;
 }
 
+/* ==================================================== */
+/* ADDED: SOCCER APP TIMERS & MOBILE VIEW FIXES        */
+/* ==================================================== */
 
+/* Make mobile view content target scrollable instead of parent */
+#mobile-view-content-target {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 90px; /* Space for bottom tab bar and home indicator */
+  width: 100%;
+}
 
+/* Mobile Navigation Sliding Tracer Line */
+.mobile-nav-tracer {
+  position: absolute;
+  top: 0;
+  height: 3px;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary);
+  border-radius: 0 0 2px 2px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1002;
+  left: 0;
+  width: 0;
+}
+
+/* Force mobile/single-column layouts inside the iPhone mockup screen */
+.iphone-screen .handbook-layout,
+.iphone-screen .tactics-layout,
+.iphone-screen .lounge-layout,
+.iphone-screen .board-dashboard-grid,
+.iphone-screen .kanban-board {
+  grid-template-columns: 1fr !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+}
+
+.iphone-screen .sidebar-list {
+  margin-bottom: 15px;
+}
+
+.iphone-screen .kanban-column {
+  margin-bottom: 15px;
+}
+
+.iphone-screen .tactics-inputs-panel {
+  width: 100% !important;
+}
+
+.iphone-screen .soccer-field-wrapper {
+  padding: 10px !important;
+}
+
+/* Timers Panel Styling */
+.match-timers-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.timers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.timers-header h3 {
+  font-family: var(--font-title);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.timers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+@media (max-width: 768px) {
+  .timers-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.timer-card {
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.timer-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.timer-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+}
+
+.timer-card.starters::before { background: var(--primary); }
+.timer-card.sub-line-1::before { background: var(--success); }
+.timer-card.sub-line-2::before { background: var(--accent); }
+
+.timer-card-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.timer-card-header h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.timer-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: var(--transition);
+}
+
+.timer-card.running .timer-dot {
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+  animation: pulseDot 1s infinite alternate;
+}
+
+@keyframes pulseDot {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}
+
+.timer-display {
+  font-family: var(--font-title);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text-main);
+  margin: 5px 0;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.btn-timer-control {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: var(--transition);
+  outline: none;
+}
+
+.btn-timer-control.play-pause {
+  flex: 1;
+}
+
+.btn-timer-control.play-pause:hover {
+  background: var(--primary-hover);
+  color: white;
+  border-color: var(--primary-hover);
+}
+
+.timer-card.running .btn-timer-control.play-pause {
+  background: var(--warning);
+  color: white;
+  border-color: var(--warning);
+}
+
+.timer-card.running .btn-timer-control.play-pause:hover {
+  background: #d97706;
+  border-color: #d97706;
+}
+
+.btn-timer-control.reset {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+}
+
+.btn-timer-control.reset:hover {
+  background: var(--danger);
+  color: white;
+  border-color: var(--danger);
+}
+
+/* ==================================================== */
+/* ADDED: BOARD CALENDAR & REGISTRATION LINKS STYLING  */
+/* ==================================================== */
+
+/* Calendar Widget Card */
+.calendar-widget-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 25px;
+}
+
+.calendar-events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.calendar-event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 15px;
+  transition: var(--transition);
+}
+
+.calendar-event-item:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: var(--shadow);
+}
+
+/* Date Badge in Calendar */
+.event-date-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(14, 165, 233, 0.1);
+  border: 1px solid rgba(14, 165, 233, 0.25);
+  color: var(--primary);
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-title);
+  flex-shrink: 0;
+}
+
+.event-date-badge .month {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.event-date-badge .day {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.event-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.event-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.event-item-title {
+  font-family: var(--font-title);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.event-time-badge {
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+}
+
+.event-item-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-top: 2px;
+}
+
+.event-actions-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+  align-items: center;
+}
+
+.meeting-join-link {
+  font-size: 11px;
+  font-weight: 700;
+  color: white !important;
+  background: var(--success);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  text-decoration: none !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+
+.meeting-join-link:hover {
+  background: var(--success-hover);
+  transform: translateY(-1px);
+}
+
+.meeting-join-link.teams {
+  background: #4f46e5;
+}
+
+.meeting-join-link.teams:hover {
+  background: #4338ca;
+}
+
+.btn-event-edit {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  outline: none;
+}
+
+.btn-event-edit:hover {
+  color: var(--primary);
+}
+
+/* Board Links Widget */
+.board-links-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 25px;
+}
+
+.board-links-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.board-link-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  gap: 15px;
+  transition: var(--transition);
+}
+
+.board-link-item:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.board-link-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.board-link-info strong {
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+.board-link-url-display {
+  font-size: 11px;
+  color: var(--primary);
+  text-decoration: none;
+  word-break: break-all;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.board-link-url-display:hover {
+  text-decoration: underline;
+}
+
+body.light-theme .event-date-badge {
+  background: rgba(2, 132, 199, 0.1);
+  color: var(--primary);
+}
+
+body.light-theme .event-time-badge {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Kanban Drag & Drop Styles */
+.kanban-card.dragging {
+  opacity: 0.4;
+  border: 1px dashed var(--primary);
+  transform: scale(0.98);
+}
+
+.kanban-cards-container.drag-over {
+  background: rgba(0, 240, 255, 0.04);
+  border: 2px dashed rgba(0, 240, 255, 0.25);
+  border-radius: var(--radius-md);
+  transition: var(--transition);
+}
+
+body.light-theme .kanban-cards-container.drag-over {
+  background: rgba(2, 132, 199, 0.04);
+  border-color: rgba(2, 132, 199, 0.25);
+}

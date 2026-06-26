@@ -302,108 +302,108 @@ const DEFAULT_DATABASE = {
     {
       id: "drill-017",
       title: "Passing",
-      type: "Dribbling",
+      type: "Passing",
       ageRange: "u10, u11, u12",
-      duration: "Teach play",
+      duration: "15 mins",
       description: "Practice passing with a teammate, focusing on foot position and body angling. Rotate pairs to test different passing distances.",
-      whyImportant: "Helps play",
-      pointers: "Verify appropriate player posture.; Maintain high energy practice.",
+      whyImportant: "Ensures precise ball control and vision on the pitch.",
+      pointers: "Keep your ankle locked, look up before delivering the pass, and cushion the ball on receiving.",
       youtubeUrl: "https://youtu.be/_lexjndYGc?si=5gwEWH8zsoJr0PRe",
       imageUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80"
     },
     {
       id: "drill-018",
-      title: "Dribbling",
+      title: "Dribbling Focus",
       type: "Dribbling",
       ageRange: "u8, u10",
-      duration: "Teach and train",
+      duration: "12 mins",
       description: "Use smaller balls and focus on changing direction rapidly when facing a direct defender. Practice dummy moves and step-overs.",
-      whyImportant: "Enhances skill",
-      pointers: "Verify appropriate player posture.; Maintain high energy practice.",
+      whyImportant: "Improves 1v1 confidence and body positioning.",
+      pointers: "Stay low to the ground, keep touches tight, and accelerate after making a cut.",
       youtubeUrl: "",
       imageUrl: "https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?auto=format&fit=crop&w=600&q=80"
     },
     {
       id: "drill-019",
-      title: "Teamwork",
-      type: "Dribbling",
+      title: "Teamwork & Movement",
+      type: "Passing",
       ageRange: "u6, u7, u8",
-      duration: "Teach play",
+      duration: "10 mins",
       description: "Practice teamwork drills, focusing on passing, overlapping runs, and communicating where the space is.",
-      whyImportant: "Builds cohesion",
-      pointers: "Verify appropriate player posture.; Maintain high energy practice.",
+      whyImportant: "Teaches players how to move off the ball and call for passes early.",
+      pointers: "Communicate clearly, make eye contact, and point to where you want the ball.",
       youtubeUrl: "https://youtu.be/Kb58F3r_TQM?si=cIPYqan_YamSHg4l",
       imageUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80"
     },
     {
       id: "drill-020",
       title: "Area Responsibilities",
-      type: "Dribbling",
+      type: "Defending",
       ageRange: "u8, u9, u10",
-      duration: "Teach play",
+      duration: "15 mins",
       description: "Practice positional drills, focusing on maintaining defense area and staying compact when opponent has ball.",
-      whyImportant: "Strengthen defense",
-      pointers: "Verify appropriate player posture.; Maintain high energy practice.",
+      whyImportant: "Develops positional awareness and prevents defensive gaps.",
+      pointers: "Drop back as a unit, keep an arm's distance from opponents, and shift with the ball.",
       youtubeUrl: "https://youtu.be/E5kGtr2K61Y?si=pd0sQQTVcS_5f82_",
       imageUrl: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=600&q=80"
     },
     {
       id: "drill-021",
-      title: "Rotations",
+      title: "Rotations Relay",
       type: "Dribbling",
       ageRange: "u10, u11, u12",
-      duration: "Train players",
+      duration: "10 mins",
       description: "Rotation relay; “switch and cover” - players dribble to a cone, perform a turn, and pass back.",
-      whyImportant: "Improves agility",
-      pointers: "Verify appropriate player posture.; Maintain high energy practice.",
+      whyImportant: "Improves transition speed, agility, and relay chemistry.",
+      pointers: "Focus on clean turns, weight passes back accurately, and sprint immediately after passing.",
       youtubeUrl: "https://youtu.be/oclFQQgXLCQ?si=7U_taGSXzMfJ8Ox5",
       imageUrl: "https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?auto=format&fit=crop&w=600&q=80"
     },
     {
       id: "drill-022",
       title: "Defending Set Pieces",
-      type: "Dribbling",
+      type: "Defending",
       ageRange: "u6, u7, u8",
-      duration: "Teach play",
+      duration: "12 mins",
       description: "Practice defending set pieces (corners, throw-ins), focusing on tracking runs, marking, and clearing the ball.",
-      whyImportant: "Helps play",
-      pointers: "Verify appropriate player posture.; Maintain high energy practice.",
+      whyImportant: "Reduces soft goals from restarts by tracking marks early.",
+      pointers: "Stay between your player and the goal, keep eyes on both player and ball, and clear dynamically.",
       youtubeUrl: "https://youtu.be/yRewtO19RQc?si=g5BvWEPbSOB5p",
       imageUrl: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=600&q=80"
     },
     {
       id: "drill-023",
       title: "Goalkeeping Fundamentals",
-      type: "Dribbling",
+      type: "Goalkeeping",
       ageRange: "u10, u11, u12",
-      duration: "Teach goal",
+      duration: "15 mins",
       description: "Practice basic goalkeeping drills, focusing on catching, proper hand positioning (the 'W'), diving safely, and distribution.",
-      whyImportant: "Helps keepers",
-      pointers: "Verify appropriate player posture.; Maintain high energy practice.",
+      whyImportant: "Builds goalie fundamentals and instills confidence inside the box.",
+      pointers: "Form a solid 'W' with your hands, look the ball into your hands, and get your body behind the ball.",
       youtubeUrl: "https://youtu.be/k1i6kWxI2Ls?si=9-8xBtLPGRNum6af",
       imageUrl: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=600&q=80"
     },
     {
       id: "drill-024",
       title: "Small Sided Games",
-      type: "Dribbling",
+      type: "Fun Game",
       ageRange: "u8, u9, u10",
-      duration: "Encourage play",
+      duration: "20 mins",
       description: "Practice small sided games, focusing on decision making, switching fields, and integrating skills learned.",
-      whyImportant: "Integrates skill",
-      pointers: "Verify appropriate player posture.; Maintain high energy practice.",
+      whyImportant: "Encourages creativity and high number of match-like touches.",
+      pointers: "Look for open passes, transition quickly, and create space by spreading wide.",
       youtubeUrl: "https://youtu.be/XWIP0VbJtKs?si=AsyCw-chEo3pPLYf",
       imageUrl: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80"
     },
     {
       id: "drill-025",
       title: "Game Situations",
-      type: "Dribbling",
+      type: "Fun Game",
       ageRange: "u8, u9, u10",
-      duration: "Teach play",
+      duration: "15 mins",
       description: "Practice game situation drills (throw-ins, goal kicks, restarts), focusing on soccer rules and early team shape.",
-      whyImportant: "Builds match",
-      pointers: "Verify appropriate player posture.; Maintain high energy practice.",
+      whyImportant: "Aids volunteer coaches in explaining match restarts and spacing configurations.",
+      pointers: "Follow throw-in rules (both feet down, overhead), spread out for goal kicks, and look for open teammates.",
       youtubeUrl: "https://youtu.be/zUo_FMbox5I?si=UngFMS8V8iJ8thaz",
       imageUrl: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80"
     }
@@ -435,11 +435,11 @@ const DEFAULT_DATABASE = {
     }
   ],
   practicePlans: [
-    { name: "U6 Ball Comfort & Dribbling Plan", ageGroup: "U6", link: "#", author: "Coach Miller" },
-    { name: "U8 Gate Passing & Movement Session", ageGroup: "U8", link: "#", author: "Coach Miller" },
-    { name: "U10 Defensive Positioning & Jockeying", ageGroup: "U10", link: "#", author: "Director Dave" },
-    { name: "U12 Counter-Attack Transition Play", ageGroup: "U12", link: "#", author: "Coach Sarah" },
-    { name: "U14 Shielding & Attacking Triangles", ageGroup: "U13 & Older", link: "#", author: "Director Dave" }
+    { name: "U6 Ball Comfort & Dribbling Plan", ageGroup: "U6", link: "#", author: "Coach Miller", details: "1. Warmup: Dynamic movements and ball tags (10 mins).\n2. Practice: Cone slalom dribbling focusing on using inside/outside foot surfaces (15 mins).\n3. Play: Sharks & minnows small grid game (15 mins).\n4. Scrimmage: 3v3 no goalie fun play (15 mins)." },
+    { name: "U8 Gate Passing & Movement Session", ageGroup: "U8", link: "#", author: "Coach Miller", details: "1. Warmup: Jogging and gate passing in pairs (10 mins).\n2. Practice: Passing relays with focus on first touch cushioning (15 mins).\n3. Play: 4v4 scrimmage emphasizing spacing and finding open gates (20 mins)." },
+    { name: "U10 Defensive Positioning & Jockeying", ageGroup: "U10", link: "#", author: "Director Dave", details: "1. Warmup: Dynamic stretching and keep-away grids (10 mins).\n2. Practice: 1v1 defensive jockeying drills showing stance (15 mins).\n3. Play: 7v7 scrimmage with offside rules enforced (25 mins)." },
+    { name: "U12 Counter-Attack Transition Play", ageGroup: "U12", link: "#", author: "Coach Sarah", details: "1. Warmup: Small-sided 3v1 possession squares (10 mins).\n2. Practice: Transition attack drills from defensive halves (20 mins).\n3. Play: 9v9 scrimmage with fast build-ups (30 mins)." },
+    { name: "U14 Shielding & Attacking Triangles", ageGroup: "U13 & Older", link: "#", author: "Director Dave", details: "1. Warmup: Passing triangles with overlapping runs (15 mins).\n2. Practice: Shielding exercises under pressure (20 mins).\n3. Play: 11v11 full scrimmage applying tactical positioning (35 mins)." }
   ],
   complaints: [
     {
@@ -488,13 +488,44 @@ const DEFAULT_DATABASE = {
       assignee: "Dave M. (Equipment)",
       dueDate: "2026-06-15"
     }
-  ]
+  ],
+  calendarEvents: [
+    {
+      id: "event-1",
+      title: "LCSL Board League Monthly Meet",
+      date: new Date(Date.now() + 2*24*60*60*1000).toISOString().split('T')[0], // Today + 2 days
+      time: "19:30",
+      link: "https://meet.google.com/abc-defg-hij",
+      description: "Standard monthly board review of schedules, referee allocations, and incident reports from rec and travel divisions."
+    },
+    {
+      id: "event-2",
+      title: "Referee Conduct Panel & Training Clinic",
+      date: new Date(Date.now() + 5*24*60*60*1000).toISOString().split('T')[0], // Today + 5 days
+      time: "18:00",
+      link: "https://teams.microsoft.com/l/meetup-join/19:meeting_abcdef",
+      description: "Special panels to address referee escalation reports and coordinate standard training cues for county commissioners."
+    },
+    {
+      id: "event-3",
+      title: "Oberlin Fields Maintenance & Replacement Walkthrough",
+      date: new Date(Date.now() + 12*24*60*60*1000).toISOString().split('T')[0], // Today + 12 days
+      time: "10:00",
+      link: "",
+      description: "On-site equipment review to procure replacement goals, verify nets, and confirm field painting coordinators."
+    }
+  ],
+  boardLinks: {
+    coachOnboarding: { label: "Coach Onboarding FAQ", url: "https://www.usys.org/coaching-resources/" },
+    playerTravel: { label: "Travel Registration Link", url: "https://aysaohiosoccer.com/travel/" },
+    playerRec: { label: "Rec Registration Link", url: "https://www.quickscores.com/loraincountysoccer" }
+  }
 };
 
 // Database class helper
 class SoccerDb {
   constructor() {
-    this.key = "soccercoach_hub_db_v3";
+    this.key = "soccercoach_hub_db_v4";
     this.init();
   }
 
@@ -628,6 +659,9 @@ function setupNavigation() {
     if (viewId === "board") {
       renderBoardPortal();
     }
+    
+    // Update sliding tracer position
+    updateMobileNavTracer();
   }
 
   mobileButtons.forEach(btn => {
@@ -670,6 +704,7 @@ function setupLayoutSwitcher() {
       mobileTarget.appendChild(appViews);
     }
     addSystemLog("Switched display layout to Mobile Frame Mockup.");
+    setTimeout(updateMobileNavTracer, 100);
   });
 
   btnDesktop.addEventListener("click", () => {
@@ -681,6 +716,7 @@ function setupLayoutSwitcher() {
       desktopTarget.appendChild(appViews);
     }
     addSystemLog("Switched display layout to Desktop Portal.");
+    setTimeout(updateMobileNavTracer, 100);
   });
 
   // Light/Dark Theme Switcher
@@ -909,37 +945,41 @@ window.saveAgeGroup = function(e) {
 
 window.deleteAgeGroup = function(groupId) {
   if (!checkAdminAuth("Only board administrators can delete age categories.")) return;
-  if (!confirm("Are you sure you want to delete this age category and all its rule specs?")) return;
-  const data = db.getData();
-  const index = data.ageGroups.findIndex(g => g.id === groupId);
-  if (index !== -1) {
-    const name = data.ageGroups[index].name;
-    data.ageGroups.splice(index, 1);
-    addSystemLog(`Deleted age category: ${name}`);
-    
-    // Update active selection
-    if (data.ageGroups.length > 0) {
-      selectedAgeGroupId = data.ageGroups[0].id;
-    } else {
-      selectedAgeGroupId = "";
+  customConfirm("Are you sure you want to delete this age category and all its rule specs?", () => {
+    const data = db.getData();
+    const index = data.ageGroups.findIndex(g => g.id === groupId);
+    if (index !== -1) {
+      const name = data.ageGroups[index].name;
+      data.ageGroups.splice(index, 1);
+      addSystemLog(`Deleted age category: ${name}`);
+      
+      // Update active selection
+      if (data.ageGroups.length > 0) {
+        selectedAgeGroupId = data.ageGroups[0].id;
+      } else {
+        selectedAgeGroupId = "";
+      }
+      
+      db.saveData(data);
+      renderHandbook();
+      updateAgeSelectors();
+      showToast(`Deleted age category <strong>${name}</strong>`, "warning");
     }
-    
-    db.saveData(data);
-    renderHandbook();
-    updateAgeSelectors();
-  }
+  });
 };
 
 window.restoreHandbookDefaults = function() {
   if (!checkAdminAuth("Only board administrators can restore default rules.")) return;
-  if (!confirm("Reset all specifications, rules and handbook entries back to league default values?")) return;
-  const data = db.resetToDefault();
-  selectedAgeGroupId = "u6";
-  db.saveData(data);
-  renderHandbook();
-  renderDrills();
-  updateAgeSelectors();
-  addSystemLog("Restored database to default rules and values.");
+  customConfirm("Reset all specifications, rules and handbook entries back to league default values?", () => {
+    const data = db.resetToDefault();
+    selectedAgeGroupId = "u6";
+    db.saveData(data);
+    renderHandbook();
+    renderDrills();
+    updateAgeSelectors();
+    addSystemLog("Restored database to default rules and values.");
+    showToast("Restored database to league default handbook rules.", "success");
+  });
 };
 
 // Update dropdown listings for adding drills etc.
@@ -984,6 +1024,12 @@ function renderDrills() {
 
     return matchesSearch && matchesAge && matchesType;
   });
+
+  // Render stats count
+  const countInfo = document.getElementById("drills-count-info");
+  if (countInfo) {
+    countInfo.innerHTML = `<i class="fas fa-info-circle" style="color: var(--primary);"></i> Showing <strong>${filteredDrills.length}</strong> of <strong>${data.drills.length}</strong> drills matching your filters.`;
+  }
 
   // Render cards
   if (filteredDrills.length === 0) {
@@ -1196,17 +1242,19 @@ window.saveDrill = function(e) {
 
 window.deleteDrill = function(drillId) {
   if (!checkAdminAuth("Only board administrators can delete training drills.")) return;
-  if (!confirm("Are you sure you want to delete this drill from the library?")) return;
-  const data = db.getData();
-  const index = data.drills.findIndex(d => d.id === drillId);
-  if (index !== -1) {
-    const title = data.drills[index].title;
-    data.drills.splice(index, 1);
-    addSystemLog(`Deleted drill: ${title}`);
-    db.saveData(data);
-    closeDrillDetail();
-    renderDrills();
-  }
+  customConfirm("Are you sure you want to delete this drill from the library?", () => {
+    const data = db.getData();
+    const index = data.drills.findIndex(d => d.id === drillId);
+    if (index !== -1) {
+      const title = data.drills[index].title;
+      data.drills.splice(index, 1);
+      addSystemLog(`Deleted drill: ${title}`);
+      db.saveData(data);
+      closeDrillDetail();
+      renderDrills();
+      showToast(`Deleted drill <strong>${title}</strong>`, "warning");
+    }
+  });
 };
 
 // Filters setup
@@ -1266,9 +1314,9 @@ function renderLounge() {
 
   if (plansList) {
     let plansHtml = "";
-    data.practicePlans.forEach(plan => {
+    data.practicePlans.forEach((plan, index) => {
       plansHtml += `
-        <a href="${plan.link}" class="plan-item" onclick="alert('Downloading practice template: ${plan.name} - ${plan.ageGroup}')">
+        <a href="javascript:void(0)" class="plan-item" onclick="viewPracticePlanDetail(${index})">
           <div class="plan-meta">
             <span class="plan-age">${plan.ageGroup} Group</span>
             <span class="text-muted">By ${plan.author}</span>
@@ -1280,6 +1328,48 @@ function renderLounge() {
     plansList.innerHTML = plansHtml;
   }
 }
+
+window.viewPracticePlanDetail = function(index) {
+  const data = db.getData();
+  const plan = data.practicePlans[index];
+  if (!plan) return;
+
+  document.getElementById("plan-details-title").innerText = "Practice Plan Outline";
+  document.getElementById("plan-details-age").innerText = `${plan.ageGroup} Category`;
+  document.getElementById("plan-details-author").innerText = `Contributed by: ${plan.author}`;
+  document.getElementById("plan-details-theme").innerText = plan.name;
+  document.getElementById("plan-details-text").innerText = plan.details || "No details provided for this practice plan.";
+
+  openModal("modal-plan-details");
+};
+
+window.openAddPracticePlanModal = function() {
+  document.getElementById("practice-plan-form").reset();
+  openModal("modal-practice-plan");
+};
+
+window.savePracticePlan = function(e) {
+  e.preventDefault();
+  const data = db.getData();
+  const name = document.getElementById("plan-name").value;
+  const ageGroup = document.getElementById("plan-ageGroup").value;
+  const author = document.getElementById("plan-author").value;
+  const details = document.getElementById("plan-details").value;
+
+  const newPlan = {
+    name: name,
+    ageGroup: ageGroup,
+    link: "#",
+    author: author,
+    details: details
+  };
+
+  data.practicePlans.unshift(newPlan);
+  db.saveData(data);
+  closeModal("modal-practice-plan");
+  renderLounge();
+  addSystemLog(`Shared new Practice Plan template: "${name}" for ${ageGroup} Group`);
+};
 
 window.openAddBlogModal = function() {
   document.getElementById("blog-form").reset();
@@ -1307,6 +1397,106 @@ window.saveBlog = function(e) {
   closeModal("modal-blog");
   renderLounge();
   addSystemLog(`Published new Coaches' Blog post: "${title}"`);
+};
+
+// Toast Notification System
+window.showToast = function(message, type = "success") {
+  let toastContainer = document.getElementById("toast-container");
+  if (!toastContainer) {
+    toastContainer = document.createElement("div");
+    toastContainer.id = "toast-container";
+    toastContainer.style.position = "fixed";
+    toastContainer.style.bottom = "30px";
+    toastContainer.style.right = "30px";
+    toastContainer.style.display = "flex";
+    toastContainer.style.flexDirection = "column";
+    toastContainer.style.gap = "10px";
+    toastContainer.style.zIndex = "11000";
+    document.body.appendChild(toastContainer);
+  }
+
+  const toast = document.createElement("div");
+  toast.className = `toast toast-${type}`;
+  toast.style.background = "rgba(15, 23, 42, 0.95)";
+  toast.style.color = "var(--text-main)";
+  toast.style.borderLeft = `4px solid ${type === "success" ? "var(--success)" : type === "warning" ? "var(--warning)" : "var(--primary)"}`;
+  toast.style.borderTop = "1px solid var(--border-color)";
+  toast.style.borderRight = "1px solid var(--border-color)";
+  toast.style.borderBottom = "1px solid var(--border-color)";
+  toast.style.padding = "14px 20px";
+  toast.style.borderRadius = "var(--radius-md)";
+  toast.style.boxShadow = "var(--shadow-lg)";
+  toast.style.fontSize = "13px";
+  toast.style.fontWeight = "600";
+  toast.style.display = "flex";
+  toast.style.alignItems = "center";
+  toast.style.gap = "10px";
+  toast.style.minWidth = "280px";
+  toast.style.maxWidth = "400px";
+  toast.style.opacity = "0";
+  toast.style.transform = "translateY(20px)";
+  toast.style.transition = "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)";
+
+  const icon = document.createElement("i");
+  if (type === "success") {
+    icon.className = "fas fa-check-circle";
+    icon.style.color = "var(--success)";
+  } else if (type === "warning") {
+    icon.className = "fas fa-exclamation-triangle";
+    icon.style.color = "var(--warning)";
+  } else {
+    icon.className = "fas fa-info-circle";
+    icon.style.color = "var(--primary)";
+  }
+
+  const text = document.createElement("span");
+  text.innerHTML = message;
+
+  toast.appendChild(icon);
+  toast.appendChild(text);
+  toastContainer.appendChild(toast);
+
+  // Trigger animation
+  setTimeout(() => {
+    toast.style.opacity = "1";
+    toast.style.transform = "translateY(0)";
+  }, 10);
+
+  // Auto remove after 5 seconds
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateY(-20px)";
+    setTimeout(() => {
+      toast.remove();
+    }, 300);
+  }, 5000);
+};
+
+// Custom Modal Confirmation System
+window.customConfirm = function(message, onConfirm) {
+  const modal = document.getElementById("modal-confirm");
+  const msgEl = document.getElementById("confirm-message");
+  const actionBtn = document.getElementById("btn-confirm-action");
+  
+  if (!modal || !msgEl || !actionBtn) {
+    if (confirm(message)) {
+      onConfirm();
+    }
+    return;
+  }
+  
+  msgEl.innerText = message;
+  
+  // Clone button to remove previous event listeners
+  const newActionBtn = actionBtn.cloneNode(true);
+  actionBtn.parentNode.replaceChild(newActionBtn, actionBtn);
+  
+  newActionBtn.addEventListener("click", () => {
+    closeModal("modal-confirm");
+    onConfirm();
+  });
+  
+  openModal("modal-confirm");
 };
 
 // ----------------------------------------------------
@@ -1365,6 +1555,9 @@ function setupComplaintForm() {
       }, 7000);
     }
 
+    // Trigger elegant Toast Notification
+    showToast(`<strong>Report Submitted Successfully!</strong> Assigned ID: ${newId}. reps notified.`, "success");
+
     addSystemLog(`New official complaint submitted: ${newId} regarding "${subject}". Task automatically assigned on board workflow.`);
   });
 }
@@ -1386,7 +1579,8 @@ function renderBoardPortal() {
   workspaceSection.style.display = "block";
 
   // Render components
-  renderGoogleSyncState();
+  renderBoardCalendar();
+  renderBoardLinks();
   renderKanbanBoard();
   renderBoardComplaints();
   renderLogs();
@@ -1418,72 +1612,249 @@ window.logoutBoard = function() {
   renderDrills();
 };
 
-// Google Calendar Sync Simulation
-window.syncGoogleAccounts = function() {
-  const syncBtn = document.getElementById("btn-google-sync");
-  if (!syncBtn) return;
+// ----------------------------------------------------
+// BOARD CALENDAR (ROLLING 30-DAY WINDOW)
+// ----------------------------------------------------
+window.renderBoardCalendar = function() {
+  const container = document.getElementById("board-calendar-list");
+  if (!container) return;
 
-  syncBtn.innerText = "Syncing Google Accounts...";
-  syncBtn.disabled = true;
+  const data = db.getData();
+  if (!data.calendarEvents) {
+    data.calendarEvents = [];
+    db.saveData(data);
+  }
 
-  // Simulate delay
-  setTimeout(() => {
-    isGoogleSynced = !isGoogleSynced;
-    syncBtn.disabled = false;
-    syncBtn.innerHTML = isGoogleSynced ? '<i class="fab fa-google"></i> Connected & Synced' : '<i class="fab fa-google"></i> Sync Google Account';
-    
-    if (isGoogleSynced) {
-      addSystemLog("Synced Google Workspace: Fetched Google Calendar virtual meets and sheets data.");
-    } else {
-      addSystemLog("Google Account disconnected.");
+  const now = new Date();
+  const todayStr = now.toISOString().split('T')[0];
+  const today = new Date(todayStr);
+  const maxDate = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+  // Filter events within rolling 30 days
+  const filteredEvents = data.calendarEvents.filter(function(event) {
+    const eventDate = new Date(event.date);
+    return eventDate >= today && eventDate <= maxDate;
+  });
+
+  // Sort chronologically
+  filteredEvents.sort(function(a, b) {
+    if (a.date !== b.date) {
+      return a.date.localeCompare(b.date);
     }
-    renderGoogleSyncState();
-  }, 1200);
+    return a.time.localeCompare(b.time);
+  });
+
+  if (filteredEvents.length === 0) {
+    container.innerHTML = '<div class="empty-state">' +
+      '<i class="fas fa-calendar-times" style="font-size: 28px; color: var(--text-muted); margin-bottom: 8px;"></i>' +
+      '<p>No upcoming board meetings or notices posted for the next 30 days.</p>' +
+    '</div>';
+    return;
+  }
+
+  let html = "";
+  filteredEvents.forEach(function(event) {
+    const eventDateObj = new Date(event.date + 'T00:00:00');
+    const month = eventDateObj.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+    const day = eventDateObj.getDate();
+
+    let joinLinkHtml = "";
+    if (event.link) {
+      let linkText = "Join Meeting";
+      let linkClass = "";
+      if (event.link.indexOf("meet.google.com") !== -1 || event.link.indexOf("google.com") !== -1) {
+        linkText = '<i class="fab fa-google"></i> Google Meet';
+      } else if (event.link.indexOf("teams.microsoft.com") !== -1 || event.link.indexOf("teams.live.com") !== -1) {
+        linkText = '<i class="fab fa-microsoft"></i> MS Teams';
+        linkClass = "teams";
+      } else if (event.link.indexOf("zoom.us") !== -1) {
+        linkText = '<i class="fas fa-video"></i> Zoom Meet';
+      }
+      joinLinkHtml = '<a href="' + event.link + '" target="_blank" class="meeting-join-link ' + linkClass + '">' + linkText + '</a>';
+    }
+
+    html += '<div class="calendar-event-item">' +
+      '<div class="event-date-badge">' +
+        '<span class="month">' + month + '</span>' +
+        '<span class="day">' + day + '</span>' +
+      '</div>' +
+      '<div class="event-info">' +
+        '<div class="event-title-row">' +
+          '<h4 class="event-item-title">' + event.title + '</h4>' +
+          '<span class="event-time-badge"><i class="fas fa-clock"></i> ' + formatTimeStr(event.time) + '</span>' +
+        '</div>' +
+        '<p class="event-item-desc">' + event.description + '</p>' +
+        '<div class="event-actions-row">' +
+          joinLinkHtml +
+          '<button class="btn-event-edit" onclick="openEditEventModal(\'' + event.id + '\')">' +
+            '<i class="fas fa-edit"></i> Edit Notice' +
+          '</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  });
+
+  container.innerHTML = html;
 };
 
-function renderGoogleSyncState() {
-  const indicator = document.getElementById("google-sync-indicator");
-  const meetingsList = document.getElementById("google-meetings-list");
-  
-  if (!indicator || !meetingsList) return;
-
-  if (isGoogleSynced) {
-    indicator.className = "sync-status-indicator synced";
-    indicator.innerHTML = `
-      <span>Google Workspace</span>
-      <span class="sync-pill">Connected & Synced</span>
-    `;
-
-    meetingsList.innerHTML = `
-      <div class="meeting-item">
-        <div class="meeting-details">
-          <div class="meeting-title">LCSL Board League Monthly Meet</div>
-          <div class="meeting-time">Today, 7:30 PM &bull; Google Meet</div>
-        </div>
-        <a href="https://meet.google.com" target="_blank" class="meeting-join-btn" onclick="addSystemLog('Joined Google Meet: Board Monthly Meet')">Join Meet</a>
-      </div>
-      <div class="meeting-item" style="border-left-color: var(--warning);">
-        <div class="meeting-details">
-          <div class="meeting-title">Referee Escalations & Conduct Panel</div>
-          <div class="meeting-time">June 25, 6:00 PM &bull; Google Meet</div>
-        </div>
-        <a href="https://meet.google.com" target="_blank" class="meeting-join-btn" onclick="addSystemLog('Joined Google Meet: Referee Panel')">Join Meet</a>
-      </div>
-    `;
-  } else {
-    indicator.className = "sync-status-indicator";
-    indicator.innerHTML = `
-      <span>Google Workspace</span>
-      <span class="sync-pill">Offline</span>
-    `;
-    meetingsList.innerHTML = `
-      <div class="empty-state">
-        <i class="fab fa-google"></i>
-        <p>No active connections. Click the button above to sync Google Meet schedules and spreadsheets.</p>
-      </div>
-    `;
-  }
+function formatTimeStr(time24) {
+  if (!time24) return "";
+  const parts = time24.split(':');
+  let hrs = parseInt(parts[0]);
+  const mins = parts[1];
+  const ampm = hrs >= 12 ? 'PM' : 'AM';
+  hrs = hrs % 12;
+  hrs = hrs ? hrs : 12;
+  return hrs + ':' + mins + ' ' + ampm;
 }
+
+window.openAddEventModal = function() {
+  document.getElementById("calendar-event-modal-title").innerText = "Post Board Notice";
+  document.getElementById("calendar-event-id-input").value = "";
+  document.getElementById("calendar-event-form").reset();
+  
+  document.getElementById("calendar-event-date").value = new Date().toISOString().split('T')[0];
+  document.getElementById("calendar-event-time").value = "19:00";
+  
+  document.getElementById("btn-delete-calendar-event").style.display = "none";
+  openModal("modal-calendar-event");
+};
+
+window.openEditEventModal = function(eventId) {
+  const data = db.getData();
+  const event = data.calendarEvents.find(function(e) { return e.id === eventId; });
+  if (!event) return;
+
+  document.getElementById("calendar-event-modal-title").innerText = "Edit Board Notice";
+  document.getElementById("calendar-event-id-input").value = event.id;
+  document.getElementById("calendar-event-title").value = event.title;
+  document.getElementById("calendar-event-date").value = event.date;
+  document.getElementById("calendar-event-time").value = event.time;
+  document.getElementById("calendar-event-link").value = event.link || "";
+  document.getElementById("calendar-event-description").value = event.description;
+
+  document.getElementById("btn-delete-calendar-event").style.display = "inline-flex";
+  openModal("modal-calendar-event");
+};
+
+window.saveCalendarEvent = function(e) {
+  e.preventDefault();
+  const data = db.getData();
+  const idInput = document.getElementById("calendar-event-id-input").value;
+  const title = document.getElementById("calendar-event-title").value;
+  
+  const eventData = {
+    title: title,
+    date: document.getElementById("calendar-event-date").value,
+    time: document.getElementById("calendar-event-time").value,
+    link: document.getElementById("calendar-event-link").value,
+    description: document.getElementById("calendar-event-description").value
+  };
+
+  if (idInput) {
+    const index = data.calendarEvents.findIndex(function(ev) { return ev.id === idInput; });
+    if (index !== -1) {
+      data.calendarEvents[index] = { ...data.calendarEvents[index], ...eventData };
+      addSystemLog("Modified board notice: " + title);
+    }
+  } else {
+    const newId = "event-" + Date.now();
+    data.calendarEvents.push({ id: newId, ...eventData });
+    addSystemLog("Posted new board notice: " + title);
+  }
+
+  db.saveData(data);
+  closeModal("modal-calendar-event");
+  renderBoardCalendar();
+};
+
+window.deleteCalendarEvent = function() {
+  const idInput = document.getElementById("calendar-event-id-input").value;
+  if (!idInput) return;
+  customConfirm("Are you sure you want to delete this board calendar notice?", () => {
+    const data = db.getData();
+    const index = data.calendarEvents.findIndex(function(ev) { return ev.id === idInput; });
+    if (index !== -1) {
+      const title = data.calendarEvents[index].title;
+      data.calendarEvents.splice(index, 1);
+      addSystemLog("Deleted board notice: " + title);
+      db.saveData(data);
+      closeModal("modal-calendar-event");
+      renderBoardCalendar();
+      showToast(`Deleted notice <strong>${title}</strong>`, "warning");
+    }
+  });
+};
+
+// ----------------------------------------------------
+// BOARD EDITABLE RESOURCE LINKS
+// ----------------------------------------------------
+window.renderBoardLinks = function() {
+  const container = document.getElementById("board-links-container");
+  if (!container) return;
+
+  const data = db.getData();
+  if (!data.boardLinks) {
+    data.boardLinks = {
+      coachOnboarding: { label: "Coach Onboarding FAQ", url: "https://www.usys.org/coaching-resources/" },
+      playerTravel: { label: "Travel Registration Link", url: "https://aysaohiosoccer.com/travel/" },
+      playerRec: { label: "Rec Registration Link", url: "https://www.quickscores.com/loraincountysoccer" }
+    };
+    db.saveData(data);
+  }
+
+  let html = "";
+  const keys = ["coachOnboarding", "playerTravel", "playerRec"];
+  keys.forEach(function(key) {
+    const linkObj = data.boardLinks[key];
+    html += '<div class="board-link-item">' +
+      '<div class="board-link-info">' +
+        '<strong>' + linkObj.label + '</strong>' +
+        '<a href="' + linkObj.url + '" target="_blank" class="board-link-url-display">' +
+          '<i class="fas fa-external-link-alt"></i> ' + cleanUrlDisplay(linkObj.url) +
+        '</a>' +
+      '</div>' +
+      '<button class="btn btn-secondary btn-small" onclick="openEditLinkModal(\'' + key + '\')">' +
+        '<i class="fas fa-edit"></i> Edit' +
+      '</button>' +
+    '</div>';
+  });
+
+  container.innerHTML = html;
+};
+
+function cleanUrlDisplay(url) {
+  if (!url) return "";
+  return url.replace(/^(https?:\/\/)?(www\.)?/, "");
+}
+
+window.openEditLinkModal = function(key) {
+  const data = db.getData();
+  if (!data.boardLinks || !data.boardLinks[key]) return;
+  const linkObj = data.boardLinks[key];
+
+  document.getElementById("board-link-key-input").value = key;
+  document.getElementById("board-link-label").value = linkObj.label;
+  document.getElementById("board-link-url").value = linkObj.url;
+
+  openModal("modal-board-link-edit");
+};
+
+window.saveBoardLink = function(e) {
+  e.preventDefault();
+  const key = document.getElementById("board-link-key-input").value;
+  const label = document.getElementById("board-link-label").value;
+  const url = document.getElementById("board-link-url").value;
+
+  const data = db.getData();
+  if (!data.boardLinks) data.boardLinks = {};
+  data.boardLinks[key] = { label: label, url: url };
+
+  db.saveData(data);
+  closeModal("modal-board-link-edit");
+  renderBoardLinks();
+  addSystemLog("Updated board resource link: " + label);
+};
 
 // Kanban Task Board
 function renderKanbanBoard() {
@@ -1499,7 +1870,7 @@ function renderKanbanBoard() {
 
   data.tasks.forEach(task => {
     const cardHtml = `
-      <div class="kanban-card" onclick="openEditTaskModal('${task.id}')">
+      <div class="kanban-card" draggable="true" ondragstart="dragTask(event, '${task.id}')" ondragend="dragEndTask(event)" onclick="openEditTaskModal('${task.id}')">
         <span class="card-tag ${task.tag}">${task.tag.toUpperCase()}</span>
         <div class="card-title">${task.title}</div>
         <div class="card-meta">
@@ -1529,6 +1900,61 @@ function renderKanbanBoard() {
   colTodo.innerHTML = htmlTodo || '<div class="empty-state"><p>No tasks</p></div>';
   colProgress.innerHTML = htmlProgress || '<div class="empty-state"><p>No tasks</p></div>';
   colDone.innerHTML = htmlDone || '<div class="empty-state"><p>No tasks</p></div>';
+}
+
+window.dragTask = function(ev, taskId) {
+  ev.dataTransfer.setData("text/plain", taskId);
+  ev.currentTarget.classList.add("dragging");
+};
+
+window.dragEndTask = function(ev) {
+  ev.currentTarget.classList.remove("dragging");
+};
+
+window.moveTaskStatus = function(taskId, newStatus) {
+  const data = db.getData();
+  const index = data.tasks.findIndex(t => t.id === taskId);
+  if (index !== -1) {
+    const task = data.tasks[index];
+    if (task.status !== newStatus) {
+      const oldStatus = task.status;
+      task.status = newStatus;
+      db.saveData(data);
+      addSystemLog(`Moved task "${task.title}" from [${oldStatus.toUpperCase()}] to [${newStatus.toUpperCase()}]`);
+      renderKanbanBoard();
+      showToast(`Task status updated to <strong>${newStatus.toUpperCase()}</strong>`, "info");
+    }
+  }
+};
+
+function setupKanbanDragAndDrop() {
+  const containers = document.querySelectorAll(".kanban-cards-container");
+  containers.forEach(container => {
+    container.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      container.classList.add("drag-over");
+    });
+    
+    container.addEventListener("dragleave", () => {
+      container.classList.remove("drag-over");
+    });
+    
+    container.addEventListener("drop", (e) => {
+      e.preventDefault();
+      container.classList.remove("drag-over");
+      const taskId = e.dataTransfer.getData("text/plain");
+      if (!taskId) return;
+      
+      let newStatus = "todo";
+      if (container.id === "kanban-progress") {
+        newStatus = "in-progress";
+      } else if (container.id === "kanban-done") {
+        newStatus = "done";
+      }
+      
+      window.moveTaskStatus(taskId, newStatus);
+    });
+  });
 }
 
 window.openAddTaskModal = function() {
@@ -1600,18 +2026,19 @@ window.saveTask = function(e) {
 window.deleteTask = function() {
   const idInput = document.getElementById("task-id-input").value;
   if (!idInput) return;
-  if (!confirm("Are you sure you want to delete this task card?")) return;
-
-  const data = db.getData();
-  const index = data.tasks.findIndex(t => t.id === idInput);
-  if (index !== -1) {
-    const title = data.tasks[index].title;
-    data.tasks.splice(index, 1);
-    addSystemLog(`Deleted board task card: "${title}"`);
-    db.saveData(data);
-    closeModal("modal-task");
-    renderKanbanBoard();
-  }
+  customConfirm("Are you sure you want to delete this task card?", () => {
+    const data = db.getData();
+    const index = data.tasks.findIndex(t => t.id === idInput);
+    if (index !== -1) {
+      const title = data.tasks[index].title;
+      data.tasks.splice(index, 1);
+      addSystemLog(`Deleted board task card: "${title}"`);
+      db.saveData(data);
+      closeModal("modal-task");
+      renderKanbanBoard();
+      showToast(`Deleted task <strong>${title}</strong>`, "warning");
+    }
+  });
 };
 
 // Render Referee and Parent complaints in Board area
@@ -1698,15 +2125,17 @@ window.escalateComplaint = function(complaintId) {
 };
 
 window.deleteComplaint = function(complaintId) {
-  if (!confirm("Remove this complaint entry permanently from archives?")) return;
-  const data = db.getData();
-  const index = data.complaints.findIndex(c => c.id === complaintId);
-  if (index !== -1) {
-    data.complaints.splice(index, 1);
-    db.saveData(data);
-    addSystemLog(`Removed complaint ${complaintId} from archives.`);
-    renderBoardPortal();
-  }
+  customConfirm("Remove this complaint entry permanently from archives?", () => {
+    const data = db.getData();
+    const index = data.complaints.findIndex(c => c.id === complaintId);
+    if (index !== -1) {
+      data.complaints.splice(index, 1);
+      db.saveData(data);
+      addSystemLog(`Removed complaint ${complaintId} from archives.`);
+      renderBoardPortal();
+      showToast(`Removed complaint <strong>${complaintId}</strong>`, "warning");
+    }
+  });
 };
 
 // Render Logs in dashboard
@@ -1748,6 +2177,13 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTacticsInputs();
   renderPlayerTokens();
   
+  // Initialize Match Timers and Navigation Tracer
+  setupTimers();
+  updateMobileNavTracer();
+  
+  // Initialize Kanban Drag-and-Drop
+  setupKanbanDragAndDrop();
+  
   // Service Worker Registration
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -1782,6 +2218,10 @@ window.addEventListener('storage', (e) => {
     renderTacticsInputs();
     renderPlayerTokens();
     addSystemLog("Tactics Board lineup synchronized across tabs.");
+  }
+  if (e.key === "soccercoach_timers") {
+    loadTimers();
+    updateTimersUI();
   }
 });
 
@@ -1992,3 +2432,274 @@ window.resetPlayerPositions = function() {
   renderPlayerTokens();
   addSystemLog("Tactics Board layout reset to default lineup and ball position.");
 };
+
+// ====================================================
+// ADDED: SOCCER APP TIMERS & MOBILE VIEW LOGIC
+// ====================================================
+
+// persistent timers state
+let timersState = {
+  starters: { elapsed: 0, running: false, lastTick: null },
+  sub1: { elapsed: 0, running: false, lastTick: null },
+  sub2: { elapsed: 0, running: false, lastTick: null }
+};
+
+let timersInterval = null;
+const maxTimerSeconds = 3600; // 60 minutes max
+
+function loadTimers() {
+  const saved = localStorage.getItem("soccercoach_timers");
+  if (saved) {
+    try {
+      timersState = JSON.parse(saved);
+      // Catch up running timers for time elapsed while tab was closed/inactive
+      const now = Date.now();
+      Object.keys(timersState).forEach(key => {
+        const timer = timersState[key];
+        if (timer.running && timer.lastTick) {
+          const diffSeconds = Math.floor((now - timer.lastTick) / 1000);
+          timer.elapsed = Math.min(maxTimerSeconds, timer.elapsed + Math.max(0, diffSeconds));
+          timer.lastTick = now;
+          if (timer.elapsed >= maxTimerSeconds) {
+            timer.running = false;
+          }
+        }
+      });
+    } catch (e) {
+      console.error("Error loading timers from storage:", e);
+    }
+  }
+}
+
+function saveTimers() {
+  localStorage.setItem("soccercoach_timers", JSON.stringify(timersState));
+}
+
+window.toggleTimer = function(key) {
+  const timer = timersState[key];
+  if (!timer) return;
+  
+  if (timer.elapsed >= maxTimerSeconds && !timer.running) {
+    alert("Timer has reached the maximum duration of 60 minutes. Please reset to start again.");
+    return;
+  }
+
+  timer.running = !timer.running;
+  
+  var label = "Starters";
+  if (key === "sub1") {
+    label = "Sub Line 1";
+  } else if (key === "sub2") {
+    label = "Sub Line 2";
+  }
+
+  if (timer.running) {
+    timer.lastTick = Date.now();
+    addSystemLog("Timer for " + label + " started.");
+  } else {
+    timer.lastTick = null;
+    addSystemLog("Timer for " + label + " paused.");
+  }
+  saveTimers();
+  updateTimersUI();
+};
+
+// Track reset confirmation timeouts
+let resetConfirmTimeouts = {};
+let resetAllTimeout = null;
+
+window.resetTimer = function(key) {
+  const btn = document.getElementById("btn-" + key + "-reset");
+  if (!btn) return;
+
+  var label = "Starters";
+  if (key === "sub1") {
+    label = "Sub Line 1";
+  } else if (key === "sub2") {
+    label = "Sub Line 2";
+  }
+
+  if (btn.classList.contains("confirm-active")) {
+    // Second click: perform the reset
+    clearTimeout(resetConfirmTimeouts[key]);
+    delete resetConfirmTimeouts[key];
+    btn.classList.remove("confirm-active");
+    btn.innerHTML = '<i class="fas fa-redo"></i>';
+    btn.style.background = "";
+    btn.style.color = "";
+    
+    timersState[key] = { elapsed: 0, running: false, lastTick: null };
+    saveTimers();
+    updateTimersUI();
+    addSystemLog("Timer for " + label + " reset to 00:00.");
+  } else {
+    // First click: activate confirm mode
+    btn.classList.add("confirm-active");
+    btn.innerHTML = '<i class="fas fa-check" style="font-size: 10px;"></i>';
+    btn.style.background = "var(--danger)";
+    btn.style.color = "white";
+    
+    // Automatically revert after 3 seconds
+    resetConfirmTimeouts[key] = setTimeout(function() {
+      btn.classList.remove("confirm-active");
+      btn.innerHTML = '<i class="fas fa-redo"></i>';
+      btn.style.background = "";
+      btn.style.color = "";
+      delete resetConfirmTimeouts[key];
+    }, 3000);
+  }
+};
+
+window.resetAllTimers = function() {
+  const btn = document.getElementById("btn-reset-all-timers");
+  if (!btn) return;
+
+  if (btn.classList.contains("confirm-active")) {
+    // Second click: perform reset all
+    clearTimeout(resetAllTimeout);
+    resetAllTimeout = null;
+    btn.classList.remove("confirm-active");
+    btn.innerHTML = '<i class="fas fa-history"></i> Half-Time Reset (All)';
+    
+    timersState = {
+      starters: { elapsed: 0, running: false, lastTick: null },
+      sub1: { elapsed: 0, running: false, lastTick: null },
+      sub2: { elapsed: 0, running: false, lastTick: null }
+    };
+    saveTimers();
+    updateTimersUI();
+    addSystemLog("All game timers reset to 00:00 (Half-Time Reset).");
+  } else {
+    // First click: activate confirm mode
+    btn.classList.add("confirm-active");
+    btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Confirm Reset All?';
+    
+    // Automatically revert after 4 seconds
+    resetAllTimeout = setTimeout(function() {
+      btn.classList.remove("confirm-active");
+      btn.innerHTML = '<i class="fas fa-history"></i> Half-Time Reset (All)';
+      resetAllTimeout = null;
+    }, 4000);
+  }
+};
+
+function startTimersInterval() {
+  if (timersInterval) return;
+  timersInterval = setInterval(() => {
+    let stateChanged = false;
+    const now = Date.now();
+    
+    Object.keys(timersState).forEach(key => {
+      const timer = timersState[key];
+      if (timer.running) {
+        timer.elapsed = Math.min(maxTimerSeconds, timer.elapsed + 1);
+        timer.lastTick = now;
+        if (timer.elapsed >= maxTimerSeconds) {
+          timer.running = false;
+          timer.lastTick = null;
+          
+          let timerLabel = "Starters";
+          if (key === "sub1") {
+            timerLabel = "Sub Line 1";
+          } else if (key === "sub2") {
+            timerLabel = "Sub Line 2";
+          }
+          addSystemLog("Timer for " + timerLabel + " reached max limit of 60 mins.");
+        }
+        stateChanged = true;
+      }
+    });
+    
+    if (stateChanged) {
+      saveTimers();
+    }
+    updateTimersUI();
+  }, 1000);
+}
+
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return mins.toString().padStart(2, '0') + ':' + secs.toString().padStart(2, '0');
+}
+
+function updateTimersUI() {
+  Object.keys(timersState).forEach(key => {
+    const timer = timersState[key];
+    const displayId = 'timer-' + key + '-time';
+    const cardId = 'timer-card-' + key;
+    const toggleId = 'btn-' + key + '-toggle';
+    
+    const displayEl = document.getElementById(displayId);
+    const cardEl = document.getElementById(cardId);
+    const toggleEl = document.getElementById(toggleId);
+    
+    if (displayEl) {
+      displayEl.innerText = formatTime(timer.elapsed);
+      if (timer.elapsed >= maxTimerSeconds) {
+        displayEl.style.color = "var(--danger)";
+      } else {
+        displayEl.style.color = "";
+      }
+    }
+    
+    if (cardEl) {
+      if (timer.running) {
+        cardEl.classList.add("running");
+      } else {
+        cardEl.classList.remove("running");
+      }
+    }
+    
+    if (toggleEl) {
+      if (timer.running) {
+        toggleEl.innerHTML = '<i class="fas fa-pause"></i> Pause';
+      } else {
+        toggleEl.innerHTML = '<i class="fas fa-play"></i> Start';
+      }
+    }
+  });
+}
+
+function setupTimers() {
+  loadTimers();
+  updateTimersUI();
+  startTimersInterval();
+  
+  // Attach listeners
+  const btnStartersToggle = document.getElementById("btn-starters-toggle");
+  if (btnStartersToggle) btnStartersToggle.addEventListener("click", () => toggleTimer("starters"));
+  const btnStartersReset = document.getElementById("btn-starters-reset");
+  if (btnStartersReset) btnStartersReset.addEventListener("click", () => resetTimer("starters"));
+  
+  const btnSub1Toggle = document.getElementById("btn-sub1-toggle");
+  if (btnSub1Toggle) btnSub1Toggle.addEventListener("click", () => toggleTimer("sub1"));
+  const btnSub1Reset = document.getElementById("btn-sub1-reset");
+  if (btnSub1Reset) btnSub1Reset.addEventListener("click", () => resetTimer("sub1"));
+  
+  const btnSub2Toggle = document.getElementById("btn-sub2-toggle");
+  if (btnSub2Toggle) btnSub2Toggle.addEventListener("click", () => toggleTimer("sub2"));
+  const btnSub2Reset = document.getElementById("btn-sub2-reset");
+  if (btnSub2Reset) btnSub2Reset.addEventListener("click", () => resetTimer("sub2"));
+  
+  const btnResetAll = document.getElementById("btn-reset-all-timers");
+  if (btnResetAll) btnResetAll.addEventListener("click", resetAllTimers);
+}
+
+// Mobile Nav Active Underline Slide Logic
+window.updateMobileNavTracer = function() {
+  const activeBtn = document.querySelector(".mobile-nav-item.active");
+  const tracer = document.querySelector(".mobile-nav-tracer");
+  if (!activeBtn || !tracer) return;
+  
+  const btnWidth = activeBtn.offsetWidth;
+  const btnLeft = activeBtn.offsetLeft;
+  
+  tracer.style.width = btnWidth + 'px';
+  tracer.style.transform = 'translateX(' + btnLeft + 'px)';
+};
+
+// Listen to window size changes to keep mobile nav tracer in line
+window.addEventListener("resize", () => {
+  updateMobileNavTracer();
+});
