@@ -341,7 +341,7 @@
               <input type="text" id="drill-search" class="search-input" placeholder="Search drills, keywords, focus...">
             </div>
             
-            <div class="filter-controls">
+            <div class="filter-controls custom-scrollbar">
               <select id="drill-filter-age" class="filter-select">
                 <option value="all">Any Age</option>
                 <option value="u6">U6 Groups</option>
@@ -494,14 +494,26 @@
 
         <!-- 2. Authenticated Board Portal Workspace -->
         <div id="board-workspace-section" style="display: none;">
-          <div class="welcome-banner board-banner">
-            <div class="banner-text">
-              <h2>BOARD ADMINISTRATIVE CENTER</h2>
-              <p>Sync calendars, track county tasks, manage incident reports, and review logs.</p>
+          <!-- Restricted Access Header -->
+          <div class="welcome-banner board-banner" style="position: relative; overflow: hidden; border-left: 4px solid var(--danger); margin-bottom: 25px; padding: 20px;">
+            <div class="scanline" style="width: 100%; height: 2px; background: rgba(239, 68, 68, 0.2); position: absolute; left: 0; top: 0; animation: scan 4s linear infinite;"></div>
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; gap: 8px; color: var(--danger); margin-bottom: 5px;">
+                <i class="fas fa-shield-alt" style="font-size: 14px;"></i>
+                <span style="font-family: var(--font-body); font-size: 11px; font-weight: 700; uppercase; tracking-widest; letter-spacing: 1px;">SECURITY LEVEL: ALPHA</span>
+              </div>
+              <h2 style="font-family: var(--font-title); font-size: 24px; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">Restricted Access</h2>
+              <p style="color: var(--text-muted); font-size: 13px;">Admin System Logs & Workflows: Authorized Personnel Only</p>
             </div>
-            <button class="btn btn-danger" onclick="logoutBoard()">
-              <i class="fas fa-sign-out-alt"></i> Logout Portal
-            </button>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              <div style="padding: 6px 12px; background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); border-radius: var(--radius-sm); display: flex; align-items: center; gap: 8px;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success);"></div>
+                <span style="font-family: monospace; font-size: 11px; color: var(--success); font-weight: 700;">SEC_ACTIVE</span>
+              </div>
+              <button class="btn btn-danger" onclick="logoutBoard()">
+                <i class="fas fa-sign-out-alt"></i> Logout Portal
+              </button>
+            </div>
           </div>
 
           <!-- Sync and Meeting Management Grid -->
