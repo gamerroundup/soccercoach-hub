@@ -525,7 +525,7 @@ const DEFAULT_DATABASE = {
 // Database class helper
 class SoccerDb {
   constructor() {
-    this.key = "soccercoach_hub_db_v4";
+    this.key = "soccercoach_hub_db_v5";
     this.init();
   }
 
