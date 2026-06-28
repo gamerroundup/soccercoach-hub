@@ -6,32 +6,34 @@
   --font-title: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   
-  /* Slate/Teal color theme */
-  --bg-main: #060913;
-  --bg-card: rgba(17, 24, 39, 0.65);
-  --bg-sidebar: #090e1a;
-  --bg-header: #03060c;
-  --bg-input: #121824;
+  /* Performance Dark theme */
+  --bg-main: #0b1326;
+  --bg-card: rgba(23, 31, 51, 0.7);
+  --bg-sidebar: #131b2e;
+  --bg-header: #0b1326;
+  --bg-input: #020617;
   
-  --border-color: rgba(255, 255, 255, 0.08);
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-dark: #0f172a;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --text-main: #dae2fd;
+  --text-muted: #bbcabf;
+  --text-dark: #020617;
   
-  --primary: #00f0ff; /* Neon cyan */
-  --primary-hover: #0ea5e9;
+  --primary: #10B981; /* Pitch green */
+  --primary-hover: #4edea3;
   --success: #10b981;
   --success-hover: #059669;
   --warning: #f59e0b;
-  --danger: #ef4444;
-  --danger-hover: #dc2626;
-  --accent: #d946ef; /* Magenta */
+  --danger: #F43F5E; /* Danger red */
+  --danger-hover: #e11d48;
+  --accent: #adc6ff; /* Secondary blue */
   
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  
+  --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -2180,7 +2182,7 @@ textarea.form-input {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #0566d9 0%, #002e6a 100%);
   color: white;
   border: 2px solid white;
   display: flex;
@@ -2320,6 +2322,34 @@ textarea.form-input {
 
 .iphone-screen .soccer-field-wrapper {
   padding: 10px !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}
+
+.iphone-screen .soccer-field {
+  max-width: 100% !important;
+  width: 320px !important;
+  height: 520px !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.iphone-screen .field-boundary {
+  bottom: 60px !important;
+}
+.iphone-screen .field-midline {
+  top: 230px !important;
+}
+.iphone-screen .field-center-circle {
+  top: 230px !important;
+}
+.iphone-screen .field-penalty-box-bottom {
+  bottom: 60px !important;
+}
+.iphone-screen .subs-bench-area {
+  height: 60px !important;
 }
 
 /* Timers Panel Styling */

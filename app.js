@@ -117,7 +117,7 @@ const DEFAULT_DATABASE = {
       whyImportant: "Place 6 cones in a straight line, 3 yards apart.",
       pointers: "Keep the ball close. Use all surfaces of the foot. Stay low for balance and look up between touches.",
       youtubeUrl: "https://www.youtube.com/watch?v=FkWp9dY_Brc",
-      imageUrl: "https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?auto=format&fit=crop&w=600&q=80"
+      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCkk1A36UR0AZepSsr3RJ9F5FzUhcjpk1L7n3ihgF6VJwVdGkAwGx0ESfJ47mXA0GjTL8ljFYBlr-DwITJyvVYRTelikKhlVXf_e4EBX28y6qJFPOOFASOW_KbrH-lL4DOSDpDVBFqDCZJ3TYtcusch4Aaf_h6nUcpbmO2_uomyBR5JsxwC3jtaktX2mcS7HGTIsniI4zePOv8tzClDpYO0p2_d2OvNkyyNhcBZz5PbYhD1W2v_o3UFzB-Ms04FTPRGHV2wmI43Zf4"
     },
     {
       id: "drill-002",
@@ -129,7 +129,7 @@ const DEFAULT_DATABASE = {
       whyImportant: "Set up small cone gates around the field.",
       pointers: "Communication is key. Weight the passes correctly. Look up before passing and lock the ankle.",
       youtubeUrl: "https://www.youtube.com/watch?v=A3M1c4e7vA8",
-      imageUrl: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80"
+      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuB8zK6RaKkP8UT6ngcU8Yy6MN1lgEH68LU22RxoPWfHe0lU3lIATYdvrt8rO9KDaCU_6QLnp6YDQni-GwmeHifhWx-5XcjcznZQC-10KLoHlAMKKqkckzer0T0FuBgIsSd9sGavto3FrpYRZJhGHgN1uc-cfWhhW8lcrT3EjsbyuSY1mUyuXJGKgaL_QGCP3SDVHB5d0TQ3bcgWl8DVY8kt7J68u35fzsLVJM6iPRV1RD3WjZIX0Wmd4kuHmRFTnQqe4Pnm-ZZum1o"
     },
     {
       id: "drill-003",
@@ -141,7 +141,7 @@ const DEFAULT_DATABASE = {
       whyImportant: "Set up a grid with mini-goals on opposite ends.",
       pointers: "Be aggressive to the ball. Take positive first touches towards the goal. Shield the ball with your body.",
       youtubeUrl: "https://www.youtube.com/watch?v=yIyYxN_uV5U",
-      imageUrl: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=600&q=80"
+      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCOuP7knuh_y58Bjzv-9LHz2GW6cYMUrAxWITeszFRWQBiAC6df5ppTp1uAwc2zgNhjCubOucXtabaVZv366Yw0dh-aYbLFXKe6DOFiCb_9qXNT95CjyZ3T3n0H5KmHnhCKVM2R957IyLnt5Vc5NGywvTrWbi-yIxcSXdxf-YRGcvwhSyKh_sjkkb3sLs8MBEwCQrTeY1DYFboy9QD3BxllxAbOftQ86tWEFRw2WxLa8cFOghwYp_08WzuhNZqykv8AfW4FISV4M8I"
     },
     {
       id: "drill-004",
@@ -153,7 +153,7 @@ const DEFAULT_DATABASE = {
       whyImportant: "A 20x20 yard grid represents the 'room'.",
       pointers: "Keep body between ball and defender. Dribble to open spaces. React quickly to recover when ball is lost.",
       youtubeUrl: "https://www.youtube.com/watch?v=F88-g4_k_d0",
-      imageUrl: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80"
+      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuA2OLYikplm2VXYE7Mg71uptWZIix6Yl48OgV5DHgeDJNRsHZMGVPoU7ALEDf-JKZ1zAv9DIHynL4uv88P-U2QbC0SeeXrL9N97I0Gws8QpOOedpL30pAJj7sUXR-x9NoRmn7vgxDRqLG4ZxSiYWHddIshj5GSXjl4-V9zfSv5OeQdxlar2JRqzFCjtDkp2jfOCDG8VBaV6HAyILeqEubYPngpHqjhS3kK_2dAbqPxOvbTq1U4s5oNpyjEoGyaR-CMeS47WqPYxNaA"
     },
     {
       id: "drill-005",
@@ -165,7 +165,7 @@ const DEFAULT_DATABASE = {
       whyImportant: "Create two lines of players.",
       pointers: "Perform movements with control. Focus on proper posture. Maintain high energy and coordination.",
       youtubeUrl: "https://www.youtube.com/watch?v=1C6fWqny24w",
-      imageUrl: "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?auto=format&fit=crop&w=600&q=80"
+      imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCF8koCUsVtgqHeXRGLz2xLVQezcfO7zAwkH3IUDDupZsrpvQYJcbv1ijQIKviwuvY6C76nwRj0ycOTI-QU_2gSCaEp1UqyJmJf-AGNemJgc1bjgaKKiTDO_oCigI0qeIQgN_HVI7SFiK8GYKJKoLLIiXDIIt1rSfpRzZnpMsTWiTJ7oN6dYyPtEM0zSroo9Dz0nZgkIezovtXRoiiMz-9SY4xCFECZbpjs21TqdCV3KsY2cvfF5DnKGcehundLNtB1RwOP4SdXMWQ"
     },
     {
       id: "drill-006",
@@ -704,7 +704,12 @@ function setupLayoutSwitcher() {
       mobileTarget.appendChild(appViews);
     }
     addSystemLog("Switched display layout to Mobile Frame Mockup.");
-    setTimeout(updateMobileNavTracer, 100);
+    setTimeout(() => {
+      updateMobileNavTracer();
+      loadTacticsData();
+      renderTacticsInputs();
+      renderPlayerTokens();
+    }, 100);
   });
 
   btnDesktop.addEventListener("click", () => {
@@ -716,7 +721,12 @@ function setupLayoutSwitcher() {
       desktopTarget.appendChild(appViews);
     }
     addSystemLog("Switched display layout to Desktop Portal.");
-    setTimeout(updateMobileNavTracer, 100);
+    setTimeout(() => {
+      updateMobileNavTracer();
+      loadTacticsData();
+      renderTacticsInputs();
+      renderPlayerTokens();
+    }, 100);
   });
 
   // Light/Dark Theme Switcher
@@ -2229,26 +2239,53 @@ window.addEventListener('storage', (e) => {
 // TACTICS BOARD (LINEUP BUILDER) LOGIC
 // ----------------------------------------------------
 function getDefaultPositions() {
+  const isMobile = document.getElementById("tactics-field") && document.getElementById("tactics-field").clientWidth < 350;
   const positions = [];
-  // GK
-  positions.push({ left: 174, top: 450 });
-  // LB, LCB, RCB, RB
-  positions.push({ left: 40, top: 370 });
-  positions.push({ left: 130, top: 370 });
-  positions.push({ left: 210, top: 370 });
-  positions.push({ left: 300, top: 370 });
-  // LM, CM, RM
-  positions.push({ left: 60, top: 250 });
-  positions.push({ left: 174, top: 270 });
-  positions.push({ left: 280, top: 250 });
-  // LW, CF, RW
-  positions.push({ left: 60, top: 100 });
-  positions.push({ left: 174, top: 70 });
-  positions.push({ left: 280, top: 100 });
   
-  // 7 Subs on the bench (y = 544)
-  for (let i = 0; i < 7; i++) {
-    positions.push({ left: 15 + i * 50, top: 544 });
+  if (isMobile) {
+    // Mobilized scaled positions (field is 320x520)
+    // GK
+    positions.push({ left: 144, top: 380 });
+    // LB, LCB, RCB, RB
+    positions.push({ left: 20, top: 310 });
+    positions.push({ left: 100, top: 310 });
+    positions.push({ left: 180, top: 310 });
+    positions.push({ left: 260, top: 310 });
+    // LM, CM, RM
+    positions.push({ left: 35, top: 210 });
+    positions.push({ left: 144, top: 225 });
+    positions.push({ left: 245, top: 210 });
+    // LW, CF, RW
+    positions.push({ left: 35, top: 80 });
+    positions.push({ left: 144, top: 50 });
+    positions.push({ left: 245, top: 80 });
+    
+    // Subs on bench
+    for (let i = 0; i < 7; i++) {
+      positions.push({ left: 10 + i * 43, top: 474 });
+    }
+  } else {
+    // Desktop positions (field is 380x600)
+    // GK
+    positions.push({ left: 174, top: 450 });
+    // LB, LCB, RCB, RB
+    positions.push({ left: 40, top: 370 });
+    positions.push({ left: 130, top: 370 });
+    positions.push({ left: 210, top: 370 });
+    positions.push({ left: 300, top: 370 });
+    // LM, CM, RM
+    positions.push({ left: 60, top: 250 });
+    positions.push({ left: 174, top: 270 });
+    positions.push({ left: 280, top: 250 });
+    // LW, CF, RW
+    positions.push({ left: 60, top: 100 });
+    positions.push({ left: 174, top: 70 });
+    positions.push({ left: 280, top: 100 });
+    
+    // 7 Subs on the bench (y = 544)
+    for (let i = 0; i < 7; i++) {
+      positions.push({ left: 15 + i * 50, top: 544 });
+    }
   }
   return positions;
 }

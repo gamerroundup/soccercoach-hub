@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Coaching Drills Library | SOCCERCOACH HUB</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&amp;family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#6ffbbe",
+                        "matte-black": "#020617",
+                        "action-blue": "#3B82F6",
+                        "on-secondary-fixed-variant": "#004395",
+                        "inverse-surface": "#dae2fd",
+                        "surface-container-low": "#131b2e",
+                        "on-tertiary-container": "#711419",
+                        "inverse-primary": "#006c49",
+                        "primary-fixed-dim": "#4edea3",
+                        "primary-container": "#10b981",
+                        "surface-tint": "#4edea3",
+                        "tertiary-fixed": "#ffdad7",
+                        "on-tertiary-fixed": "#410005",
+                        "surface-bright": "#31394d",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "primary": "#4edea3",
+                        "on-tertiary-fixed-variant": "#842225",
+                        "on-primary": "#003824",
+                        "outline": "#86948a",
+                        "on-primary-container": "#00422b",
+                        "surface-container-high": "#222a3d",
+                        "on-error-container": "#ffdad6",
+                        "surface-container": "#171f33",
+                        "outline-variant": "#3c4a42",
+                        "error-container": "#93000a",
+                        "on-background": "#dae2fd",
+                        "on-primary-fixed-variant": "#005236",
+                        "surface": "#0b1326",
+                        "on-secondary": "#002e6a",
+                        "surface-dim": "#0b1326",
+                        "on-secondary-fixed": "#001a42",
+                        "secondary-fixed": "#d8e2ff",
+                        "on-tertiary": "#650911",
+                        "tertiary-container": "#fc7c78",
+                        "tertiary": "#ffb3af",
+                        "error": "#ffb4ab",
+                        "on-error": "#690005",
+                        "on-secondary-container": "#e6ecff",
+                        "on-primary-fixed": "#002113",
+                        "deep-charcoal": "#0F172A",
+                        "surface-container-highest": "#2d3449",
+                        "background": "#0b1326",
+                        "surface-container-lowest": "#060e20",
+                        "tertiary-fixed-dim": "#ffb3af",
+                        "secondary-container": "#0566d9",
+                        "secondary": "#adc6ff",
+                        "on-surface-variant": "#bbcabf",
+                        "surface-variant": "#2d3449",
+                        "inverse-on-surface": "#283044",
+                        "danger-red": "#F43F5E",
+                        "glass-stroke": "rgba(255, 255, 255, 0.1)",
+                        "pitch-green": "#10B981",
+                        "on-surface": "#dae2fd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "stack-md": "16px",
+                        "gutter-desktop": "24px",
+                        "gutter-mobile": "16px",
+                        "stack-lg": "24px",
+                        "stack-sm": "8px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-md": ["Outfit"],
+                        "body-lg": ["Inter"],
+                        "mono-timer": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Outfit"],
+                        "headline-lg": ["Outfit"],
+                        "body-sm": ["Inter"],
+                        "headline-sm": ["Outfit"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #020617; /* matte-black */
+            color: #dae2fd; /* on-surface */
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #10B981;
+            border-radius: 10px;
+        }
+        /* Active nav indicator animation */
+        .nav-active-bg {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 3px;
+            background-color: #10B981;
+            border-radius: 3px 3px 0 0;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="dark selection:bg-pitch-green selection:text-matte-black pb-32">
+<!-- Top AppBar (Injected from Shared Components) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-surface/80 backdrop-blur-xl border-b border-glass-stroke">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-pitch-green flex items-center justify-center text-matte-black font-bold text-xs shadow-[0_0_15px_rgba(16,185,129,0.4)]">
+                SC
+            </div>
+<h1 class="font-headline-md text-headline-md font-bold tracking-tight text-on-surface">SOCCERCOACH HUB</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors">search</button>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+</div>
+</header>
+<main class="mt-20 px-4 max-w-5xl mx-auto space-y-stack-lg">
+<!-- Header Section -->
+<section class="space-y-4">
+<div class="flex justify-between items-end">
+<div>
+<span class="font-label-md text-label-md text-pitch-green uppercase tracking-widest">Training Resources</span>
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface mt-1">COACHING DRILLS LIBRARY</h2>
+</div>
+<button class="hidden md:flex items-center gap-2 bg-pitch-green text-matte-black px-6 py-3 rounded-xl font-bold hover:scale-105 transition-transform">
+<span class="material-symbols-outlined">add_circle</span>
+                    Create Drill
+                </button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+                Browse passing, dribbling, and physical drill guides. Filter by focus area or age group to find the perfect session for your next practice.
+            </p>
+</section>
+<!-- Search & Filter Area -->
+<section class="space-y-6">
+<!-- Search Bar -->
+<div class="relative group">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant group-focus-within:text-pitch-green transition-colors">search</span>
+<input class="w-full bg-surface-container-lowest border border-glass-stroke rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-action-blue outline-none transition-all" placeholder="Search drills, concepts, or keywords..." type="text"/>
+</div>
+<!-- Focus Area Pill Filters -->
+<div class="flex items-center gap-2 overflow-x-auto pb-2 custom-scrollbar no-scrollbar">
+<button class="whitespace-nowrap px-6 py-2 rounded-full bg-pitch-green text-matte-black font-bold text-body-sm">All Focuses</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full border border-glass-stroke text-on-surface-variant font-bold text-body-sm hover:bg-surface-container-high transition-colors">Passing</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full border border-glass-stroke text-on-surface-variant font-bold text-body-sm hover:bg-surface-container-high transition-colors">Dribbling</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full border border-glass-stroke text-on-surface-variant font-bold text-body-sm hover:bg-surface-container-high transition-colors">Shooting</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full border border-glass-stroke text-on-surface-variant font-bold text-body-sm hover:bg-surface-container-high transition-colors">Defending</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full border border-glass-stroke text-on-surface-variant font-bold text-body-sm hover:bg-surface-container-high transition-colors">Warmup</button>
+<button class="whitespace-nowrap px-6 py-2 rounded-full border border-glass-stroke text-on-surface-variant font-bold text-body-sm hover:bg-surface-container-high transition-colors">Goalkeeping</button>
+</div>
+<!-- Age Group Selection (Secondary Filters) -->
+<div class="flex items-center gap-4 py-2 border-b border-glass-stroke">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">Age Group:</span>
+<div class="flex gap-4 overflow-x-auto no-scrollbar">
+<button class="text-pitch-green font-bold text-body-sm underline underline-offset-4">Any Age</button>
+<button class="text-on-surface-variant font-bold text-body-sm hover:text-on-surface">U6</button>
+<button class="text-on-surface-variant font-bold text-body-sm hover:text-on-surface">U8</button>
+<button class="text-on-surface-variant font-bold text-body-sm hover:text-on-surface">U10</button>
+<button class="text-on-surface-variant font-bold text-body-sm hover:text-on-surface">U12</button>
+<button class="text-on-surface-variant font-bold text-body-sm hover:text-on-surface">U13+</button>
+</div>
+</div>
+</section>
+<!-- Listings: Vertical Drill Feed -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
+<!-- Drill Card 1 -->
+<div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row gap-6 hover:border-pitch-green transition-all cursor-pointer group">
+<div class="relative w-full sm:w-48 h-32 rounded-xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" data-alt="A professional soccer training field at golden hour. A coach is setting up vibrant orange cones in a triangle pattern for a passing drill. The grass is perfectly manicured and bright green. The lighting is cinematic and warm, highlighting the high-performance coaching atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8zK6RaKkP8UT6ngcU8Yy6MN1lgEH68LU22RxoPWfHe0lU3lIATYdvrt8rO9KDaCU_6QLnp6YDQni-GwmeHifhWx-5XcjcznZQC-10KLoHlAMKKqkckzer0T0FuBgIsSd9sGavto3FrpYRZJhGHgN1uc-cfWhhW8lcrT3EjsbyuSY1mUyuXJGKgaL_QGCP3SDVHB5d0TQ3bcgWl8DVY8kt7J68u35fzsLVJM6iPRV1RD3WjZIX0Wmd4kuHmRFTnQqe4Pnm-ZZum1o"/>
+<div class="absolute bottom-2 right-2 bg-matte-black/80 backdrop-blur-md px-2 py-1 rounded-md text-[10px] font-bold text-pitch-green border border-glass-stroke uppercase">
+                        Video Guide
+                    </div>
+</div>
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-pitch-green transition-colors">Triangle Awareness Passing</h3>
+<span class="material-symbols-outlined text-on-surface-variant/40 hover:text-action-blue">bookmark</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1 mt-1">Focuses on technical weight of pass and scanning before receiving.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3 mt-4">
+<div class="flex items-center gap-1.5 px-3 py-1 bg-action-blue/10 rounded-full border border-action-blue/20">
+<span class="w-1.5 h-1.5 rounded-full bg-action-blue"></span>
+<span class="font-label-md text-label-md text-action-blue uppercase">Passing</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-high rounded-full border border-glass-stroke">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">groups</span>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">U6 - U10</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-high rounded-full border border-glass-stroke">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">timer</span>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">15 MINS</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Drill Card 2 -->
+<div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row gap-6 hover:border-pitch-green transition-all cursor-pointer group">
+<div class="relative w-full sm:w-48 h-32 rounded-xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" data-alt="Overhead tactical view of a soccer dribbling course. Multiple small children in athletic gear are weaving between blue and yellow cones. The scene is bright and energetic with a professional dark UI backdrop feel. High contrast colors and sharp focus on the footwork movement." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkk1A36UR0AZepSsr3RJ9F5FzUhcjpk1L7n3ihgF6VJwVdGkAwGx0ESfJ47mXA0GjTL8ljFYBlr-DwITJyvVYRTelikKhlVXf_e4EBX28y6qJFPOOFASOW_KbrH-lL4DOSDpDVBFqDCZJ3TYtcusch4Aaf_h6nUcpbmO2_uomyBR5JsxwC3jtaktX2mcS7HGTIsniI4zePOv8tzClDpYO0p2_d2OvNkyyNhcBZz5PbYhD1W2v_o3UFzB-Ms04FTPRGHV2wmI43Zf4"/>
+</div>
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-pitch-green transition-colors">Cone Weave &amp; Burst</h3>
+<span class="material-symbols-outlined text-on-surface-variant/40 hover:text-action-blue">bookmark</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1 mt-1">Develops close control and explosive acceleration out of turns.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3 mt-4">
+<div class="flex items-center gap-1.5 px-3 py-1 bg-action-blue/10 rounded-full border border-action-blue/20">
+<span class="w-1.5 h-1.5 rounded-full bg-action-blue"></span>
+<span class="font-label-md text-label-md text-action-blue uppercase">Dribbling</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-high rounded-full border border-glass-stroke">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">groups</span>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">U8 - U12</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-high rounded-full border border-glass-stroke">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">timer</span>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">20 MINS</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Drill Card 3 -->
+<div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row gap-6 hover:border-pitch-green transition-all cursor-pointer group">
+<div class="relative w-full sm:w-48 h-32 rounded-xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" data-alt="A macro shot of a soccer ball hitting the back of a net in slow motion. The background features a blurred goal post and a dark, moody stadium lighting. The style is athletic and high-performance, emphasizing power and precision in shooting drills. Vibrant action-blue highlights in the atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOuP7knuh_y58Bjzv-9LHz2GW6cYMUrAxWITeszFRWQBiAC6df5ppTp1uAwc2zgNhjCubOucXtabaVZv366Yw0dh-aYbLFXKe6DOFiCb_9qXNT95CjyZ3T3n0H5KmHnhCKVM2R957IyLnt5Vc5NGywvTrWbi-yIxcSXdxf-YRGcvwhSyKh_sjkkb3sLs8MBEwCQrTeY1DYFboy9QD3BxllxAbOftQ86tWEFRw2WxLa8cFOghwYp_08WzuhNZqykv8AfW4FISV4M8I"/>
+<div class="absolute bottom-2 right-2 bg-matte-black/80 backdrop-blur-md px-2 py-1 rounded-md text-[10px] font-bold text-pitch-green border border-glass-stroke uppercase">
+                        Video Guide
+                    </div>
+</div>
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-pitch-green transition-colors">Precision Target Striking</h3>
+<span class="material-symbols-outlined text-on-surface-variant/40 hover:text-action-blue">bookmark</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1 mt-1">Focus on ball striking technique and aiming for corner pockets.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3 mt-4">
+<div class="flex items-center gap-1.5 px-3 py-1 bg-action-blue/10 rounded-full border border-action-blue/20">
+<span class="w-1.5 h-1.5 rounded-full bg-action-blue"></span>
+<span class="font-label-md text-label-md text-action-blue uppercase">Shooting</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-high rounded-full border border-glass-stroke">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">groups</span>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">U10 - U13+</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-high rounded-full border border-glass-stroke">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">timer</span>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">25 MINS</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Drill Card 4 -->
+<div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row gap-6 hover:border-pitch-green transition-all cursor-pointer group">
+<div class="relative w-full sm:w-48 h-32 rounded-xl overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500" data-alt="A group of young soccer players in bright bibs running in a structured pattern for a warmup. The image is captured from a low angle on the grass. The background is a clean athletic park under a clear sky. Professional sports photography style with deep shadows and vibrant colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2OLYikplm2VXYE7Mg71uptWZIix6Yl48OgV5DHgeDJNRsHZMGVPoU7ALEDf-JKZ1zAv9DIHynL4uv88P-U2QbC0SeeXrL9N97I0Gws8QpOOedpL30pAJj7sUXR-x9NoRmn7vgxDRqLG4ZxSiYWHddIshj5GSXjl4-V9zfSv5OeQdxlar2JRqzFCjtDkp2jfOCDG8VBaV6HAyILeqEubYPngpHqjhS3kK_2dAbqPxOvbTq1U4s5oNpyjEoGyaR-CMeS47WqPYxNaA"/>
+</div>
+<div class="flex-grow flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-pitch-green transition-colors">Dynamic Gate Activation</h3>
+<span class="material-symbols-outlined text-on-surface-variant/40 hover:text-action-blue">bookmark</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1 mt-1">Total body engagement and mobility work before intensive training.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3 mt-4">
+<div class="flex items-center gap-1.5 px-3 py-1 bg-action-blue/10 rounded-full border border-action-blue/20">
+<span class="w-1.5 h-1.5 rounded-full bg-action-blue"></span>
+<span class="font-label-md text-label-md text-action-blue uppercase">Warmup</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-high rounded-full border border-glass-stroke">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">groups</span>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">All Ages</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1 bg-surface-container-high rounded-full border border-glass-stroke">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">timer</span>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase">10 MINS</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Footer (Micro-copy) -->
+<div class="text-center py-10 opacity-40">
+<p class="font-label-md text-label-md uppercase tracking-widest">Showing 4 of 48 Drill Modules</p>
+<div class="mt-4 flex justify-center gap-2">
+<div class="w-12 h-1 bg-pitch-green rounded-full"></div>
+<div class="w-2 h-1 bg-glass-stroke rounded-full"></div>
+<div class="w-2 h-1 bg-glass-stroke rounded-full"></div>
+</div>
+</div>
+</main>
+<!-- FAB for Mobile -->
+<button class="md:hidden fixed bottom-24 right-6 w-14 h-14 bg-pitch-green text-matte-black rounded-full shadow-2xl flex items-center justify-center z-[55] hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[32px]">add</span>
+</button>
+<!-- BottomNavBar (Shared Component) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-20 bg-deep-charcoal/90 dark:bg-deep-charcoal/90 border-t border-glass-stroke backdrop-blur-lg shadow-lg rounded-t-xl">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="font-label-md text-label-md">Handbook</span>
+</div>
+<!-- Active Tab: Drills -->
+<div class="flex flex-col items-center justify-center text-pitch-green bg-primary-container/10 rounded-xl px-3 py-1 relative">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">exercise</span>
+<span class="font-label-md text-label-md">Drills</span>
+<div class="nav-active-bg"></div>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">strategy</span>
+<span class="font-label-md text-label-md">Tactics</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="font-label-md text-label-md">Reports</span>
+</div>
+</nav>
+<script>
+        // Micro-interactions for filtering
+        const filters = document.querySelectorAll('button.whitespace-nowrap');
+        filters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                filters.forEach(f => {
+                    f.classList.remove('bg-pitch-green', 'text-matte-black');
+                    f.classList.add('border', 'border-glass-stroke', 'text-on-surface-variant');
+                });
+                filter.classList.add('bg-pitch-green', 'text-matte-black');
+                filter.classList.remove('border', 'border-glass-stroke', 'text-on-surface-variant');
+            });
+        });
+    </script>
+</body></html>
