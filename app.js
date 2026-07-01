@@ -522,16 +522,56 @@ const DEFAULT_DATABASE = {
   }
 };
 
+// Snake-to-Camel and Camel-to-Snake utilities for DB mapping
+function toSnake(obj) {
+  if (!obj || typeof obj !== 'object') return obj;
+  if (obj instanceof Date) return obj.toISOString();
+  if (Array.isArray(obj)) return obj.map(toSnake);
+  const newObj = {};
+  for (const key of Object.keys(obj)) {
+    const snakeKey = key.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
+    newObj[snakeKey] = toSnake(obj[key]);
+  }
+  return newObj;
+}
+
+function toCamel(obj) {
+  if (!obj || typeof obj !== 'object') return obj;
+  if (Array.isArray(obj)) return obj.map(toCamel);
+  const newObj = {};
+  for (const key of Object.keys(obj)) {
+    const camelKey = key.replace(/([-_][a-z])/g, group => group.toUpperCase().replace('-', '').replace('_', ''));
+    newObj[camelKey] = toCamel(obj[key]);
+  }
+  return newObj;
+}
+
 // Database class helper
 class SoccerDb {
   constructor() {
     this.key = "soccercoach_hub_db_v5";
+    this.syncQueueKey = "soccercoach_sync_queue";
+    this.isSyncing = false;
     this.init();
   }
 
   init() {
     if (!localStorage.getItem(this.key)) {
       localStorage.setItem(this.key, JSON.stringify(DEFAULT_DATABASE));
+    }
+    // Ensure all practice plans in local storage have IDs
+    const data = this.getData();
+    let changed = false;
+    if (data.practicePlans) {
+      data.practicePlans.forEach((plan, idx) => {
+        if (!plan.id) {
+          plan.id = `plan-${Date.now()}-${idx}-${plan.name.replace(/\s+/g, '-').toLowerCase()}`;
+          changed = true;
+        }
+      });
+    }
+    if (changed) {
+      localStorage.setItem(this.key, JSON.stringify(data));
     }
   }
 
@@ -546,12 +586,271 @@ class SoccerDb {
   }
 
   saveData(data) {
+    const oldData = this.getData();
     localStorage.setItem(this.key, JSON.stringify(data));
+    this.diffAndQueue(oldData, data);
+    this.flushQueue();
+  }
+
+  saveTactics(key, tacticsData) {
+    localStorage.setItem(`soccercoach_tactics_${key}`, JSON.stringify(tacticsData));
+    if (window.supabaseClient) {
+      const queue = this.getSyncQueue();
+      queue.push({
+        type: 'upsert',
+        table: 'soccer_tactics',
+        id: key,
+        data: { key: key, data: tacticsData }
+      });
+      this.saveSyncQueue(queue);
+      this.flushQueue();
+    }
   }
 
   resetToDefault() {
     localStorage.setItem(this.key, JSON.stringify(DEFAULT_DATABASE));
+    if (window.supabaseClient) {
+      this.resetSupabaseToDefault();
+    }
     return DEFAULT_DATABASE;
+  }
+
+  getSyncQueue() {
+    try {
+      return JSON.parse(localStorage.getItem(this.syncQueueKey)) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  saveSyncQueue(queue) {
+    localStorage.setItem(this.syncQueueKey, JSON.stringify(queue));
+    const countEl = document.getElementById("sb-queue-count");
+    if (countEl) countEl.innerText = queue.length;
+  }
+
+  diffAndQueue(oldData, newData) {
+    if (!window.supabaseClient) return;
+
+    const tables = {
+      ageGroups: { table: 'soccer_age_groups', idField: 'id' },
+      drills: { table: 'soccer_drills', idField: 'id' },
+      blogs: { table: 'soccer_blogs', idField: 'id' },
+      practicePlans: { table: 'soccer_practice_plans', idField: 'id' },
+      complaints: { table: 'soccer_complaints', idField: 'id' },
+      tasks: { table: 'soccer_tasks', idField: 'id' },
+      calendarEvents: { table: 'soccer_calendar_events', idField: 'id' }
+    };
+
+    const queue = this.getSyncQueue();
+
+    for (const [key, config] of Object.entries(tables)) {
+      const oldArr = oldData[key] || [];
+      const newArr = newData[key] || [];
+
+      // Added or Modified
+      for (const newItem of newArr) {
+        const oldItem = oldArr.find(o => o[config.idField] === newItem[config.idField]);
+        if (!oldItem || JSON.stringify(oldItem) !== JSON.stringify(newItem)) {
+          queue.push({
+            type: 'upsert',
+            table: config.table,
+            id: newItem[config.idField],
+            data: newItem
+          });
+        }
+      }
+
+      // Deleted
+      for (const oldItem of oldArr) {
+        if (!newArr.some(n => n[config.idField] === oldItem[config.idField])) {
+          queue.push({
+            type: 'delete',
+            table: config.table,
+            id: oldItem[config.idField]
+          });
+        }
+      }
+    }
+
+    // Board links diff
+    const oldLinks = oldData.boardLinks || {};
+    const newLinks = newData.boardLinks || {};
+    for (const [linkKey, newLink] of Object.entries(newLinks)) {
+      const oldLink = oldLinks[linkKey];
+      if (!oldLink || oldLink.label !== newLink.label || oldLink.url !== newLink.url) {
+        queue.push({
+          type: 'upsert',
+          table: 'soccer_board_links',
+          id: linkKey,
+          data: { key: linkKey, label: newLink.label, url: newLink.url }
+        });
+      }
+    }
+    for (const linkKey of Object.keys(oldLinks)) {
+      if (!newLinks[linkKey]) {
+        queue.push({
+          type: 'delete',
+          table: 'soccer_board_links',
+          id: linkKey
+        });
+      }
+    }
+
+    this.saveSyncQueue(queue);
+  }
+
+  async flushQueue() {
+    if (!window.supabaseClient || this.isSyncing || !navigator.onLine) return;
+    this.isSyncing = true;
+    updateSyncStatus("Syncing...");
+
+    let queue = this.getSyncQueue();
+    const failedItems = [];
+
+    while (queue.length > 0) {
+      const item = queue.shift();
+      try {
+        let error = null;
+        if (item.type === 'upsert') {
+          const snakeData = toSnake(item.data);
+          const { error: err } = await window.supabaseClient
+            .from(item.table)
+            .upsert(snakeData);
+          error = err;
+        } else if (item.type === 'delete') {
+          const idCol = item.table === 'soccer_board_links' || item.table === 'soccer_tactics' ? 'key' : 'id';
+          const { error: err } = await window.supabaseClient
+            .from(item.table)
+            .delete()
+            .eq(idCol, item.id);
+          error = err;
+        }
+
+        if (error) {
+          console.error(`Sync error on table ${item.table}:`, error);
+          failedItems.push(item);
+          if (error.message && error.message.includes('Failed to fetch')) {
+            queue.unshift(item);
+            break;
+          }
+        }
+      } catch (err) {
+        console.error("Flush queue exception:", err);
+        failedItems.push(item);
+        break;
+      }
+      this.saveSyncQueue(queue.concat(failedItems));
+    }
+
+    this.isSyncing = false;
+    this.saveSyncQueue(queue.concat(failedItems));
+
+    if (queue.length === 0 && failedItems.length === 0) {
+      updateSyncStatus("Connected (Real-time)");
+      localStorage.setItem("sb_last_sync_time", new Date().toLocaleString());
+      const lastSyncEl = document.getElementById("sb-last-sync");
+      if (lastSyncEl) lastSyncEl.innerText = localStorage.getItem("sb_last_sync_time");
+      await this.pullLatestData();
+    } else {
+      updateSyncStatus("Offline (Pending Sync)");
+    }
+  }
+
+  async pullLatestData() {
+    if (!window.supabaseClient || !navigator.onLine) return;
+    try {
+      const tables = {
+        ageGroups: 'soccer_age_groups',
+        drills: 'soccer_drills',
+        blogs: 'soccer_blogs',
+        practicePlans: 'soccer_practice_plans',
+        complaints: 'soccer_complaints',
+        tasks: 'soccer_tasks',
+        calendarEvents: 'soccer_calendar_events'
+      };
+
+      const localDb = this.getData();
+
+      for (const [key, table] of Object.entries(tables)) {
+        const { data, error } = await window.supabaseClient.from(table).select('*');
+        if (!error && data) {
+          localDb[key] = toCamel(data);
+        }
+      }
+
+      // Board links
+      const { data: linksData, error: linksError } = await window.supabaseClient.from('soccer_board_links').select('*');
+      if (!linksError && linksData) {
+        localDb.boardLinks = {};
+        linksData.forEach(row => {
+          localDb.boardLinks[row.key] = { label: row.label, url: row.url };
+        });
+      }
+
+      // Tactics data
+      const { data: tacticsData, error: tacticsError } = await window.supabaseClient.from('soccer_tactics').select('*');
+      if (!tacticsError && tacticsData) {
+        tacticsData.forEach(row => {
+          localStorage.setItem(`soccercoach_tactics_${row.key}`, JSON.stringify(row.data));
+        });
+      }
+
+      localStorage.setItem(this.key, JSON.stringify(localDb));
+      
+      loadTacticsData();
+      triggerAllRenders();
+    } catch (e) {
+      console.error("Error pulling latest data from Supabase:", e);
+    }
+  }
+
+  async resetSupabaseToDefault() {
+    if (!window.supabaseClient) return;
+    try {
+      addSystemLog("Resetting remote database to seed defaults...");
+      const tables = [
+        'soccer_age_groups',
+        'soccer_drills',
+        'soccer_blogs',
+        'soccer_practice_plans',
+        'soccer_complaints',
+        'soccer_tasks',
+        'soccer_calendar_events',
+        'soccer_board_links',
+        'soccer_tactics'
+      ];
+      for (const t of tables) {
+        const idCol = t === 'soccer_board_links' || t === 'soccer_tactics' ? 'key' : 'id';
+        await window.supabaseClient.from(t).delete().neq(idCol, 'xyz_not_exist_xyz');
+      }
+      addSystemLog("Remote database tables cleared. Seeding default data...");
+      
+      const ensureIds = (arr, prefix) => {
+        return arr.map((item, idx) => {
+          const copy = {...item};
+          if (!copy.id) copy.id = `${prefix}-${Date.now()}-${idx}-${copy.name.replace(/\s+/g, '-').toLowerCase()}`;
+          return copy;
+        });
+      };
+      
+      const seedPlans = ensureIds(DEFAULT_DATABASE.practicePlans, 'plan');
+
+      await window.supabaseClient.from('soccer_age_groups').insert(toSnake(DEFAULT_DATABASE.ageGroups));
+      await window.supabaseClient.from('soccer_drills').insert(toSnake(DEFAULT_DATABASE.drills));
+      await window.supabaseClient.from('soccer_blogs').insert(toSnake(DEFAULT_DATABASE.blogs));
+      await window.supabaseClient.from('soccer_practice_plans').insert(toSnake(seedPlans));
+      await window.supabaseClient.from('soccer_complaints').insert(toSnake(DEFAULT_DATABASE.complaints));
+      await window.supabaseClient.from('soccer_tasks').insert(toSnake(DEFAULT_DATABASE.tasks));
+      await window.supabaseClient.from('soccer_calendar_events').insert(toSnake(DEFAULT_DATABASE.calendarEvents));
+      
+      const linksRows = Object.entries(DEFAULT_DATABASE.boardLinks).map(([k, v]) => ({ key: k, label: v.label, url: v.url }));
+      await window.supabaseClient.from('soccer_board_links').insert(linksRows);
+      
+      addSystemLog("Remote database successfully seeded with league defaults.");
+    } catch (e) {
+      console.error("Error resetting Supabase to default:", e);
+    }
   }
 }
 
@@ -2203,6 +2502,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Initialize Supabase Integration
+  initSupabase();
+
   addSystemLog("Interactive PWA modules initialized.");
 });
 
@@ -2347,7 +2649,7 @@ function renderTacticsInputs() {
 window.updatePlayerName = function(input) {
   const index = parseInt(input.dataset.index);
   playerNames[index] = input.value;
-  localStorage.setItem("soccercoach_tactics_names", JSON.stringify(playerNames));
+  db.saveTactics("names", playerNames);
   
   const label = document.getElementById(`player-token-label-${index}`);
   if (label) label.innerText = input.value;
@@ -2450,9 +2752,9 @@ function makeElementDraggable(el, isBall, index) {
     document.removeEventListener('touchend', endDrag);
     
     if (isBall) {
-      localStorage.setItem("soccercoach_tactics_ball", JSON.stringify(ballPosition));
+      db.saveTactics("ball", ballPosition);
     } else {
-      localStorage.setItem("soccercoach_tactics_positions", JSON.stringify(playerPositions));
+      db.saveTactics("positions", playerPositions);
     }
     localStorage.setItem("soccercoach_tactics_sync_trigger", Date.now());
   }
@@ -2462,8 +2764,8 @@ window.resetPlayerPositions = function() {
   playerPositions = getDefaultPositions();
   ballPosition = { left: 178, top: 248 };
   
-  localStorage.setItem("soccercoach_tactics_positions", JSON.stringify(playerPositions));
-  localStorage.setItem("soccercoach_tactics_ball", JSON.stringify(ballPosition));
+  db.saveTactics("positions", playerPositions);
+  db.saveTactics("ball", ballPosition);
   localStorage.setItem("soccercoach_tactics_sync_trigger", Date.now());
   
   renderPlayerTokens();
@@ -2740,3 +3042,386 @@ window.updateMobileNavTracer = function() {
 window.addEventListener("resize", () => {
   updateMobileNavTracer();
 });
+
+// ====================================================
+// SUPABASE CLIENT ORCHESTRATION & SYNC TRIGGERS
+// ====================================================
+let supabaseRealtimeChannel = null;
+
+window.initSupabase = async function() {
+  const url = localStorage.getItem("supabase_url");
+  const key = localStorage.getItem("supabase_key");
+
+  const urlInput = document.getElementById("sb-url");
+  const keyInput = document.getElementById("sb-key");
+  if (urlInput && url) urlInput.value = url;
+  if (keyInput && key) keyInput.value = key;
+
+  const sqlArea = document.getElementById("sql-script-text");
+  if (sqlArea) {
+    sqlArea.value = DB_SETUP_SQL;
+  }
+
+  if (!url || !key) {
+    updateSyncStatus("Local Only");
+    return;
+  }
+
+  updateSyncStatus("Connecting...");
+
+  try {
+    // Initialize client
+    window.supabaseClient = supabase.createClient(url, key);
+
+    // Verify connection by doing a simple select query
+    const { error } = await window.supabaseClient.from('soccer_age_groups').select('id').limit(1);
+    
+    if (error) {
+      console.error("Supabase verification failed:", error);
+      updateSyncStatus("Offline (Pending Sync)");
+      addSystemLog("Supabase connection failed. Running offline cache mode.");
+      return;
+    }
+
+    addSystemLog("Supabase Cloud Connected successfully.");
+    updateSyncStatus("Connected (Real-time)");
+
+    // Flush any pending queue
+    await db.flushQueue();
+
+    // Setup Realtime subscriptions
+    setupSupabaseRealtime();
+    
+    // Perform initial pull
+    await db.pullLatestData();
+  } catch (err) {
+    console.error("Error connecting to Supabase:", err);
+    updateSyncStatus("Offline (Pending Sync)");
+    addSystemLog("Offline: Supabase server is currently unreachable.");
+  }
+};
+
+window.saveSupabaseConfig = function(e) {
+  e.preventDefault();
+  const url = document.getElementById("sb-url").value.trim();
+  const key = document.getElementById("sb-key").value.trim();
+
+  localStorage.setItem("supabase_url", url);
+  localStorage.setItem("supabase_key", key);
+
+  addSystemLog("Saved new Supabase database configuration credentials.");
+  showToast("Supabase credentials saved. Sync starting...", "success");
+
+  initSupabase();
+};
+
+window.disconnectSupabase = function() {
+  if (confirm("Disconnect Supabase cloud database? App will revert to isolated local storage mode.")) {
+    localStorage.removeItem("supabase_url");
+    localStorage.removeItem("supabase_key");
+    window.supabaseClient = null;
+    
+    if (supabaseRealtimeChannel) {
+      supabaseRealtimeChannel.unsubscribe();
+      supabaseRealtimeChannel = null;
+    }
+
+    const urlInput = document.getElementById("sb-url");
+    const keyInput = document.getElementById("sb-key");
+    if (urlInput) urlInput.value = "";
+    if (keyInput) keyInput.value = "";
+
+    updateSyncStatus("Local Only");
+    addSystemLog("Supabase cloud database disconnected. Offline mode activated.");
+    showToast("Disconnected from Supabase.", "warning");
+    triggerAllRenders();
+  }
+};
+
+function updateSyncStatus(status) {
+  const textEl = document.getElementById("sb-status-text");
+  const badgeEl = document.getElementById("sync-status-badge");
+  const badgeMobileEl = document.getElementById("sync-status-badge-mobile");
+  const localMonitorEl = document.getElementById("live-local-monitor-badge");
+  const lastSyncEl = document.getElementById("sb-last-sync");
+
+  if (textEl) {
+    textEl.innerText = status;
+    if (status === "Connected (Real-time)") textEl.style.color = "var(--success)";
+    else if (status === "Syncing...") textEl.style.color = "var(--warning)";
+    else if (status === "Local Only") textEl.style.color = "#94a3b8";
+    else textEl.style.color = "var(--danger)";
+  }
+
+  const updateBadge = (el) => {
+    if (!el) return;
+    el.innerHTML = `<i class="fas fa-database"></i> ${status}`;
+    if (status === "Connected (Real-time)") {
+      el.style.background = "rgba(16, 185, 129, 0.15)";
+      el.style.color = "var(--success)";
+    } else if (status === "Syncing..." || status === "Connecting...") {
+      el.style.background = "rgba(245, 158, 11, 0.15)";
+      el.style.color = "var(--warning)";
+    } else if (status === "Local Only") {
+      el.style.background = "rgba(100, 116, 139, 0.15)";
+      el.style.color = "#94a3b8";
+    } else {
+      el.style.background = "rgba(239, 68, 68, 0.15)";
+      el.style.color = "var(--danger)";
+    }
+  };
+
+  updateBadge(badgeEl);
+  updateBadge(badgeMobileEl);
+
+  if (localMonitorEl) {
+    localMonitorEl.style.display = status === "Connected (Real-time)" ? "inline-flex" : "none";
+  }
+
+  if (lastSyncEl) {
+    lastSyncEl.innerText = localStorage.getItem("sb_last_sync_time") || "Never";
+  }
+}
+
+function setupSupabaseRealtime() {
+  if (!window.supabaseClient) return;
+
+  if (supabaseRealtimeChannel) {
+    supabaseRealtimeChannel.unsubscribe();
+  }
+
+  supabaseRealtimeChannel = window.supabaseClient
+    .channel('public-db-changes')
+    .on('postgres_changes', { event: '*', schema: 'public' }, (payload) => {
+      handleRealtimeUpdate(payload);
+    })
+    .subscribe();
+}
+
+function handleRealtimeUpdate(payload) {
+  const table = payload.table;
+  const eventType = payload.eventType;
+  const localDb = db.getData();
+
+  const mapping = {
+    soccer_age_groups: { key: 'ageGroups', idField: 'id', render: () => { renderHandbook(); updateAgeSelectors(); } },
+    soccer_drills: { key: 'drills', idField: 'id', render: () => { renderDrills(); } },
+    soccer_blogs: { key: 'blogs', idField: 'id', render: () => { renderLounge(); } },
+    soccer_practice_plans: { key: 'practicePlans', idField: 'id', render: () => { renderLounge(); } },
+    soccer_complaints: { key: 'complaints', idField: 'id', render: () => { renderBoardPortal(); } },
+    soccer_tasks: { key: 'tasks', idField: 'id', render: () => { renderBoardPortal(); } },
+    soccer_calendar_events: { key: 'calendarEvents', idField: 'id', render: () => { renderBoardPortal(); } }
+  };
+
+  if (mapping[table]) {
+    const config = mapping[table];
+    const newRecord = payload.new ? toCamel(payload.new) : null;
+    const oldRecord = payload.old ? toCamel(payload.old) : null;
+
+    let currentArr = localDb[config.key] || [];
+
+    if (eventType === 'INSERT') {
+      if (!currentArr.some(item => item[config.idField] === newRecord[config.idField])) {
+        currentArr.push(newRecord);
+      }
+    } else if (eventType === 'UPDATE') {
+      const idx = currentArr.findIndex(item => item[config.idField] === newRecord[config.idField]);
+      if (idx !== -1) {
+        currentArr[idx] = newRecord;
+      } else {
+        currentArr.push(newRecord);
+      }
+    } else if (eventType === 'DELETE') {
+      const idToDelete = oldRecord ? oldRecord[config.idField] : (payload.old ? (payload.old.id || payload.old.key) : null);
+      if (idToDelete) {
+        localDb[config.key] = currentArr.filter(item => item[config.idField] !== idToDelete);
+      }
+    }
+
+    localStorage.setItem(db.key, JSON.stringify(localDb));
+    config.render();
+    addSystemLog(`Real-time update synchronized table [${table.toUpperCase()}]`);
+  } else if (table === 'soccer_board_links') {
+    const newRecord = payload.new;
+    if (eventType === 'DELETE') {
+      if (payload.old && payload.old.key) {
+        delete localDb.boardLinks[payload.old.key];
+      }
+    } else if (newRecord) {
+      if (!localDb.boardLinks) localDb.boardLinks = {};
+      localDb.boardLinks[newRecord.key] = { label: newRecord.label, url: newRecord.url };
+    }
+    localStorage.setItem(db.key, JSON.stringify(localDb));
+    renderBoardLinks();
+    addSystemLog("Real-time update synchronized board links.");
+  } else if (table === 'soccer_tactics') {
+    const newRecord = payload.new;
+    if (eventType !== 'DELETE' && newRecord) {
+      localStorage.setItem(`soccercoach_tactics_${newRecord.key}`, JSON.stringify(newRecord.data));
+      loadTacticsData();
+      renderTacticsInputs();
+      renderPlayerTokens();
+      addSystemLog("Real-time update synchronized tactics layout.");
+    }
+  }
+}
+
+function triggerAllRenders() {
+  renderHandbook();
+  renderDrills();
+  renderLounge();
+  renderBoardPortal();
+  loadTacticsData();
+  renderTacticsInputs();
+  renderPlayerTokens();
+}
+
+window.toggleSqlScript = function() {
+  const panel = document.getElementById("sql-script-panel");
+  const btn = document.getElementById("btn-toggle-sql-script");
+  if (!panel || !btn) return;
+
+  if (panel.style.display === "none") {
+    panel.style.display = "block";
+    btn.innerHTML = `<i class="fas fa-eye-slash"></i> Hide SQL Script`;
+  } else {
+    panel.style.display = "none";
+    btn.innerHTML = `<i class="fas fa-code"></i> Show Setup SQL Script`;
+  }
+};
+
+window.copySqlScript = function() {
+  const text = document.getElementById("sql-script-text");
+  if (!text) return;
+  text.select();
+  document.execCommand("copy");
+  showToast("SQL Setup Script copied to clipboard!", "success");
+};
+
+// Event Listeners for connection recovery
+window.addEventListener('online', () => {
+  addSystemLog("Internet connection restored. Sync active.");
+  db.flushQueue();
+});
+
+window.addEventListener('offline', () => {
+  addSystemLog("Network disconnected. Operations running in cached offline mode.");
+  updateSyncStatus("Offline (Pending Sync)");
+});
+
+const DB_SETUP_SQL = `-- Create tables for SoccerCoach Hub PWA
+CREATE TABLE IF NOT EXISTS public.soccer_age_groups (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  match_format TEXT,
+  ball_size TEXT,
+  roster_size TEXT,
+  match_duration TEXT,
+  field_dimension TEXT,
+  goalkeeper TEXT,
+  offsides TEXT,
+  heading TEXT,
+  notes TEXT,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.soccer_drills (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  type TEXT NOT NULL,
+  age_range TEXT,
+  duration TEXT,
+  description TEXT,
+  why_important TEXT,
+  pointers TEXT,
+  youtube_url TEXT,
+  image_url TEXT,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.soccer_blogs (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  author TEXT NOT NULL,
+  role TEXT,
+  date TEXT,
+  content TEXT,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.soccer_practice_plans (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  age_group TEXT NOT NULL,
+  link TEXT,
+  author TEXT,
+  details TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.soccer_complaints (
+  id TEXT PRIMARY KEY,
+  type TEXT NOT NULL,
+  subject TEXT NOT NULL,
+  date TEXT,
+  reporter TEXT,
+  opponent_community TEXT,
+  details TEXT,
+  status TEXT DEFAULT 'new',
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.soccer_tasks (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  status TEXT DEFAULT 'todo',
+  tag TEXT,
+  assignee TEXT,
+  due_date TEXT,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.soccer_calendar_events (
+  id TEXT PRIMARY KEY,
+  title TEXT NOT NULL,
+  date TEXT NOT NULL,
+  time TEXT,
+  link TEXT,
+  description TEXT,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.soccer_board_links (
+  key TEXT PRIMARY KEY,
+  label TEXT NOT NULL,
+  url TEXT NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS public.soccer_tactics (
+  key TEXT PRIMARY KEY,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- Enable real-time replication for all these tables
+ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_age_groups;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_drills;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_blogs;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_practice_plans;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_complaints;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_tasks;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_calendar_events;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_board_links;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_tactics;
+
+-- Disable Row Level Security (RLS) for simple integration
+ALTER TABLE public.soccer_age_groups DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.soccer_drills DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.soccer_blogs DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.soccer_practice_plans DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.soccer_complaints DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.soccer_tasks DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.soccer_calendar_events DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.soccer_board_links DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.soccer_tactics DISABLE ROW LEVEL SECURITY;`;

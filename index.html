@@ -54,7 +54,10 @@
           <!-- Views will be moved here in Mobile mode -->
           <div id="mobile-app-header" style="padding: 15px 20px; background: var(--bg-sidebar); border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center;">
             <span style="font-family: var(--font-title); font-size: 16px; font-weight: 800; color: var(--primary);">SoccerCoach PWA</span>
-            <span class="badge-item hub" style="font-size: 9px; padding: 2px 6px;">Mobile Mode</span>
+            <div style="display: flex; gap: 5px; align-items: center;">
+              <span class="badge-item" id="sync-status-badge-mobile" style="font-size: 9px; padding: 2px 6px; background: rgba(100, 116, 139, 0.15); color: #94a3b8;"><i class="fas fa-database"></i> Local</span>
+              <span class="badge-item hub" style="font-size: 9px; padding: 2px 6px;">Mobile Mode</span>
+            </div>
           </div>
           
           <div id="mobile-view-content-target">
@@ -106,7 +109,8 @@
           </div>
         </div>
         <div class="header-badges-links">
-          <span class="badge-item monitor"><i class="fas fa-circle" style="color: var(--success); font-size: 8px; margin-right: 4px;"></i> Live Local Monitor</span>
+          <span class="badge-item monitor" id="sync-status-badge"><i class="fas fa-database" style="margin-right: 4px;"></i> Local Only</span>
+          <span class="badge-item monitor" style="display: none;" id="live-local-monitor-badge"><i class="fas fa-circle" style="color: var(--success); font-size: 8px; margin-right: 4px;"></i> Live Local Monitor</span>
           <span class="badge-item practice">Volunteer Practice Session</span>
           <a href="https://www.usys.org" target="_blank" class="header-link-btn">USYS Website <i class="fas fa-external-link-alt"></i></a>
           <a href="https://aysaohiosoccer.com/" target="_blank" class="header-link-btn">AYSA Soccer <i class="fas fa-external-link-alt"></i></a>
@@ -513,6 +517,47 @@
               <button class="btn btn-danger" onclick="logoutBoard()">
                 <i class="fas fa-sign-out-alt"></i> Logout Portal
               </button>
+            </div>
+          </div>
+
+          <!-- Supabase Synchronization & Config Panel -->
+          <div class="supabase-config-card" style="background: var(--bg-sidebar); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 20px; margin-bottom: 25px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">
+              <h3 style="font-family: var(--font-title); font-size: 16px; margin: 0; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-sync" style="color: var(--primary);"></i> Supabase Database Synchronization
+              </h3>
+              <button class="btn btn-secondary btn-small" id="btn-toggle-sql-script" onclick="toggleSqlScript()">
+                <i class="fas fa-code"></i> Show Setup SQL Script
+              </button>
+            </div>
+            
+            <form id="supabase-config-form" onsubmit="saveSupabaseConfig(event)" style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 15px; align-items: end; margin-bottom: 15px;">
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label" for="sb-url" style="margin-bottom: 5px; font-size: 11px;">Supabase Project URL</label>
+                <input type="url" id="sb-url" class="form-input" style="padding: 8px 12px; font-size: 13px;" placeholder="https://xxxx.supabase.co" required>
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label class="form-label" for="sb-key" style="margin-bottom: 5px; font-size: 11px;">Supabase Anon Key</label>
+                <input type="password" id="sb-key" class="form-input" style="padding: 8px 12px; font-size: 13px;" placeholder="eyJhbGciOi..." required>
+              </div>
+              <div style="display: flex; gap: 8px;">
+                <button type="submit" class="btn btn-success" style="padding: 9px 16px;">Connect & Sync</button>
+                <button type="button" class="btn btn-danger" onclick="disconnectSupabase()" style="padding: 9px 16px;">Disconnect</button>
+              </div>
+            </form>
+
+            <div id="sql-script-panel" style="display: none; margin-top: 15px; padding: 15px; background: var(--matte-black); border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span style="font-family: monospace; font-size: 11px; color: var(--text-muted);">Database Setup Script</span>
+                <button class="btn btn-secondary btn-small" type="button" onclick="copySqlScript()"><i class="fas fa-copy"></i> Copy Script</button>
+              </div>
+              <textarea id="sql-script-text" readonly style="width: 100%; height: 200px; font-family: monospace; font-size: 11px; background: transparent; color: #10B981; border: none; outline: none; resize: none;"></textarea>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); background: rgba(0,0,0,0.15); padding: 10px 15px; border-radius: var(--radius-sm);">
+              <div>Status: <strong id="sb-status-text" style="color: #94a3b8;">Local Only</strong></div>
+              <div>Pending Sync Queue: <strong id="sb-queue-count">0</strong></div>
+              <div>Last Synced: <strong id="sb-last-sync">Never</strong></div>
             </div>
           </div>
 
@@ -985,6 +1030,8 @@
     </div>
   </div>
 
+  <!-- Supabase JS Library CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <!-- Main JavaScript Logic -->
   <script src="app.js"></script>
 </body>
