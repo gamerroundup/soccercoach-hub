@@ -493,7 +493,7 @@ const DEFAULT_DATABASE = {
     {
       id: "event-1",
       title: "LCSL Board League Monthly Meet",
-      date: new Date(Date.now() + 2*24*60*60*1000).toISOString().split('T')[0], // Today + 2 days
+      date: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Today + 2 days
       time: "19:30",
       link: "https://meet.google.com/abc-defg-hij",
       description: "Standard monthly board review of schedules, referee allocations, and incident reports from rec and travel divisions."
@@ -501,7 +501,7 @@ const DEFAULT_DATABASE = {
     {
       id: "event-2",
       title: "Referee Conduct Panel & Training Clinic",
-      date: new Date(Date.now() + 5*24*60*60*1000).toISOString().split('T')[0], // Today + 5 days
+      date: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Today + 5 days
       time: "18:00",
       link: "https://teams.microsoft.com/l/meetup-join/19:meeting_abcdef",
       description: "Special panels to address referee escalation reports and coordinate standard training cues for county commissioners."
@@ -509,7 +509,7 @@ const DEFAULT_DATABASE = {
     {
       id: "event-3",
       title: "Oberlin Fields Maintenance & Replacement Walkthrough",
-      date: new Date(Date.now() + 12*24*60*60*1000).toISOString().split('T')[0], // Today + 12 days
+      date: new Date(Date.now() + 12 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Today + 12 days
       time: "10:00",
       link: "",
       description: "On-site equipment review to procure replacement goals, verify nets, and confirm field painting coordinators."
@@ -797,7 +797,7 @@ class SoccerDb {
       }
 
       localStorage.setItem(this.key, JSON.stringify(localDb));
-      
+
       loadTacticsData();
       triggerAllRenders();
     } catch (e) {
@@ -825,15 +825,15 @@ class SoccerDb {
         await window.supabaseClient.from(t).delete().neq(idCol, 'xyz_not_exist_xyz');
       }
       addSystemLog("Remote database tables cleared. Seeding default data...");
-      
+
       const ensureIds = (arr, prefix) => {
         return arr.map((item, idx) => {
-          const copy = {...item};
+          const copy = { ...item };
           if (!copy.id) copy.id = `${prefix}-${Date.now()}-${idx}-${copy.name.replace(/\s+/g, '-').toLowerCase()}`;
           return copy;
         });
       };
-      
+
       const seedPlans = ensureIds(DEFAULT_DATABASE.practicePlans, 'plan');
 
       await window.supabaseClient.from('soccer_age_groups').insert(toSnake(DEFAULT_DATABASE.ageGroups));
@@ -843,10 +843,10 @@ class SoccerDb {
       await window.supabaseClient.from('soccer_complaints').insert(toSnake(DEFAULT_DATABASE.complaints));
       await window.supabaseClient.from('soccer_tasks').insert(toSnake(DEFAULT_DATABASE.tasks));
       await window.supabaseClient.from('soccer_calendar_events').insert(toSnake(DEFAULT_DATABASE.calendarEvents));
-      
+
       const linksRows = Object.entries(DEFAULT_DATABASE.boardLinks).map(([k, v]) => ({ key: k, label: v.label, url: v.url }));
       await window.supabaseClient.from('soccer_board_links').insert(linksRows);
-      
+
       addSystemLog("Remote database successfully seeded with league defaults.");
     } catch (e) {
       console.error("Error resetting Supabase to default:", e);
@@ -877,11 +877,11 @@ function checkAdminAuth(message = "This action requires Administrative authoriza
     localStorage.setItem("board_admin_logged_in", "true");
     addSystemLog("Board administrator authenticated via prompt.");
     initSupabase(); // Update headers for Supabase RLS
-    renderBoardPortal(); 
-    renderHandbook();    
+    renderBoardPortal();
+    renderHandbook();
     updateAdminLockIcons();
     if (selectedDrillId) {
-      viewDrillDetail(selectedDrillId); 
+      viewDrillDetail(selectedDrillId);
     }
     return true;
   }
@@ -893,15 +893,15 @@ function checkAdminAuth(message = "This action requires Administrative authoriza
 function updateAdminLockIcons() {
   const btnAddAge = document.getElementById("btn-add-agegroup");
   const btnCreateDrill = document.getElementById("btn-create-drill");
-  
+
   if (btnAddAge) {
-    btnAddAge.innerHTML = isBoardAuthenticated ? 
-      '<i class="fas fa-plus"></i> Add Age Category' : 
+    btnAddAge.innerHTML = isBoardAuthenticated ?
+      '<i class="fas fa-plus"></i> Add Age Category' :
       '<i class="fas fa-lock"></i> Add Age Category (Admin)';
   }
   if (btnCreateDrill) {
-    btnCreateDrill.innerHTML = isBoardAuthenticated ? 
-      '<i class="fas fa-plus"></i> Create Drill' : 
+    btnCreateDrill.innerHTML = isBoardAuthenticated ?
+      '<i class="fas fa-plus"></i> Create Drill' :
       '<i class="fas fa-lock"></i> Create Drill (Admin)';
   }
 }
@@ -929,7 +929,7 @@ function setupNavigation() {
 
   function changeView(viewId) {
     currentView = viewId;
-    
+
     // Update active tab buttons
     mobileButtons.forEach(btn => {
       if (btn.dataset.view === viewId) btn.classList.add("active");
@@ -959,7 +959,7 @@ function setupNavigation() {
     if (viewId === "board") {
       renderBoardPortal();
     }
-    
+
     // Update sliding tracer position
     updateMobileNavTracer();
   }
@@ -973,7 +973,7 @@ function setupNavigation() {
   });
 
   // Handle drill detail modal closing or returning
-  window.closeDrillDetail = function() {
+  window.closeDrillDetail = function () {
     selectedDrillId = null;
     document.getElementById("drills-list-container").style.display = "block";
     document.getElementById("drill-detail-container").style.display = "none";
@@ -1046,7 +1046,7 @@ function renderHandbook() {
   const data = db.getData();
   const listContainerMobile = document.getElementById("handbook-list-mobile");
   const listContainerDesktop = document.getElementById("handbook-list-desktop");
-  
+
   // Render sidebar selections
   let listHtml = "";
   data.ageGroups.forEach(group => {
@@ -1057,15 +1057,15 @@ function renderHandbook() {
       </button>
     `;
   });
-  
+
   if (listContainerMobile) listContainerMobile.innerHTML = listHtml;
   if (listContainerDesktop) listContainerDesktop.innerHTML = listHtml;
-  
+
   // Render details card
   const selectedGroup = data.ageGroups.find(g => g.id === selectedAgeGroupId);
   const detailContainerMobile = document.getElementById("handbook-details-mobile");
   const detailContainerDesktop = document.getElementById("handbook-details-desktop");
-  
+
   if (!selectedGroup) return;
 
   const detailHtml = `
@@ -1129,14 +1129,14 @@ function renderHandbook() {
   updateAdminLockIcons();
 }
 
-window.toggleHandbookView = function(viewType) {
+window.toggleHandbookView = function (viewType) {
   const cardsBtn = document.getElementById("handbook-view-cards-btn");
   const tableBtn = document.getElementById("handbook-view-table-btn");
   const cardsView = document.getElementById("handbook-cards-view");
   const tableView = document.getElementById("handbook-table-view");
-  
+
   if (!cardsBtn || !tableBtn || !cardsView || !tableView) return;
-  
+
   if (viewType === 'cards') {
     cardsBtn.classList.add("active");
     tableBtn.classList.remove("active");
@@ -1156,7 +1156,7 @@ function renderComparisonTable() {
   const data = db.getData();
   const tbody = document.getElementById("comparison-table-body");
   if (!tbody) return;
-  
+
   let html = "";
   data.ageGroups.forEach(group => {
     html += `
@@ -1177,12 +1177,12 @@ function renderComparisonTable() {
   tbody.innerHTML = html;
 }
 
-window.selectAgeGroup = function(groupId) {
+window.selectAgeGroup = function (groupId) {
   selectedAgeGroupId = groupId;
   renderHandbook();
 };
 
-window.openAddAgeGroupModal = function() {
+window.openAddAgeGroupModal = function () {
   if (!checkAdminAuth("Only board administrators can add new age categories.")) return;
   document.getElementById("agegroup-modal-title").innerText = "Add Age Category";
   document.getElementById("agegroup-id-input").value = "";
@@ -1190,7 +1190,7 @@ window.openAddAgeGroupModal = function() {
   openModal("modal-agegroup");
 };
 
-window.openEditAgeGroupModal = function(groupId) {
+window.openEditAgeGroupModal = function (groupId) {
   if (!checkAdminAuth("Only board administrators can edit age group specifications.")) return;
   const data = db.getData();
   const group = data.ageGroups.find(g => g.id === groupId);
@@ -1212,12 +1212,12 @@ window.openEditAgeGroupModal = function(groupId) {
   openModal("modal-agegroup");
 };
 
-window.saveAgeGroup = function(e) {
+window.saveAgeGroup = function (e) {
   e.preventDefault();
   const data = db.getData();
   const idInput = document.getElementById("agegroup-id-input").value;
   const name = document.getElementById("agegroup-name").value;
-  
+
   const groupData = {
     name: name,
     matchFormat: document.getElementById("agegroup-format").value,
@@ -1253,7 +1253,7 @@ window.saveAgeGroup = function(e) {
   updateAgeSelectors(); // update drop downs across pages
 };
 
-window.deleteAgeGroup = function(groupId) {
+window.deleteAgeGroup = function (groupId) {
   if (!checkAdminAuth("Only board administrators can delete age categories.")) return;
   customConfirm("Are you sure you want to delete this age category and all its rule specs?", () => {
     const data = db.getData();
@@ -1262,14 +1262,14 @@ window.deleteAgeGroup = function(groupId) {
       const name = data.ageGroups[index].name;
       data.ageGroups.splice(index, 1);
       addSystemLog(`Deleted age category: ${name}`);
-      
+
       // Update active selection
       if (data.ageGroups.length > 0) {
         selectedAgeGroupId = data.ageGroups[0].id;
       } else {
         selectedAgeGroupId = "";
       }
-      
+
       db.saveData(data);
       renderHandbook();
       updateAgeSelectors();
@@ -1278,7 +1278,7 @@ window.deleteAgeGroup = function(groupId) {
   });
 };
 
-window.restoreHandbookDefaults = function() {
+window.restoreHandbookDefaults = function () {
   if (!checkAdminAuth("Only board administrators can restore default rules.")) return;
   customConfirm("Reset all specifications, rules and handbook entries back to league default values?", () => {
     const data = db.resetToDefault();
@@ -1316,10 +1316,10 @@ function renderDrills() {
   // Filter logic
   let filteredDrills = data.drills.filter(drill => {
     // Search Query filter
-    const matchesSearch = drill.title.toLowerCase().includes(searchDrillQuery) || 
-                          drill.type.toLowerCase().includes(searchDrillQuery) || 
-                          drill.description.toLowerCase().includes(searchDrillQuery);
-    
+    const matchesSearch = drill.title.toLowerCase().includes(searchDrillQuery) ||
+      drill.type.toLowerCase().includes(searchDrillQuery) ||
+      drill.description.toLowerCase().includes(searchDrillQuery);
+
     // Age Filter
     let matchesAge = true;
     if (drillFilterAge !== "all") {
@@ -1357,7 +1357,7 @@ function renderDrills() {
   filteredDrills.forEach(drill => {
     // Helper to extract a clean age range label (e.g., u6-u10 -> U6-U10)
     const ageLabel = drill.ageRange.toUpperCase();
-    
+
     html += `
       <div class="drill-card" onclick="viewDrillDetail('${drill.id}')">
         <div class="drill-image-wrapper">
@@ -1378,7 +1378,7 @@ function renderDrills() {
   });
 
   container.innerHTML = html;
-  
+
   // Render total badge count (matching Screenshot 2: Library [25])
   const drillCounts = document.querySelectorAll(".drills-count-badge");
   drillCounts.forEach(el => {
@@ -1387,7 +1387,7 @@ function renderDrills() {
   updateAdminLockIcons();
 }
 
-window.viewDrillDetail = function(drillId) {
+window.viewDrillDetail = function (drillId) {
   selectedDrillId = drillId;
   const data = db.getData();
   const drill = data.drills.find(d => d.id === drillId);
@@ -1409,7 +1409,7 @@ window.viewDrillDetail = function(drillId) {
       const vidId = cleanEmbedUrl.split("youtu.be/")[1].split("?")[0];
       cleanEmbedUrl = `https://www.youtube.com/embed/${vidId}`;
     }
-    
+
     videoEmbedHtml = `
       <div class="video-iframe-wrapper">
         <iframe src="${cleanEmbedUrl}" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -1478,7 +1478,7 @@ window.viewDrillDetail = function(drillId) {
   `;
 };
 
-window.openAddDrillModal = function() {
+window.openAddDrillModal = function () {
   if (!checkAdminAuth("Only board administrators can create training drills.")) return;
   document.getElementById("drill-modal-title").innerText = "Add Training Drill";
   document.getElementById("drill-id-input").value = "";
@@ -1486,7 +1486,7 @@ window.openAddDrillModal = function() {
   openModal("modal-drill");
 };
 
-window.openEditDrillModal = function(drillId) {
+window.openEditDrillModal = function (drillId) {
   if (!checkAdminAuth("Only board administrators can edit training drills.")) return;
   const data = db.getData();
   const drill = data.drills.find(d => d.id === drillId);
@@ -1507,12 +1507,12 @@ window.openEditDrillModal = function(drillId) {
   openModal("modal-drill");
 };
 
-window.saveDrill = function(e) {
+window.saveDrill = function (e) {
   e.preventDefault();
   const data = db.getData();
   const idInput = document.getElementById("drill-id-input").value;
   const title = document.getElementById("drill-title").value;
-  
+
   const drillData = {
     title: title,
     type: document.getElementById("drill-type").value,
@@ -1541,7 +1541,7 @@ window.saveDrill = function(e) {
 
   db.saveData(data);
   closeModal("modal-drill");
-  
+
   if (selectedDrillId) {
     // If we were inside the detail view, reload it
     viewDrillDetail(idInput || data.drills[data.drills.length - 1].id);
@@ -1550,7 +1550,7 @@ window.saveDrill = function(e) {
   }
 };
 
-window.deleteDrill = function(drillId) {
+window.deleteDrill = function (drillId) {
   if (!checkAdminAuth("Only board administrators can delete training drills.")) return;
   customConfirm("Are you sure you want to delete this drill from the library?", () => {
     const data = db.getData();
@@ -1639,7 +1639,7 @@ function renderLounge() {
   }
 }
 
-window.viewPracticePlanDetail = function(index) {
+window.viewPracticePlanDetail = function (index) {
   const data = db.getData();
   const plan = data.practicePlans[index];
   if (!plan) return;
@@ -1653,12 +1653,12 @@ window.viewPracticePlanDetail = function(index) {
   openModal("modal-plan-details");
 };
 
-window.openAddPracticePlanModal = function() {
+window.openAddPracticePlanModal = function () {
   document.getElementById("practice-plan-form").reset();
   openModal("modal-practice-plan");
 };
 
-window.savePracticePlan = function(e) {
+window.savePracticePlan = function (e) {
   e.preventDefault();
   const data = db.getData();
   const name = document.getElementById("plan-name").value;
@@ -1681,18 +1681,18 @@ window.savePracticePlan = function(e) {
   addSystemLog(`Shared new Practice Plan template: "${name}" for ${ageGroup} Group`);
 };
 
-window.openAddBlogModal = function() {
+window.openAddBlogModal = function () {
   document.getElementById("blog-form").reset();
   openModal("modal-blog");
 };
 
-window.saveBlog = function(e) {
+window.saveBlog = function (e) {
   e.preventDefault();
   const data = db.getData();
   const title = document.getElementById("blog-title").value;
   const author = document.getElementById("blog-author").value;
   const content = document.getElementById("blog-content").value;
-  
+
   const newBlog = {
     id: "blog-" + Date.now(),
     title: title,
@@ -1710,7 +1710,7 @@ window.saveBlog = function(e) {
 };
 
 // Toast Notification System
-window.showToast = function(message, type = "success") {
+window.showToast = function (message, type = "success") {
   let toastContainer = document.getElementById("toast-container");
   if (!toastContainer) {
     toastContainer = document.createElement("div");
@@ -1783,29 +1783,29 @@ window.showToast = function(message, type = "success") {
 };
 
 // Custom Modal Confirmation System
-window.customConfirm = function(message, onConfirm) {
+window.customConfirm = function (message, onConfirm) {
   const modal = document.getElementById("modal-confirm");
   const msgEl = document.getElementById("confirm-message");
   const actionBtn = document.getElementById("btn-confirm-action");
-  
+
   if (!modal || !msgEl || !actionBtn) {
     if (confirm(message)) {
       onConfirm();
     }
     return;
   }
-  
+
   msgEl.innerText = message;
-  
+
   // Clone button to remove previous event listeners
   const newActionBtn = actionBtn.cloneNode(true);
   actionBtn.parentNode.replaceChild(newActionBtn, actionBtn);
-  
+
   newActionBtn.addEventListener("click", () => {
     closeModal("modal-confirm");
     onConfirm();
   });
-  
+
   openModal("modal-confirm");
 };
 
@@ -1840,7 +1840,7 @@ function setupComplaintForm() {
 
     // 1. Save Complaint
     data.complaints.unshift(newComplaint);
-    
+
     // 2. Automatically generate Board Task for representatives to investigate
     const newBoardTask = {
       id: "task-" + Date.now(),
@@ -1848,7 +1848,7 @@ function setupComplaintForm() {
       status: "todo",
       tag: type === "referee" ? "ref" : "complaint",
       assignee: "Unassigned (Review Required)",
-      dueDate: new Date(Date.now() + 5*24*60*60*1000).toISOString().split('T')[0] // 5 days from now
+      dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] // 5 days from now
     };
     data.tasks.push(newBoardTask);
 
@@ -1896,7 +1896,7 @@ function renderBoardPortal() {
   renderLogs();
 }
 
-window.submitBoardLogin = function(e) {
+window.submitBoardLogin = function (e) {
   e.preventDefault();
   const passcode = document.getElementById("board-passcode-input").value;
   if (passcode === boardPasscode) {
@@ -1914,7 +1914,7 @@ window.submitBoardLogin = function(e) {
   }
 };
 
-window.logoutBoard = function() {
+window.logoutBoard = function () {
   isBoardAuthenticated = false;
   localStorage.setItem("board_admin_logged_in", "false");
   addSystemLog("Board administrator logged out.");
@@ -1927,7 +1927,7 @@ window.logoutBoard = function() {
 // ----------------------------------------------------
 // BOARD CALENDAR (ROLLING 30-DAY WINDOW)
 // ----------------------------------------------------
-window.renderBoardCalendar = function() {
+window.renderBoardCalendar = function () {
   const container = document.getElementById("board-calendar-list");
   if (!container) return;
 
@@ -1943,13 +1943,13 @@ window.renderBoardCalendar = function() {
   const maxDate = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000);
 
   // Filter events within rolling 30 days
-  const filteredEvents = data.calendarEvents.filter(function(event) {
+  const filteredEvents = data.calendarEvents.filter(function (event) {
     const eventDate = new Date(event.date);
     return eventDate >= today && eventDate <= maxDate;
   });
 
   // Sort chronologically
-  filteredEvents.sort(function(a, b) {
+  filteredEvents.sort(function (a, b) {
     if (a.date !== b.date) {
       return a.date.localeCompare(b.date);
     }
@@ -1960,12 +1960,12 @@ window.renderBoardCalendar = function() {
     container.innerHTML = '<div class="empty-state">' +
       '<i class="fas fa-calendar-times" style="font-size: 28px; color: var(--text-muted); margin-bottom: 8px;"></i>' +
       '<p>No upcoming board meetings or notices posted for the next 30 days.</p>' +
-    '</div>';
+      '</div>';
     return;
   }
 
   let html = "";
-  filteredEvents.forEach(function(event) {
+  filteredEvents.forEach(function (event) {
     const eventDateObj = new Date(event.date + 'T00:00:00');
     const month = eventDateObj.toLocaleString('en-US', { month: 'short' }).toUpperCase();
     const day = eventDateObj.getDate();
@@ -1987,23 +1987,23 @@ window.renderBoardCalendar = function() {
 
     html += '<div class="calendar-event-item">' +
       '<div class="event-date-badge">' +
-        '<span class="month">' + month + '</span>' +
-        '<span class="day">' + day + '</span>' +
+      '<span class="month">' + month + '</span>' +
+      '<span class="day">' + day + '</span>' +
       '</div>' +
       '<div class="event-info">' +
-        '<div class="event-title-row">' +
-          '<h4 class="event-item-title">' + event.title + '</h4>' +
-          '<span class="event-time-badge"><i class="fas fa-clock"></i> ' + formatTimeStr(event.time) + '</span>' +
-        '</div>' +
-        '<p class="event-item-desc">' + event.description + '</p>' +
-        '<div class="event-actions-row">' +
-          joinLinkHtml +
-          '<button class="btn-event-edit" onclick="openEditEventModal(\'' + event.id + '\')">' +
-            '<i class="fas fa-edit"></i> Edit Notice' +
-          '</button>' +
-        '</div>' +
+      '<div class="event-title-row">' +
+      '<h4 class="event-item-title">' + event.title + '</h4>' +
+      '<span class="event-time-badge"><i class="fas fa-clock"></i> ' + formatTimeStr(event.time) + '</span>' +
       '</div>' +
-    '</div>';
+      '<p class="event-item-desc">' + event.description + '</p>' +
+      '<div class="event-actions-row">' +
+      joinLinkHtml +
+      '<button class="btn-event-edit" onclick="openEditEventModal(\'' + event.id + '\')">' +
+      '<i class="fas fa-edit"></i> Edit Notice' +
+      '</button>' +
+      '</div>' +
+      '</div>' +
+      '</div>';
   });
 
   container.innerHTML = html;
@@ -2020,21 +2020,21 @@ function formatTimeStr(time24) {
   return hrs + ':' + mins + ' ' + ampm;
 }
 
-window.openAddEventModal = function() {
+window.openAddEventModal = function () {
   document.getElementById("calendar-event-modal-title").innerText = "Post Board Notice";
   document.getElementById("calendar-event-id-input").value = "";
   document.getElementById("calendar-event-form").reset();
-  
+
   document.getElementById("calendar-event-date").value = new Date().toISOString().split('T')[0];
   document.getElementById("calendar-event-time").value = "19:00";
-  
+
   document.getElementById("btn-delete-calendar-event").style.display = "none";
   openModal("modal-calendar-event");
 };
 
-window.openEditEventModal = function(eventId) {
+window.openEditEventModal = function (eventId) {
   const data = db.getData();
-  const event = data.calendarEvents.find(function(e) { return e.id === eventId; });
+  const event = data.calendarEvents.find(function (e) { return e.id === eventId; });
   if (!event) return;
 
   document.getElementById("calendar-event-modal-title").innerText = "Edit Board Notice";
@@ -2049,12 +2049,12 @@ window.openEditEventModal = function(eventId) {
   openModal("modal-calendar-event");
 };
 
-window.saveCalendarEvent = function(e) {
+window.saveCalendarEvent = function (e) {
   e.preventDefault();
   const data = db.getData();
   const idInput = document.getElementById("calendar-event-id-input").value;
   const title = document.getElementById("calendar-event-title").value;
-  
+
   const eventData = {
     title: title,
     date: document.getElementById("calendar-event-date").value,
@@ -2064,7 +2064,7 @@ window.saveCalendarEvent = function(e) {
   };
 
   if (idInput) {
-    const index = data.calendarEvents.findIndex(function(ev) { return ev.id === idInput; });
+    const index = data.calendarEvents.findIndex(function (ev) { return ev.id === idInput; });
     if (index !== -1) {
       data.calendarEvents[index] = { ...data.calendarEvents[index], ...eventData };
       addSystemLog("Modified board notice: " + title);
@@ -2080,12 +2080,12 @@ window.saveCalendarEvent = function(e) {
   renderBoardCalendar();
 };
 
-window.deleteCalendarEvent = function() {
+window.deleteCalendarEvent = function () {
   const idInput = document.getElementById("calendar-event-id-input").value;
   if (!idInput) return;
   customConfirm("Are you sure you want to delete this board calendar notice?", () => {
     const data = db.getData();
-    const index = data.calendarEvents.findIndex(function(ev) { return ev.id === idInput; });
+    const index = data.calendarEvents.findIndex(function (ev) { return ev.id === idInput; });
     if (index !== -1) {
       const title = data.calendarEvents[index].title;
       data.calendarEvents.splice(index, 1);
@@ -2101,7 +2101,7 @@ window.deleteCalendarEvent = function() {
 // ----------------------------------------------------
 // BOARD EDITABLE RESOURCE LINKS
 // ----------------------------------------------------
-window.renderBoardLinks = function() {
+window.renderBoardLinks = function () {
   const container = document.getElementById("board-links-container");
   if (!container) return;
 
@@ -2117,19 +2117,19 @@ window.renderBoardLinks = function() {
 
   let html = "";
   const keys = ["coachOnboarding", "playerTravel", "playerRec"];
-  keys.forEach(function(key) {
+  keys.forEach(function (key) {
     const linkObj = data.boardLinks[key];
     html += '<div class="board-link-item">' +
       '<div class="board-link-info">' +
-        '<strong>' + linkObj.label + '</strong>' +
-        '<a href="' + linkObj.url + '" target="_blank" class="board-link-url-display">' +
-          '<i class="fas fa-external-link-alt"></i> ' + cleanUrlDisplay(linkObj.url) +
-        '</a>' +
+      '<strong>' + linkObj.label + '</strong>' +
+      '<a href="' + linkObj.url + '" target="_blank" class="board-link-url-display">' +
+      '<i class="fas fa-external-link-alt"></i> ' + cleanUrlDisplay(linkObj.url) +
+      '</a>' +
       '</div>' +
       '<button class="btn btn-secondary btn-small" onclick="openEditLinkModal(\'' + key + '\')">' +
-        '<i class="fas fa-edit"></i> Edit' +
+      '<i class="fas fa-edit"></i> Edit' +
       '</button>' +
-    '</div>';
+      '</div>';
   });
 
   container.innerHTML = html;
@@ -2140,7 +2140,7 @@ function cleanUrlDisplay(url) {
   return url.replace(/^(https?:\/\/)?(www\.)?/, "");
 }
 
-window.openEditLinkModal = function(key) {
+window.openEditLinkModal = function (key) {
   const data = db.getData();
   if (!data.boardLinks || !data.boardLinks[key]) return;
   const linkObj = data.boardLinks[key];
@@ -2152,7 +2152,7 @@ window.openEditLinkModal = function(key) {
   openModal("modal-board-link-edit");
 };
 
-window.saveBoardLink = function(e) {
+window.saveBoardLink = function (e) {
   e.preventDefault();
   const key = document.getElementById("board-link-key-input").value;
   const label = document.getElementById("board-link-label").value;
@@ -2214,16 +2214,16 @@ function renderKanbanBoard() {
   colDone.innerHTML = htmlDone || '<div class="empty-state"><p>No tasks</p></div>';
 }
 
-window.dragTask = function(ev, taskId) {
+window.dragTask = function (ev, taskId) {
   ev.dataTransfer.setData("text/plain", taskId);
   ev.currentTarget.classList.add("dragging");
 };
 
-window.dragEndTask = function(ev) {
+window.dragEndTask = function (ev) {
   ev.currentTarget.classList.remove("dragging");
 };
 
-window.moveTaskStatus = function(taskId, newStatus) {
+window.moveTaskStatus = function (taskId, newStatus) {
   const data = db.getData();
   const index = data.tasks.findIndex(t => t.id === taskId);
   if (index !== -1) {
@@ -2246,34 +2246,34 @@ function setupKanbanDragAndDrop() {
       e.preventDefault();
       container.classList.add("drag-over");
     });
-    
+
     container.addEventListener("dragleave", () => {
       container.classList.remove("drag-over");
     });
-    
+
     container.addEventListener("drop", (e) => {
       e.preventDefault();
       container.classList.remove("drag-over");
       const taskId = e.dataTransfer.getData("text/plain");
       if (!taskId) return;
-      
+
       let newStatus = "todo";
       if (container.id === "kanban-progress") {
         newStatus = "in-progress";
       } else if (container.id === "kanban-done") {
         newStatus = "done";
       }
-      
+
       window.moveTaskStatus(taskId, newStatus);
     });
   });
 }
 
-window.openAddTaskModal = function() {
+window.openAddTaskModal = function () {
   document.getElementById("task-modal-title").innerText = "Assign Board Task";
   document.getElementById("task-id-input").value = "";
   document.getElementById("task-form").reset();
-  
+
   // Set defaults
   document.getElementById("task-status").value = "todo";
   document.getElementById("task-tag").value = "general";
@@ -2284,7 +2284,7 @@ window.openAddTaskModal = function() {
   openModal("modal-task");
 };
 
-window.openEditTaskModal = function(taskId) {
+window.openEditTaskModal = function (taskId) {
   const data = db.getData();
   const task = data.tasks.find(t => t.id === taskId);
   if (!task) return;
@@ -2301,7 +2301,7 @@ window.openEditTaskModal = function(taskId) {
   openModal("modal-task");
 };
 
-window.saveTask = function(e) {
+window.saveTask = function (e) {
   e.preventDefault();
   const data = db.getData();
   const idInput = document.getElementById("task-id-input").value;
@@ -2335,7 +2335,7 @@ window.saveTask = function(e) {
   renderKanbanBoard();
 };
 
-window.deleteTask = function() {
+window.deleteTask = function () {
   const idInput = document.getElementById("task-id-input").value;
   if (!idInput) return;
   customConfirm("Are you sure you want to delete this task card?", () => {
@@ -2413,12 +2413,12 @@ function renderBoardComplaints() {
   container.innerHTML = html;
 }
 
-window.escalateComplaint = function(complaintId) {
+window.escalateComplaint = function (complaintId) {
   const data = db.getData();
   const index = data.complaints.findIndex(c => c.id === complaintId);
   if (index !== -1) {
     data.complaints[index].status = "escalated";
-    
+
     // Add a Board Task for county meeting agenda
     const newBoardTask = {
       id: "task-" + Date.now(),
@@ -2426,7 +2426,7 @@ window.escalateComplaint = function(complaintId) {
       status: "todo",
       tag: "meeting",
       assignee: "Board President",
-      dueDate: new Date(Date.now() + 7*24*60*60*1000).toISOString().split('T')[0]
+      dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
     };
     data.tasks.push(newBoardTask);
 
@@ -2436,7 +2436,7 @@ window.escalateComplaint = function(complaintId) {
   }
 };
 
-window.deleteComplaint = function(complaintId) {
+window.deleteComplaint = function (complaintId) {
   customConfirm("Remove this complaint entry permanently from archives?", () => {
     const data = db.getData();
     const index = data.complaints.findIndex(c => c.id === complaintId);
@@ -2465,11 +2465,11 @@ function renderLogs() {
 // ----------------------------------------------------
 // SYSTEM MODALS UTILS
 // ----------------------------------------------------
-window.openModal = function(modalId) {
+window.openModal = function (modalId) {
   document.getElementById(modalId).classList.add("active");
 };
 
-window.closeModal = function(modalId) {
+window.closeModal = function (modalId) {
   document.getElementById(modalId).classList.remove("active");
 };
 
@@ -2488,14 +2488,14 @@ document.addEventListener("DOMContentLoaded", () => {
   loadTacticsData();
   renderTacticsInputs();
   renderPlayerTokens();
-  
+
   // Initialize Match Timers and Navigation Tracer
   setupTimers();
   updateMobileNavTracer();
-  
+
   // Initialize Kanban Drag-and-Drop
   setupKanbanDragAndDrop();
-  
+
   // Service Worker Registration
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -2546,7 +2546,7 @@ window.addEventListener('storage', (e) => {
 function getDefaultPositions() {
   const isMobile = document.getElementById("tactics-field") && document.getElementById("tactics-field").clientWidth < 350;
   const positions = [];
-  
+
   if (isMobile) {
     // Mobilized scaled positions (field is 320x520)
     // GK
@@ -2564,7 +2564,7 @@ function getDefaultPositions() {
     positions.push({ left: 35, top: 80 });
     positions.push({ left: 144, top: 50 });
     positions.push({ left: 245, top: 80 });
-    
+
     // Subs on bench
     for (let i = 0; i < 7; i++) {
       positions.push({ left: 10 + i * 43, top: 474 });
@@ -2586,7 +2586,7 @@ function getDefaultPositions() {
     positions.push({ left: 60, top: 100 });
     positions.push({ left: 174, top: 70 });
     positions.push({ left: 280, top: 100 });
-    
+
     // 7 Subs on the bench (y = 544)
     for (let i = 0; i < 7; i++) {
       positions.push({ left: 15 + i * 50, top: 544 });
@@ -2610,7 +2610,7 @@ function loadTacticsData() {
         playerNames = Array.from({ length: 18 }, (_, i) => parsedNames[i] || `Player ${i + 1}`);
       }
     }
-    
+
     const savedPositions = localStorage.getItem("soccercoach_tactics_positions");
     if (savedPositions) {
       const parsedPositions = JSON.parse(savedPositions);
@@ -2636,7 +2636,7 @@ function loadTacticsData() {
 function renderTacticsInputs() {
   const container = document.getElementById("player-inputs-container");
   if (!container) return;
-  
+
   let html = "";
   for (let i = 0; i < 18; i++) {
     html += `
@@ -2649,24 +2649,24 @@ function renderTacticsInputs() {
   container.innerHTML = html;
 }
 
-window.updatePlayerName = function(input) {
+window.updatePlayerName = function (input) {
   const index = parseInt(input.dataset.index);
   playerNames[index] = input.value;
   db.saveTactics("names", playerNames);
-  
+
   const label = document.getElementById(`player-token-label-${index}`);
   if (label) label.innerText = input.value;
-  
+
   localStorage.setItem("soccercoach_tactics_sync_trigger", Date.now());
 };
 
 function renderPlayerTokens() {
   const field = document.getElementById("tactics-field");
   if (!field) return;
-  
+
   const existingTokens = field.querySelectorAll(".player-token, .soccer-ball");
   existingTokens.forEach(t => t.remove());
-  
+
   playerPositions.forEach((pos, i) => {
     const token = document.createElement("div");
     token.className = "player-token";
@@ -2677,7 +2677,7 @@ function renderPlayerTokens() {
       ${i + 1}
       <div class="player-token-label" id="player-token-label-${i}">${playerNames[i]}</div>
     `;
-    
+
     field.appendChild(token);
     makeElementDraggable(token, false, i);
   });
@@ -2689,7 +2689,7 @@ function renderPlayerTokens() {
   ball.style.left = `${ballPosition.left}px`;
   ball.style.top = `${ballPosition.top}px`;
   ball.innerHTML = `<i class="fas fa-futbol"></i>`;
-  
+
   field.appendChild(ball);
   makeElementDraggable(ball, true, 0);
 }
@@ -2697,55 +2697,55 @@ function renderPlayerTokens() {
 function makeElementDraggable(el, isBall, index) {
   let isDragging = false;
   let startX, startY;
-  
+
   el.addEventListener('mousedown', startDrag);
   el.addEventListener('touchstart', startDrag, { passive: false });
-  
+
   function startDrag(e) {
     if (e.type === 'mousedown' && e.button !== 0) return;
-    
+
     e.preventDefault();
     isDragging = true;
-    
+
     const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
     const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
-    
+
     startX = clientX - el.offsetLeft;
     startY = clientY - el.offsetTop;
-    
+
     document.addEventListener('mousemove', drag);
     document.addEventListener('touchmove', drag, { passive: false });
     document.addEventListener('mouseup', endDrag);
     document.addEventListener('touchend', endDrag);
   }
-  
+
   function drag(e) {
     if (!isDragging) return;
     e.preventDefault();
-    
+
     const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
     const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
-    
+
     let x = clientX - startX;
     let y = clientY - startY;
-    
+
     const parent = el.parentElement;
     const maxX = parent.clientWidth - el.clientWidth;
     const maxY = parent.clientHeight - el.clientHeight;
-    
+
     x = Math.max(0, Math.min(x, maxX));
     y = Math.max(0, Math.min(y, maxY));
-    
+
     el.style.left = `${x}px`;
     el.style.top = `${y}px`;
-    
+
     if (isBall) {
       ballPosition = { left: x, top: y };
     } else {
       playerPositions[index] = { left: x, top: y };
     }
   }
-  
+
   function endDrag() {
     if (!isDragging) return;
     isDragging = false;
@@ -2753,7 +2753,7 @@ function makeElementDraggable(el, isBall, index) {
     document.removeEventListener('touchmove', drag);
     document.removeEventListener('mouseup', endDrag);
     document.removeEventListener('touchend', endDrag);
-    
+
     if (isBall) {
       db.saveTactics("ball", ballPosition);
     } else {
@@ -2763,14 +2763,14 @@ function makeElementDraggable(el, isBall, index) {
   }
 }
 
-window.resetPlayerPositions = function() {
+window.resetPlayerPositions = function () {
   playerPositions = getDefaultPositions();
   ballPosition = { left: 178, top: 248 };
-  
+
   db.saveTactics("positions", playerPositions);
   db.saveTactics("ball", ballPosition);
   localStorage.setItem("soccercoach_tactics_sync_trigger", Date.now());
-  
+
   renderPlayerTokens();
   addSystemLog("Tactics Board layout reset to default lineup and ball position.");
 };
@@ -2817,17 +2817,17 @@ function saveTimers() {
   localStorage.setItem("soccercoach_timers", JSON.stringify(timersState));
 }
 
-window.toggleTimer = function(key) {
+window.toggleTimer = function (key) {
   const timer = timersState[key];
   if (!timer) return;
-  
+
   if (timer.elapsed >= maxTimerSeconds && !timer.running) {
     alert("Timer has reached the maximum duration of 60 minutes. Please reset to start again.");
     return;
   }
 
   timer.running = !timer.running;
-  
+
   var label = "Starters";
   if (key === "sub1") {
     label = "Sub Line 1";
@@ -2850,7 +2850,7 @@ window.toggleTimer = function(key) {
 let resetConfirmTimeouts = {};
 let resetAllTimeout = null;
 
-window.resetTimer = function(key) {
+window.resetTimer = function (key) {
   const btn = document.getElementById("btn-" + key + "-reset");
   if (!btn) return;
 
@@ -2869,7 +2869,7 @@ window.resetTimer = function(key) {
     btn.innerHTML = '<i class="fas fa-redo"></i>';
     btn.style.background = "";
     btn.style.color = "";
-    
+
     timersState[key] = { elapsed: 0, running: false, lastTick: null };
     saveTimers();
     updateTimersUI();
@@ -2880,9 +2880,9 @@ window.resetTimer = function(key) {
     btn.innerHTML = '<i class="fas fa-check" style="font-size: 10px;"></i>';
     btn.style.background = "var(--danger)";
     btn.style.color = "white";
-    
+
     // Automatically revert after 3 seconds
-    resetConfirmTimeouts[key] = setTimeout(function() {
+    resetConfirmTimeouts[key] = setTimeout(function () {
       btn.classList.remove("confirm-active");
       btn.innerHTML = '<i class="fas fa-redo"></i>';
       btn.style.background = "";
@@ -2892,7 +2892,7 @@ window.resetTimer = function(key) {
   }
 };
 
-window.resetAllTimers = function() {
+window.resetAllTimers = function () {
   const btn = document.getElementById("btn-reset-all-timers");
   if (!btn) return;
 
@@ -2902,7 +2902,7 @@ window.resetAllTimers = function() {
     resetAllTimeout = null;
     btn.classList.remove("confirm-active");
     btn.innerHTML = '<i class="fas fa-history"></i> Half-Time Reset (All)';
-    
+
     timersState = {
       starters: { elapsed: 0, running: false, lastTick: null },
       sub1: { elapsed: 0, running: false, lastTick: null },
@@ -2915,9 +2915,9 @@ window.resetAllTimers = function() {
     // First click: activate confirm mode
     btn.classList.add("confirm-active");
     btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Confirm Reset All?';
-    
+
     // Automatically revert after 4 seconds
-    resetAllTimeout = setTimeout(function() {
+    resetAllTimeout = setTimeout(function () {
       btn.classList.remove("confirm-active");
       btn.innerHTML = '<i class="fas fa-history"></i> Half-Time Reset (All)';
       resetAllTimeout = null;
@@ -2930,7 +2930,7 @@ function startTimersInterval() {
   timersInterval = setInterval(() => {
     let stateChanged = false;
     const now = Date.now();
-    
+
     Object.keys(timersState).forEach(key => {
       const timer = timersState[key];
       if (timer.running) {
@@ -2939,7 +2939,7 @@ function startTimersInterval() {
         if (timer.elapsed >= maxTimerSeconds) {
           timer.running = false;
           timer.lastTick = null;
-          
+
           let timerLabel = "Starters";
           if (key === "sub1") {
             timerLabel = "Sub Line 1";
@@ -2951,7 +2951,7 @@ function startTimersInterval() {
         stateChanged = true;
       }
     });
-    
+
     if (stateChanged) {
       saveTimers();
     }
@@ -2971,11 +2971,11 @@ function updateTimersUI() {
     const displayId = 'timer-' + key + '-time';
     const cardId = 'timer-card-' + key;
     const toggleId = 'btn-' + key + '-toggle';
-    
+
     const displayEl = document.getElementById(displayId);
     const cardEl = document.getElementById(cardId);
     const toggleEl = document.getElementById(toggleId);
-    
+
     if (displayEl) {
       displayEl.innerText = formatTime(timer.elapsed);
       if (timer.elapsed >= maxTimerSeconds) {
@@ -2984,7 +2984,7 @@ function updateTimersUI() {
         displayEl.style.color = "";
       }
     }
-    
+
     if (cardEl) {
       if (timer.running) {
         cardEl.classList.add("running");
@@ -2992,7 +2992,7 @@ function updateTimersUI() {
         cardEl.classList.remove("running");
       }
     }
-    
+
     if (toggleEl) {
       if (timer.running) {
         toggleEl.innerHTML = '<i class="fas fa-pause"></i> Pause';
@@ -3007,36 +3007,36 @@ function setupTimers() {
   loadTimers();
   updateTimersUI();
   startTimersInterval();
-  
+
   // Attach listeners
   const btnStartersToggle = document.getElementById("btn-starters-toggle");
   if (btnStartersToggle) btnStartersToggle.addEventListener("click", () => toggleTimer("starters"));
   const btnStartersReset = document.getElementById("btn-starters-reset");
   if (btnStartersReset) btnStartersReset.addEventListener("click", () => resetTimer("starters"));
-  
+
   const btnSub1Toggle = document.getElementById("btn-sub1-toggle");
   if (btnSub1Toggle) btnSub1Toggle.addEventListener("click", () => toggleTimer("sub1"));
   const btnSub1Reset = document.getElementById("btn-sub1-reset");
   if (btnSub1Reset) btnSub1Reset.addEventListener("click", () => resetTimer("sub1"));
-  
+
   const btnSub2Toggle = document.getElementById("btn-sub2-toggle");
   if (btnSub2Toggle) btnSub2Toggle.addEventListener("click", () => toggleTimer("sub2"));
   const btnSub2Reset = document.getElementById("btn-sub2-reset");
   if (btnSub2Reset) btnSub2Reset.addEventListener("click", () => resetTimer("sub2"));
-  
+
   const btnResetAll = document.getElementById("btn-reset-all-timers");
   if (btnResetAll) btnResetAll.addEventListener("click", resetAllTimers);
 }
 
 // Mobile Nav Active Underline Slide Logic
-window.updateMobileNavTracer = function() {
+window.updateMobileNavTracer = function () {
   const activeBtn = document.querySelector(".mobile-nav-item.active");
   const tracer = document.querySelector(".mobile-nav-tracer");
   if (!activeBtn || !tracer) return;
-  
+
   const btnWidth = activeBtn.offsetWidth;
   const btnLeft = activeBtn.offsetLeft;
-  
+
   tracer.style.width = btnWidth + 'px';
   tracer.style.transform = 'translateX(' + btnLeft + 'px)';
 };
@@ -3051,7 +3051,7 @@ window.addEventListener("resize", () => {
 // ====================================================
 let supabaseRealtimeChannel = null;
 
-window.initSupabase = async function() {
+window.initSupabase = async function () {
   const url = localStorage.getItem("supabase_url");
   const key = localStorage.getItem("supabase_key");
 
@@ -3085,7 +3085,7 @@ window.initSupabase = async function() {
 
     // Verify connection by doing a simple select query
     const { error } = await window.supabaseClient.from('soccer_age_groups').select('id').limit(1);
-    
+
     if (error) {
       console.error("Supabase verification failed:", error);
       updateSyncStatus("Offline (Pending Sync)");
@@ -3101,7 +3101,7 @@ window.initSupabase = async function() {
 
     // Setup Realtime subscriptions
     setupSupabaseRealtime();
-    
+
     // Perform initial pull
     await db.pullLatestData();
   } catch (err) {
@@ -3111,7 +3111,7 @@ window.initSupabase = async function() {
   }
 };
 
-window.saveSupabaseConfig = function(e) {
+window.saveSupabaseConfig = function (e) {
   e.preventDefault();
   const url = document.getElementById("sb-url").value.trim();
   const key = document.getElementById("sb-key").value.trim();
@@ -3125,12 +3125,12 @@ window.saveSupabaseConfig = function(e) {
   initSupabase();
 };
 
-window.disconnectSupabase = function() {
+window.disconnectSupabase = function () {
   if (confirm("Disconnect Supabase cloud database? App will revert to isolated local storage mode.")) {
     localStorage.removeItem("supabase_url");
     localStorage.removeItem("supabase_key");
     window.supabaseClient = null;
-    
+
     if (supabaseRealtimeChannel) {
       supabaseRealtimeChannel.unsubscribe();
       supabaseRealtimeChannel = null;
@@ -3286,7 +3286,7 @@ function triggerAllRenders() {
   renderPlayerTokens();
 }
 
-window.toggleSqlScript = function() {
+window.toggleSqlScript = function () {
   const panel = document.getElementById("sql-script-panel");
   const btn = document.getElementById("btn-toggle-sql-script");
   if (!panel || !btn) return;
@@ -3300,7 +3300,7 @@ window.toggleSqlScript = function() {
   }
 };
 
-window.copySqlScript = function() {
+window.copySqlScript = function () {
   const text = document.getElementById("sql-script-text");
   if (!text) return;
   text.select();
@@ -3414,16 +3414,16 @@ CREATE TABLE IF NOT EXISTS public.soccer_tactics (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Enable real-time replication for all these tables
-ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_age_groups;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_drills;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_blogs;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_practice_plans;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_complaints;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_tasks;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_calendar_events;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_board_links;
-ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_tactics;
+-- Enable real-time replication for all these tables (idempotent DO blocks)
+DO $$ BEGIN ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_age_groups; EXCEPTION WHEN others THEN NULL; END $$;
+DO $$ BEGIN ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_drills; EXCEPTION WHEN others THEN NULL; END $$;
+DO $$ BEGIN ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_blogs; EXCEPTION WHEN others THEN NULL; END $$;
+DO $$ BEGIN ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_practice_plans; EXCEPTION WHEN others THEN NULL; END $$;
+DO $$ BEGIN ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_complaints; EXCEPTION WHEN others THEN NULL; END $$;
+DO $$ BEGIN ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_tasks; EXCEPTION WHEN others THEN NULL; END $$;
+DO $$ BEGIN ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_calendar_events; EXCEPTION WHEN others THEN NULL; END $$;
+DO $$ BEGIN ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_board_links; EXCEPTION WHEN others THEN NULL; END $$;
+DO $$ BEGIN ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_tactics; EXCEPTION WHEN others THEN NULL; END $$;
 
 -- Enable Row Level Security (RLS) on protected tables
 ALTER TABLE public.soccer_age_groups ENABLE ROW LEVEL SECURITY;
@@ -3450,21 +3450,31 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Policies for soccer_age_groups (Public Read, Admin Write)
+DROP POLICY IF EXISTS "Allow public read of age groups" ON public.soccer_age_groups;
+DROP POLICY IF EXISTS "Allow admin write of age groups" ON public.soccer_age_groups;
 CREATE POLICY "Allow public read of age groups" ON public.soccer_age_groups FOR SELECT USING (true);
 CREATE POLICY "Allow admin write of age groups" ON public.soccer_age_groups FOR ALL USING (public.check_board_passcode());
 
 -- Policies for soccer_drills (Public Read, Admin Write)
+DROP POLICY IF EXISTS "Allow public read of drills" ON public.soccer_drills;
+DROP POLICY IF EXISTS "Allow admin write of drills" ON public.soccer_drills;
 CREATE POLICY "Allow public read of drills" ON public.soccer_drills FOR SELECT USING (true);
 CREATE POLICY "Allow admin write of drills" ON public.soccer_drills FOR ALL USING (public.check_board_passcode());
 
 -- Policies for soccer_calendar_events (Public Read, Admin Write)
+DROP POLICY IF EXISTS "Allow public read of calendar events" ON public.soccer_calendar_events;
+DROP POLICY IF EXISTS "Allow admin write of calendar events" ON public.soccer_calendar_events;
 CREATE POLICY "Allow public read of calendar events" ON public.soccer_calendar_events FOR SELECT USING (true);
 CREATE POLICY "Allow admin write of calendar events" ON public.soccer_calendar_events FOR ALL USING (public.check_board_passcode());
 
 -- Policies for soccer_board_links (Public Read, Admin Write)
+DROP POLICY IF EXISTS "Allow public read of board links" ON public.soccer_board_links;
+DROP POLICY IF EXISTS "Allow admin write of board links" ON public.soccer_board_links;
 CREATE POLICY "Allow public read of board links" ON public.soccer_board_links FOR SELECT USING (true);
 CREATE POLICY "Allow admin write of board links" ON public.soccer_board_links FOR ALL USING (public.check_board_passcode());
 
 -- Policies for soccer_tasks (Public Read, Admin Write)
+DROP POLICY IF EXISTS "Allow public read of tasks" ON public.soccer_tasks;
+DROP POLICY IF EXISTS "Allow admin write of tasks" ON public.soccer_tasks;
 CREATE POLICY "Allow public read of tasks" ON public.soccer_tasks FOR SELECT USING (true);
 CREATE POLICY "Allow admin write of tasks" ON public.soccer_tasks FOR ALL USING (public.check_board_passcode());`;
