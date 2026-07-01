@@ -876,6 +876,7 @@ function checkAdminAuth(message = "This action requires Administrative authoriza
     isBoardAuthenticated = true;
     localStorage.setItem("board_admin_logged_in", "true");
     addSystemLog("Board administrator authenticated via prompt.");
+    initSupabase(); // Update headers for Supabase RLS
     renderBoardPortal(); 
     renderHandbook();    
     updateAdminLockIcons();
@@ -1903,6 +1904,7 @@ window.submitBoardLogin = function(e) {
     localStorage.setItem("board_admin_logged_in", "true");
     document.getElementById("board-passcode-input").value = "";
     addSystemLog("Board administrator authenticated successfully.");
+    initSupabase(); // Update headers for Supabase RLS
     renderBoardPortal();
     renderHandbook();
     renderDrills();
@@ -1916,6 +1918,7 @@ window.logoutBoard = function() {
   isBoardAuthenticated = false;
   localStorage.setItem("board_admin_logged_in", "false");
   addSystemLog("Board administrator logged out.");
+  initSupabase(); // Update headers for Supabase RLS
   renderBoardPortal();
   renderHandbook();
   renderDrills();
@@ -3070,8 +3073,15 @@ window.initSupabase = async function() {
   updateSyncStatus("Connecting...");
 
   try {
-    // Initialize client
-    window.supabaseClient = supabase.createClient(url, key);
+    // Initialize client with custom headers for RLS passcode validation
+    const passcodeHeader = isBoardAuthenticated ? 'board123' : '';
+    window.supabaseClient = supabase.createClient(url, key, {
+      global: {
+        headers: {
+          'x-board-passcode': passcodeHeader
+        }
+      }
+    });
 
     // Verify connection by doing a simple select query
     const { error } = await window.supabaseClient.from('soccer_age_groups').select('id').limit(1);
@@ -3415,13 +3425,46 @@ ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_calendar_events;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_board_links;
 ALTER PUBLICATION supabase_realtime ADD TABLE public.soccer_tactics;
 
--- Disable Row Level Security (RLS) for simple integration
-ALTER TABLE public.soccer_age_groups DISABLE ROW LEVEL SECURITY;
-ALTER TABLE public.soccer_drills DISABLE ROW LEVEL SECURITY;
+-- Enable Row Level Security (RLS) on protected tables
+ALTER TABLE public.soccer_age_groups ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.soccer_drills ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.soccer_calendar_events ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.soccer_board_links ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.soccer_tasks ENABLE ROW LEVEL SECURITY;
+
+-- Disable Row Level Security (RLS) on public tables (Tactics Board, Lounge, Incident Log)
+ALTER TABLE public.soccer_tactics DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.soccer_blogs DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.soccer_practice_plans DISABLE ROW LEVEL SECURITY;
 ALTER TABLE public.soccer_complaints DISABLE ROW LEVEL SECURITY;
-ALTER TABLE public.soccer_tasks DISABLE ROW LEVEL SECURITY;
-ALTER TABLE public.soccer_calendar_events DISABLE ROW LEVEL SECURITY;
-ALTER TABLE public.soccer_board_links DISABLE ROW LEVEL SECURITY;
-ALTER TABLE public.soccer_tactics DISABLE ROW LEVEL SECURITY;`;
+
+-- Helper function to check passcode in headers
+CREATE OR REPLACE FUNCTION public.check_board_passcode()
+RETURNS BOOLEAN AS $$
+BEGIN
+  RETURN coalesce(
+    current_setting('request.headers', true)::json->>'x-board-passcode',
+    ''
+  ) = 'board123';
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Policies for soccer_age_groups (Public Read, Admin Write)
+CREATE POLICY "Allow public read of age groups" ON public.soccer_age_groups FOR SELECT USING (true);
+CREATE POLICY "Allow admin write of age groups" ON public.soccer_age_groups FOR ALL USING (public.check_board_passcode());
+
+-- Policies for soccer_drills (Public Read, Admin Write)
+CREATE POLICY "Allow public read of drills" ON public.soccer_drills FOR SELECT USING (true);
+CREATE POLICY "Allow admin write of drills" ON public.soccer_drills FOR ALL USING (public.check_board_passcode());
+
+-- Policies for soccer_calendar_events (Public Read, Admin Write)
+CREATE POLICY "Allow public read of calendar events" ON public.soccer_calendar_events FOR SELECT USING (true);
+CREATE POLICY "Allow admin write of calendar events" ON public.soccer_calendar_events FOR ALL USING (public.check_board_passcode());
+
+-- Policies for soccer_board_links (Public Read, Admin Write)
+CREATE POLICY "Allow public read of board links" ON public.soccer_board_links FOR SELECT USING (true);
+CREATE POLICY "Allow admin write of board links" ON public.soccer_board_links FOR ALL USING (public.check_board_passcode());
+
+-- Policies for soccer_tasks (Public Read, Admin Write)
+CREATE POLICY "Allow public read of tasks" ON public.soccer_tasks FOR SELECT USING (true);
+CREATE POLICY "Allow admin write of tasks" ON public.soccer_tasks FOR ALL USING (public.check_board_passcode());`;
